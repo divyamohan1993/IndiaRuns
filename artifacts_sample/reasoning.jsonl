@@ -4,20 +4,18 @@
 {"candidate_id": "CAND_0000196", "reasoning": "QA Engineer 4.2 yrs at Mphasis — response rate 0.20 — concern: low response rate 0.20"}
 {"candidate_id": "CAND_0000200", "reasoning": "ML Engineer 4.3 yrs at Aganitha: built ranking/search/reco systems"}
 {"candidate_id": "CAND_0000201", "reasoning": "Marketing Manager 14.1 yrs at Stark Industries. built ranking/search/reco systems — concern: YOE outside band"}
-{"candidate_id": "CAND_0000330", "reasoning": "Civil Engineer 12 yrs at Acme Corp; production embeddings/vector retrieval — concern: YOE outside band"}
 {"candidate_id": "CAND_0000422", "reasoning": "AI Research Engineer 6.3 yrs at Haptik: built ranking/search/reco systems"}
 {"candidate_id": "CAND_0000666", "reasoning": "Data Scientist 6.5 yrs at PhonePe. built ranking/search/reco systems"}
 {"candidate_id": "CAND_0000738", "reasoning": "Graphic Designer 3.4 yrs at Dunder Mifflin. production embeddings/vector retrieval — concern: YOE outside band"}
-{"candidate_id": "CAND_0000921", "reasoning": "Sales Executive 7.1 yrs at Infosys: production embeddings/vector retrieval — concern: low response rate 0.17"}
 {"candidate_id": "CAND_0000981", "reasoning": "ML Engineer 6.4 yrs at Wysa — built ranking/search/reco systems — concern: not flagged open-to-work"}
 {"candidate_id": "CAND_0001113", "reasoning": "Business Analyst 4.2 yrs at Dunder Mifflin. built ranking/search/reco systems — concern: stale activity"}
-{"candidate_id": "CAND_0001147", "reasoning": "Sales Executive 11.8 yrs at Hooli; built ranking/search/reco systems — concern: YOE outside band"}
 {"candidate_id": "CAND_0001329", "reasoning": "DevOps Engineer 9.4 yrs at Hooli; response rate 0.72"}
 {"candidate_id": "CAND_0001545", "reasoning": "QA Engineer 6.9 yrs at CRED; shipped ML to production at scale — concern: not flagged open-to-work"}
 {"candidate_id": "CAND_0001673", "reasoning": "HR Manager 3.7 yrs at Hooli; production embeddings/vector retrieval — concern: low response rate 0.11"}
 {"candidate_id": "CAND_0001797", "reasoning": "Java Developer 4.4 yrs at Acme Corp — response rate 0.72 — concern: stale activity"}
 {"candidate_id": "CAND_0001980", "reasoning": "Operations Manager 8.7 yrs at Dunder Mifflin. built ranking/search/reco systems — concern: not flagged open-to-work"}
 {"candidate_id": "CAND_0002031", "reasoning": "Business Analyst 14.8 yrs at TCS; built ranking/search/reco systems — concern: YOE outside band"}
+{"candidate_id": "CAND_0002439", "reasoning": "DevOps Engineer 6 yrs at HCL; response rate 0.65"}
 {"candidate_id": "CAND_0002525", "reasoning": "Content Writer 7.7 yrs at Dunder Mifflin. built ranking/search/reco systems"}
 {"candidate_id": "CAND_0002554", "reasoning": "Java Developer 5.1 yrs at Pied Piper; response rate 0.57 — concern: stale activity"}
 {"candidate_id": "CAND_0002623", "reasoning": "HR Manager 7.9 yrs at TCS; built ranking/search/reco systems — concern: low response rate 0.18"}
@@ -31,11 +29,12 @@
 {"candidate_id": "CAND_0003741", "reasoning": "Marketing Manager 11.7 yrs at Dunder Mifflin: built ranking/search/reco systems — concern: low response rate 0.08"}
 {"candidate_id": "CAND_0003997", "reasoning": "Software Engineer 9.1 yrs at Wipro; shipped ML to production at scale — concern: low response rate 0.20"}
 {"candidate_id": "CAND_0004114", "reasoning": "Senior Software Engineer 4.9 yrs at Unacademy; response rate 0.61 — concern: not flagged open-to-work"}
+{"candidate_id": "CAND_0005001", "reasoning": ".NET Developer 6.4 yrs at Infosys. shipped ML to production at scale"}
 {"candidate_id": "CAND_0005407", "reasoning": ".NET Developer 7.1 yrs at Zomato — response rate 0.67 — concern: stale activity"}
 {"candidate_id": "CAND_0005581", "reasoning": "QA Engineer 3.8 yrs at Flipkart — shipped ML to production at scale — concern: YOE outside band"}
-{"candidate_id": "CAND_0006217", "reasoning": "Data Analyst 2.2 yrs at Meesho. shipped ML to production at scale — concern: YOE outside band"}
 {"candidate_id": "CAND_0006285", "reasoning": "Customer Support 2.6 yrs at Dunder Mifflin — production embeddings/vector retrieval — concern: YOE outside band"}
 {"candidate_id": "CAND_0007187", "reasoning": "Software Engineer 9 yrs at Tech Mahindra — response rate 0.47 — concern: stale activity"}
+{"candidate_id": "CAND_0007227", "reasoning": "Java Developer 6 yrs at Cognizant: response rate 0.83 — concern: not flagged open-to-work"}
 {"candidate_id": "CAND_0008784", "reasoning": "Full Stack Developer 10 yrs at Swiggy. response rate 0.22 — concern: low response rate 0.22"}
 {"candidate_id": "CAND_0009527", "reasoning": "Frontend Engineer 9.5 yrs at Dunder Mifflin. shipped ML to production at scale — concern: not flagged open-to-work"}
 {"candidate_id": "CAND_0011832", "reasoning": "Software Engineer 10 yrs at Swiggy — shipped ML to production at scale — concern: low response rate 0.14"}
@@ -44,5 +43,6 @@
 {"candidate_id": "CAND_0013610", "reasoning": "Mobile Developer 7.2 yrs at CRED: shipped ML to production at scale — concern: low response rate 0.21"}
 {"candidate_id": "CAND_0014342", "reasoning": "Mobile Developer 7.9 yrs at Hooli. shipped ML to production at scale — concern: stale activity"}
 {"candidate_id": "CAND_0015991", "reasoning": "Full Stack Developer 2.5 yrs at Wayne Enterprises — response rate 0.75 — concern: YOE outside band"}
-{"candidate_id": "CAND_0016368", "reasoning": "Backend Engineer 7.1 yrs at PhonePe. response rate 0.58"}
 {"candidate_id": "CAND_0018303", "reasoning": "Software Engineer 7.9 yrs at Cognizant: shipped ML to production at scale — concern: low response rate 0.22"}
+{"candidate_id": "CAND_0018341", "reasoning": "Cloud Engineer 7.2 yrs at Globex Inc — shipped ML to production at scale"}
+{"candidate_id": "CAND_0019056", "reasoning": "Data Engineer 5.6 yrs at CRED. response rate 0.62"}

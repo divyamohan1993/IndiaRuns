@@ -13,10 +13,10 @@
       "sha256": "60051fc350edf04b76f09c1ee1b5d06aaf0de824f6ce1f79e4f80a7aa67fd701"
     },
     "calibration": {
-      "bytes": 301,
+      "bytes": 302,
       "path": "calibration.json",
       "producer": "precompute/train_ltr.py",
-      "sha256": "5b47b51f80cfe012afe3d3db3c9be71eb1a23016eefb1045b995388a72910b74"
+      "sha256": "3b7f4f787c4c4f771274bae28d870712e72badde9aa72557e76bdc6223b76615"
     },
     "cand_emb": {
       "backend": "tfidf-svd-fallback",
@@ -77,11 +77,11 @@
     },
     "llm_scores": {
       "backend": "DeterministicClient",
-      "bytes": 5274,
+      "bytes": 5269,
       "n_llm_present": 0,
       "path": "llm_scores.parquet",
       "producer": "precompute/llm_rerank.py",
-      "sha256": "59bd73232ba7f4c96be159767693a24b777fc16404dcdbed05d1bbe6e92a43bd"
+      "sha256": "06b2be9529036e6e3602392fd521e3c4cfb2670fe839fbb21972d1333008cb67"
     },
     "ltr_model": {
       "bytes": 1258,
@@ -98,30 +98,30 @@
     "proxy_tiers": {
       "bytes": 288,
       "hist": {
-        "0": 62,
-        "1": 65,
-        "2": 6,
-        "3": 16,
-        "4": 3,
-        "5": 8
+        "0": 63,
+        "1": 57,
+        "2": 8,
+        "3": 27,
+        "4": 0,
+        "5": 5
       },
       "path": "proxy_tiers.npy",
       "producer": "precompute/make_labels.py",
-      "sha256": "e4e9ebe843ae780a4cdba86c23b34dedea599ea3508bdd5144db45ea98d90cc1"
+      "sha256": "98dcf22ae9be77808aa8470b7646a58b5b5bdbcc457fa0f6ae176bbefaca25ae"
     },
     "reasoning": {
       "backend": "DeterministicClient",
-      "bytes": 7071,
+      "bytes": 6939,
       "n_llm": 0,
       "path": "reasoning.jsonl",
       "producer": "precompute/build_reasoning.py",
-      "sha256": "af0d826f7ad8542474a07b291c15ef9c505f8e59dd7a0d7bc69e73ab84b03ccb"
+      "sha256": "b7aa05771e9c0c5382b7f418dfde325bd6d355deaf69677d9d0f05206b3c9cf2"
     },
     "shortlist": {
       "bytes": 2762,
       "path": "shortlist.json",
       "producer": "precompute/first_pass_shortlist.py",
-      "sha256": "418013f3c230d4e480549434cac73e0c8102b4a057b827610236f6dc57938029"
+      "sha256": "cf69ac8758fdb88b936b5e79a8aa32b3a6abba19f005e55afab58c5e4a125e51"
     },
     "tfidf_svd": {
       "bytes": 1126484,
