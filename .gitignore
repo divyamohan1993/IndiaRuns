@@ -19,6 +19,7 @@ artifacts/cand_svd32.f16.npy
 !artifacts_sample/*.npy
 !artifacts_sample/*.npz
 !artifacts_sample/*.pkl
+!artifacts_sample/*.parquet
 
 # ---- Python ----
 __pycache__/

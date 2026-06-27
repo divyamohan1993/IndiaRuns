@@ -1,0 +1,127 @@
+{
+  "artifacts": {
+    "bm25": {
+      "bytes": 902,
+      "path": "bm25.npz",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "c905133d1cdb778199217d3d7e385593bf53eef7239009407de4cb801b4c84c6"
+    },
+    "bm25_vocab": {
+      "bytes": 1362,
+      "path": "bm25_vocab.json",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "60051fc350edf04b76f09c1ee1b5d06aaf0de824f6ce1f79e4f80a7aa67fd701"
+    },
+    "calibration": {
+      "bytes": 301,
+      "path": "calibration.json",
+      "producer": "precompute/train_ltr.py",
+      "sha256": "5b47b51f80cfe012afe3d3db3c9be71eb1a23016eefb1045b995388a72910b74"
+    },
+    "cand_emb": {
+      "backend": "tfidf-svd-fallback",
+      "bytes": 123008,
+      "path": "cand_emb.f16.npy",
+      "producer": "precompute/embed.py",
+      "sha256": "d951b79f78d742ac4aa858514f548e5b8bc2dfb82c16802824c445dc2af8be1b",
+      "shape": [
+        160,
+        384
+      ]
+    },
+    "cand_features": {
+      "bytes": 12928,
+      "path": "cand_features.f16.npy",
+      "producer": "precompute/build_features.py",
+      "sha256": "0f795a2c6734976d03b18cdfce4eb19964cc575956c431cdb7861ec81ead4fff",
+      "shape": [
+        160,
+        40
+      ]
+    },
+    "cand_svd32": {
+      "bytes": 10368,
+      "path": "cand_svd32.f16.npy",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "19195857264487b30b40b381bedc27e3d1163d2106a15d4c8dddd5fee0137314"
+    },
+    "candidate_index": {
+      "bytes": 4317,
+      "path": "candidate_index.json",
+      "producer": "precompute/build_features.py",
+      "sha256": "9e5f56a29ec791092e18d9c5eb1107b5e18c28a6f230151ca673129079239272"
+    },
+    "honeypot_excludes": {
+      "bytes": 780,
+      "path": "honeypot_excludes.json",
+      "producer": "precompute/build_honeypots.py",
+      "sha256": "c87e056c87c90bd397f3172b37bf408f9e288de5b92a5b758e2e874fe8ff670a"
+    },
+    "jd_clause_emb": {
+      "bytes": 11038,
+      "path": "jd_clause_emb.npz",
+      "producer": "precompute/embed.py",
+      "sha256": "af14b76a8577937dca6217d4a4bdff84578ce4f37847d490e01815fd3a2af395"
+    },
+    "jd_meta": {
+      "bytes": 2718,
+      "path": "jd_meta.json",
+      "producer": "precompute/embed.py",
+      "sha256": "0a1fec0c2fbc12777906d2431ca0520786671e5a4fcb30d0c8b25d954f4d367e"
+    },
+    "lexical_cos_jd": {
+      "bytes": 448,
+      "path": "lexical_cos_jd.f16.npy",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "bbd562e15e3f1239ad3c5aa8ed12d50cf4de7ea9ac95f1a5e6702e1a8f925ed1"
+    },
+    "llm_scores": {
+      "backend": "DeterministicClient",
+      "bytes": 6150,
+      "n_llm_present": 0,
+      "path": "llm_scores.parquet",
+      "producer": "precompute/llm_rerank.py",
+      "sha256": "8d9f97b5165674816331b71746b9e99eb12ac23e69fcc7c07386ed3dae8e259b"
+    },
+    "ltr_model": {
+      "bytes": 1258,
+      "path": "ltr_model.json",
+      "producer": "precompute/train_ltr.py",
+      "sha256": "98d6407fe4adff428269f310937f96e6628f16ec57a4ef481ad24c2efd6a2a3c"
+    },
+    "proxy_tiers": {
+      "bytes": 288,
+      "hist": {
+        "0": 62,
+        "1": 65,
+        "2": 6,
+        "3": 16,
+        "4": 3,
+        "5": 8
+      },
+      "path": "proxy_tiers.npy",
+      "producer": "precompute/make_labels.py",
+      "sha256": "e4e9ebe843ae780a4cdba86c23b34dedea599ea3508bdd5144db45ea98d90cc1"
+    },
+    "reasoning": {
+      "backend": "DeterministicClient",
+      "bytes": 21014,
+      "n_llm": 0,
+      "path": "reasoning.jsonl",
+      "producer": "precompute/build_reasoning.py",
+      "sha256": "6d99411571809a7809e1645850f36f33209bfe147600982a014c93dea2a37ce6"
+    },
+    "shortlist": {
+      "bytes": 3223,
+      "path": "shortlist.json",
+      "producer": "precompute/first_pass_shortlist.py",
+      "sha256": "033031926b3f9b14eb270f418b3cc1717a21852118352fd17a1cd5a2bb95b41a"
+    },
+    "tfidf_svd": {
+      "bytes": 1126484,
+      "path": "tfidf_svd.pkl",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "4fbe9c3def645e52d54c299092e30aae4a82b6975cdb24d12db7331ca7b16389"
+    }
+  }
+}
