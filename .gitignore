@@ -12,6 +12,12 @@ artifacts/cand_emb.f16.npy
 artifacts/cand_features.f16.npy
 artifacts/cand_svd32.f16.npy
 
+# ---- Large FULL-pool text artifacts (regenerable; only the small JSONs + the sample
+#      dir are committed). These are the 100K-scale row maps / per-row outputs. ----
+artifacts/candidate_index.json
+artifacts/reasoning.jsonl
+artifacts/llm_scores.json
+
 # Sample-sized artifacts produced during testing live in artifacts_sample/ and ARE
 # committed selectively (small JSON/text + the sample .npy/.npz which are tiny);
 # the *.npy/*.npz ignore above is overridden for that dir below.
