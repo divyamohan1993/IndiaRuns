@@ -1,0 +1,112 @@
+{
+  "artifacts": {
+    "bm25": {
+      "bytes": 400262,
+      "path": "bm25.npz",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "c26a3d0ac5f9addf03779680d46ac957203975df39b82b2dbaec794167bdc266"
+    },
+    "bm25_vocab": {
+      "bytes": 1362,
+      "path": "bm25_vocab.json",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "710dd3ee8ea22c6dfce378a578d9e616fcb2ffa9ae784761a90447e58415842a"
+    },
+    "calibration": {
+      "bytes": 301,
+      "path": "calibration.json",
+      "producer": "precompute/train_ltr.py",
+      "sha256": "ea4c61e9d9edf908aa9106e359e5b815eea58bd03709ed67939953ca3493fedb"
+    },
+    "cand_emb": {
+      "bytes": 76800128,
+      "path": "cand_emb.f16.npy",
+      "producer": "precompute/embed.py",
+      "sha256": "d99f87bd79870a0988e0b86c2360df843031cbff4e86574c0421933628397842"
+    },
+    "cand_features": {
+      "bytes": 8000128,
+      "path": "cand_features.f16.npy",
+      "producer": "precompute/build_features.py",
+      "sha256": "1a9ebe485244650cb72ca3fb421bcaae467695b84d7c01359266d7a00ed01a09"
+    },
+    "cand_svd32": {
+      "bytes": 6400128,
+      "path": "cand_svd32.f16.npy",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "9d5eda6432895f7f8413e719e17ad2208a96a4e026d4b0d08efe6fc5a25a4500"
+    },
+    "candidate_index": {
+      "bytes": 2001120,
+      "path": "candidate_index.json",
+      "producer": "precompute/build_features.py",
+      "sha256": "b6f885993bde39e1e95b004da18ea801405028f9a3a0a0211e4e7744003f0ac5"
+    },
+    "feature_meta": {
+      "bytes": 4521,
+      "path": "feature_meta.json",
+      "producer": "features.py",
+      "sha256": "3650e79a7560c873e7f285a46152f6df15d1053acc9c503ff6aa3edf072b2045"
+    },
+    "honeypot_excludes": {
+      "bytes": 4563,
+      "path": "honeypot_excludes.json",
+      "producer": "precompute/build_honeypots.py",
+      "sha256": "16291948ad5b92cafb67418c8eedd5fb3c162f91be1b7478f9906d0725701df1"
+    },
+    "jd_clause_emb": {
+      "bytes": 11038,
+      "path": "jd_clause_emb.npz",
+      "producer": "precompute/embed.py",
+      "sha256": "76c175c87dc9081cd3e64082c64c156ec668a6b27cfa3756571d20ecb081b04a"
+    },
+    "jd_meta": {
+      "bytes": 2718,
+      "path": "jd_meta.json",
+      "producer": "precompute/embed.py",
+      "sha256": "0a1fec0c2fbc12777906d2431ca0520786671e5a4fcb30d0c8b25d954f4d367e"
+    },
+    "lexical_cos_jd": {
+      "bytes": 200128,
+      "path": "lexical_cos_jd.f16.npy",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "9b1955291a54d6587e7330900ea4d1b6e7ceb93cf342fcba4793d0f620a4f5e8"
+    },
+    "llm_scores": {
+      "bytes": 143310,
+      "path": "llm_scores.parquet",
+      "producer": "precompute/llm_rerank.py",
+      "sha256": "ee825b17d7daafd9fa0ac3be28a011dbb61ed4f571eefd53aead2ddf58c7d5d4"
+    },
+    "ltr_model": {
+      "bytes": 1258,
+      "path": "ltr_model.json",
+      "producer": "precompute/train_ltr.py",
+      "sha256": "98d6407fe4adff428269f310937f96e6628f16ec57a4ef481ad24c2efd6a2a3c"
+    },
+    "proxy_tiers": {
+      "bytes": 100128,
+      "path": "proxy_tiers.npy",
+      "producer": "precompute/make_labels.py",
+      "sha256": "7a6d1f8fa2cd5be920780bb4401301e728f28978ae3391a58cbfadc82fb73e9b"
+    },
+    "reasoning": {
+      "bytes": 183172,
+      "path": "reasoning.jsonl",
+      "producer": "precompute/build_reasoning.py",
+      "sha256": "a21fd0439d544a9d352bb002bfdbd6697d031782702bbc1de90f67a2fd79ee31"
+    },
+    "shortlist": {
+      "bytes": 60157,
+      "path": "shortlist.json",
+      "producer": "precompute/first_pass_shortlist.py",
+      "sha256": "4905ff7dd8c5382c982d8990764efb9278c97e1145e0d92bf703920af1525c6c"
+    },
+    "tfidf_svd": {
+      "bytes": 5566785,
+      "path": "tfidf_svd.pkl",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "98fedccb1b8fc1849eaacb78bdb3c24aa5f1dda1e49b95c07d7d210f30a8b67a"
+    }
+  }
+}

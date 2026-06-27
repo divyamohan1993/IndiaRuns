@@ -1,0 +1,19 @@
+{
+  "blend_weights": {
+    "S_bm25": 0.12,
+    "S_dense": 0.2,
+    "S_llm": 0.5,
+    "S_rule": 0.18
+  },
+  "cv_ndcg": {
+    "blend": 1.0,
+    "ltr": 0.7660090576187351
+  },
+  "longtail_weights": {
+    "S_bm25": 0.2,
+    "S_dense": 0.3,
+    "S_rule": 0.5,
+    "ceiling": 0.85
+  },
+  "use_ltr": false
+}

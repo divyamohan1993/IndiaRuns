@@ -1,0 +1,101 @@
+candidate_id,rank,score,reasoning
+CAND_0046525,1,1.000000,6yr ML engineer with LinkedIn RAG ranking (50M+ queries/month) and Genpact hybrid search (30M corpus) maps directly to senior ranking/search
+CAND_0024466,2,0.916246,Owned search ranking end-to-end at PharmEasy (L2R + embedding migration) and built 10M-user recs; profile truncation hides leadership depth
+CAND_0041669,3,0.908874,8yr ML engineer with LTR ranking at CRED and RAG eval ownership; gap: no listed distributed systems or large-scale infra depth
+CAND_0075439,4,0.826656,4.3yr ML engineer with prod RAG + eval ownership at Flipkart and 10M-user recsys at Genpact; gap: no explicit ranking model depth beyond GBM
+CAND_0026532,5,0.755522,4.8yr ML eng: production semantic search (35% over ES) + 10M-user recsys; gap: no explicit learning-to-rank experience
+CAND_0070485,6,0.657793,End-to-end ranker: L2R pipeline at Dream11 and FAISS semantic search at Saarthi.ai with 35% relevance gain; gap is scale beyond 500K docs
+CAND_0053591,7,0.583692,Shipped XGBoost/LightGBM discovery ranking at Ola + FAISS/BM25 search; 5.3 YoE may fall short of senior bar at larger orgs.
+CAND_0011432,8,0.519608,7.6yr ML engineer with Amazon ranking models (XGBoost/LightGBM) plus RAG and recsys at Krutrim/Nykaa; no listed LLM fine-tuning at scale or
+CAND_0051615,9,0.432091,4.6yr ML engineer with LTR ranking and relevance labeling at Meta plus NLP/vector search skills; Krutrim stint is only 11 months which may s
+CAND_0076251,10,0.426450,Led keyword-to-embedding search migration at Haptik (500K docs FAISS+bge) with 35% relevance gain; LTR and LLM skills fit Senior AI Search w
+CAND_0014440,11,0.404948,6.4yr ML engineer with LTR ranking at CRED and embedding retrieval migration; gap is no explicit GenAI/LLM production ownership beyond fine-
+CAND_0016163,12,0.393187,Led keyword-to-embedding retrieval migration; delivered 35% search relevance gain — no explicit ranking/LTR experience noted
+CAND_0003977,13,0.389599,4.6yr ML engineer at Google with embedding-based semantic search and LTR skills fits ranking/search; 6mo NLP role is brief but core experien
+CAND_0065878,14,0.341749,7.8yr ML engineer with L2R ranking + RAG + LLM fine-tuning across HealthTech/AI firms; no explicit LLM search infra at scale yet
+CAND_0076163,15,0.328556,Owns full ranking pipeline (LTR + RAG + eval) with 6.9yr ML track; concern: both roles share identical descriptions worth clarifying
+CAND_0009024,16,0.265304,5yr ML engineer at Google with embedding-based search migration and 10M+ user rec systems using FAISS/OpenSearch; no explicit ranking model
+CAND_0001600,17,0.100566,AI Specialist 6.2 yrs at InMobi — built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0078810,18,0.040814,Senior Software Engineer (ML) 6.9 yrs at Dream11; built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0048375,19,0.039949,Computer Vision Engineer 4.4 yrs at Saarthi.ai: built ranking/search/reco systems
+CAND_0031752,20,0.039831,ML Engineer 5 yrs at Unacademy: built ranking/search/reco systems
+CAND_0088049,21,0.039493,Junior ML Engineer 5.9 yrs at Freshworks; built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0061479,22,0.038654,ML Engineer 5 yrs at BYJU'S; built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0007391,23,0.036284,Data Scientist 4.3 yrs at Locobuzz — built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0017147,24,0.036205,AI Specialist 4.7 yrs at Glance; built ranking/search/reco systems
+CAND_0072410,25,0.035690,ML Engineer 4.9 yrs at PharmEasy. built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0061819,26,0.034630,Junior ML Engineer 5 yrs at Aganitha; built ranking/search/reco systems
+CAND_0077261,27,0.034421,AI Specialist 5.7 yrs at Meesho; built ranking/search/reco systems
+CAND_0042441,28,0.033931,AI Research Engineer 4.1 yrs at Nykaa: built ranking/search/reco systems
+CAND_0008295,29,0.033440,AI Research Engineer 6.5 yrs at Razorpay; built ranking/search/reco systems
+CAND_0069248,30,0.033163,AI Research Engineer 5.4 yrs at Unacademy: built ranking/search/reco systems
+CAND_0038328,31,0.032726,Junior ML Engineer 4 yrs at PhonePe. built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0043304,32,0.032342,Junior ML Engineer 6.5 yrs at TCS. built ranking/search/reco systems
+CAND_0065430,33,0.031556,ML Engineer 4.4 yrs at Mad Street Den; built ranking/search/reco systems
+CAND_0001302,34,0.031134,Computer Vision Engineer 5.8 yrs at Paytm — built ranking/search/reco systems
+CAND_0035653,35,0.031019,Data Scientist 5.6 yrs at Swiggy — built ranking/search/reco systems
+CAND_0041625,36,0.031019,AI Research Engineer 4.7 yrs at Infosys; built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0071205,37,0.030365,Senior Software Engineer (ML) 4.6 yrs at PharmEasy. built ranking/search/reco systems
+CAND_0077498,38,0.029907,Senior Software Engineer (ML) 5.4 yrs at Niramai. built ranking/search/reco systems
+CAND_0024990,39,0.029156,Junior ML Engineer 5.2 yrs at Zoho; built ranking/search/reco systems
+CAND_0009516,40,0.028792,AI Specialist 6.9 yrs at Verloop.io: built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0068985,41,0.028655,Senior Software Engineer (ML) 5.2 yrs at Locobuzz: built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0001151,42,0.027984,Junior ML Engineer 5 yrs at Aganitha — built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0038949,43,0.027840,ML Engineer 6.4 yrs at CRED. built ranking/search/reco systems
+CAND_0049831,44,0.026671,Computer Vision Engineer 5.4 yrs at BYJU'S; built ranking/search/reco systems
+CAND_0081709,45,0.025727,AI Research Engineer 5.5 yrs at PolicyBazaar; built ranking/search/reco systems
+CAND_0043318,46,0.024914,Data Scientist 6.2 yrs at Freshworks; built ranking/search/reco systems
+CAND_0040955,47,0.024663,Junior ML Engineer 6.6 yrs at Rephrase.ai — built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0015493,48,0.024236,Data Scientist 6.4 yrs at CRED — built ranking/search/reco systems
+CAND_0068012,49,0.024198,Junior ML Engineer 5.7 yrs at Vedantu; built ranking/search/reco systems
+CAND_0038821,50,0.023298,AI Specialist 4.3 yrs at upGrad: built ranking/search/reco systems
+CAND_0047492,51,0.022928,ML Engineer 4.8 yrs at PolicyBazaar: built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0090584,52,0.022645,ML Engineer 5.1 yrs at Flipkart; built ranking/search/reco systems
+CAND_0052706,53,0.022572,AI Research Engineer 5.1 yrs at Swiggy; built ranking/search/reco systems
+CAND_0079888,54,0.022277,Junior ML Engineer 4.3 yrs at InMobi; built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0034148,55,0.021897,ML Engineer 5 yrs at Zoho — built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0087264,56,0.021517,Junior ML Engineer 4 yrs at Krutrim: built ranking/search/reco systems
+CAND_0060886,57,0.020907,Senior Software Engineer (ML) 4.6 yrs at Genpact AI. built ranking/search/reco systems
+CAND_0008943,58,0.020797,Computer Vision Engineer 6 yrs at Observe.AI — built ranking/search/reco systems
+CAND_0057736,59,0.020007,Computer Vision Engineer 6.2 yrs at Mad Street Den; built ranking/search/reco systems
+CAND_0043676,60,0.019887,Senior Software Engineer (ML) 6.1 yrs at Observe.AI. built ranking/search/reco systems
+CAND_0072489,61,0.019221,Computer Vision Engineer 4.4 yrs at Dream11; built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0029671,62,0.018342,Data Scientist 5.7 yrs at BYJU'S; built ranking/search/reco systems
+CAND_0078669,63,0.016303,ML Engineer 6.3 yrs at Vedantu. built ranking/search/reco systems
+CAND_0062462,64,0.015425,Computer Vision Engineer 5 yrs at Tech Mahindra — built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0055960,65,0.014461,AI Specialist 4.9 yrs at Dream11; built ranking/search/reco systems
+CAND_0059017,66,0.014348,AI Research Engineer 6.8 yrs at PhonePe: built ranking/search/reco systems
+CAND_0019159,67,0.014284,ML Engineer 6.1 yrs at Genpact AI; built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0052431,68,0.013147,ML Engineer 5.3 yrs at Swiggy: built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0086460,69,0.012009,ML Engineer 6.2 yrs at Meesho; built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0042359,70,0.011556,Data Scientist 6.9 yrs at Aganitha — built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0091229,71,0.010988,Senior Software Engineer (ML) 7 yrs at Niramai — built ranking/search/reco systems
+CAND_0023093,72,0.010318,ML Engineer 5.1 yrs at PolicyBazaar. built ranking/search/reco systems
+CAND_0007567,73,0.009583,AI Specialist 6.1 yrs at Niramai — built ranking/search/reco systems
+CAND_0067535,74,0.008247,Junior ML Engineer 6.8 yrs at Locobuzz; built ranking/search/reco systems
+CAND_0059557,75,0.007980,Computer Vision Engineer 6.5 yrs at CRED; built ranking/search/reco systems
+CAND_0098624,76,0.007620,Senior Software Engineer (ML) 6.3 yrs at CRED; built ranking/search/reco systems
+CAND_0000200,77,0.007449,ML Engineer 4.3 yrs at Aganitha: built ranking/search/reco systems
+CAND_0089495,78,0.007035,Senior Software Engineer (ML) 4.3 yrs at Swiggy. built ranking/search/reco systems
+CAND_0092181,79,0.006607,Data Scientist 4.6 yrs at Unacademy: built ranking/search/reco systems
+CAND_0080291,80,0.006250,Junior ML Engineer 6.5 yrs at Ola. built ranking/search/reco systems
+CAND_0002793,81,0.005541,AI Specialist 5.5 yrs at Meesho: built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0068964,82,0.005382,ML Engineer 4.8 yrs at Mad Street Den. shipped ML to production at scale — concern: not flagged open-to-work
+CAND_0096589,83,0.004914,Computer Vision Engineer 4.1 yrs at Sarvam AI: built ranking/search/reco systems
+CAND_0001126,84,0.004787,Junior ML Engineer 4.9 yrs at Vedantu: built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0097079,85,0.004445,Computer Vision Engineer 5.7 yrs at Freshworks. built ranking/search/reco systems
+CAND_0033650,86,0.004104,Junior ML Engineer 4.2 yrs at Glance; built ranking/search/reco systems
+CAND_0085851,87,0.003930,ML Engineer 7 yrs at Genpact AI — built ranking/search/reco systems
+CAND_0018701,88,0.003910,Junior ML Engineer 6 yrs at Krutrim: built ranking/search/reco systems
+CAND_0002344,89,0.003816,Senior Software Engineer (ML) 4.7 yrs at upGrad. built ranking/search/reco systems
+CAND_0080794,90,0.002703,AI Research Engineer 6.2 yrs at Wipro. built ranking/search/reco systems
+CAND_0074342,91,0.002693,Data Scientist 5.7 yrs at Zoho: built ranking/search/reco systems
+CAND_0040426,92,0.002016,Data Scientist 5.2 yrs at Tech Mahindra; built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0018888,93,0.001621,AI Research Engineer 6.5 yrs at Razorpay: built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0082262,94,0.001490,Senior Software Engineer (ML) 5.9 yrs at Wipro — built ranking/search/reco systems
+CAND_0080589,95,0.001284,Computer Vision Engineer 5.7 yrs at Niramai: built ranking/search/reco systems
+CAND_0012805,96,0.001259,Data Scientist 4.9 yrs at HCL: built ranking/search/reco systems
+CAND_0046353,97,0.001244,ML Engineer 6.4 yrs at Razorpay. built ranking/search/reco systems
+CAND_0020344,98,0.000535,Computer Vision Engineer 4.4 yrs at Verloop.io — built ranking/search/reco systems
+CAND_0040200,99,0.000098,AI Research Engineer 5.5 yrs at PharmEasy: built ranking/search/reco systems
+CAND_0024549,100,0.000000,AI Specialist 5.2 yrs at Infosys. built ranking/search/reco systems
