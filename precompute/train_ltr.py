@@ -131,6 +131,9 @@ def main() -> int:
 
     ids, X, names, subs = assemble_matrix(A)
     tiers = np.load(os.path.join(A, "proxy_tiers.npy")).astype(np.float32)
+    # rank:ndcg in xgboost >=2 requires INTEGER relevance degrees (0..5); keep a float copy
+    # for the NDCG math and an int copy for the DMatrix labels.
+    tiers_int = np.load(os.path.join(A, "proxy_tiers.npy")).astype(np.int32)
     n = len(ids)
 
     # the fixed-weight blend baseline (what we ship if LTR doesn't win)
@@ -153,7 +156,7 @@ def main() -> int:
         kf = KFold(n_splits=min(5, max(2, n // 10)), shuffle=True, random_state=0)
         scores = []
         for tr, te in kf.split(X):
-            dtr = xgb.DMatrix(X[tr], label=tiers[tr])
+            dtr = xgb.DMatrix(X[tr], label=tiers_int[tr])
             dtr.set_group([len(tr)])
             dte = xgb.DMatrix(X[te])
             bst = xgb.train(params, dtr, num_boost_round=60, verbose_eval=False)
@@ -162,7 +165,7 @@ def main() -> int:
         ltr_ndcg = float(np.mean(scores))
 
         # train final on all data and export
-        dall = xgb.DMatrix(X, label=tiers)
+        dall = xgb.DMatrix(X, label=tiers_int)
         dall.set_group([n])
         final = xgb.train(params, dall, num_boost_round=80, verbose_eval=False)
         trees = export_trees(final, len(names))
