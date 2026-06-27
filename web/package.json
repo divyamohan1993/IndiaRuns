@@ -1,0 +1,38 @@
+{
+  "name": "atlas-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ATLAS — Intelligent Candidate Discovery & Ranking (Plane C web spine)",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
+    "clsx": "2.1.1",
+    "detect-gpu": "^5.0.70",
+    "framer-motion": "11.18.2",
+    "next": "14.2.33",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "recharts": "2.15.4",
+    "tailwind-merge": "2.6.0",
+    "three": "^0.171.0",
+    "zod": "3.24.4"
+  },
+  "devDependencies": {
+    "@types/node": "20.19.0",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "@types/three": "^0.171.0",
+    "autoprefixer": "10.4.20",
+    "eslint": "8.57.1",
+    "eslint-config-next": "14.2.33",
+    "postcss": "8.4.49",
+    "tailwindcss": "3.4.17",
+    "typescript": "5.6.3"
+  }
+}
