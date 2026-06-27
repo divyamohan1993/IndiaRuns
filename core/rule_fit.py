@@ -38,6 +38,11 @@ def _context(c: Dict) -> dict:
                           for j in career(c) if isinstance(j, dict))
     summ = lower(p.get("summary")) + " " + lower(p.get("headline"))
     blob = skills_txt + " " + career_txt + " " + summ
+    # Evidence blob = DESCRIPTIONS + summary ONLY (NOT the skills array). Spec §4.1: a
+    # keyword-stuffer who lists "recommendation systems" as a skill but never describes
+    # doing the work must NOT earn rank/retrieval evidence. The skills array is used only
+    # for the stuffer-signature detection elsewhere, never as positive fit evidence.
+    evid_blob = career_txt + " " + summ
 
     comps = [lower(j.get("company")) for j in career(c) if isinstance(j, dict)]
     services_only = bool(comps) and all(any(sv in cn for sv in keywords.SERVICES_FIRMS) for cn in comps)
@@ -46,9 +51,10 @@ def _context(c: Dict) -> dict:
         for j in career(c) if isinstance(j, dict))
 
     ai_title = keywords.any_in(title, keywords.AI_TITLE)
-    rank_ev = keywords.any_in(blob, keywords.RANK_EVIDENCE)
-    cv_speech = keywords.any_in(blob, keywords.CV_SPEECH_ROBO)
-    nlp_ir = keywords.any_in(blob, keywords.NLP_IR)
+    # rank/retrieval/CV/NLP evidence must come from described work, not stuffed skills.
+    rank_ev = keywords.any_in(evid_blob, keywords.RANK_EVIDENCE)
+    cv_speech = keywords.any_in(evid_blob, keywords.CV_SPEECH_ROBO)
+    nlp_ir = keywords.any_in(evid_blob, keywords.NLP_IR)
     eng_title = keywords.any_in(title, keywords.ENG_TITLE)
     non_eng = keywords.any_in(title, keywords.NON_ENG_TITLE)
 
