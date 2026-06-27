@@ -22,7 +22,7 @@ sys.path.insert(0, REPO)
 import reasoning as rsn  # noqa: E402
 from core.artifacts import load_json, manifest_add  # noqa: E402
 from core.io_jsonl import iter_candidates  # noqa: E402
-from precompute.llm_rerank import fact_bundle  # noqa: E402
+from precompute.llm_rerank import _llm_target_ids, fact_bundle  # noqa: E402
 from precompute.nvidia_client import backend_name, get_chat_backend  # noqa: E402
 
 SYSTEM = (
@@ -39,15 +39,20 @@ def main() -> int:
     ap.add_argument("--artifacts-dir", default=os.path.join(REPO, "artifacts"))
     ap.add_argument("--backend", default=None)
     ap.add_argument("--max-calls", type=int, default=0)
+    ap.add_argument("--top", type=int, default=0,
+                    help="LLM-write reasoning only for the top-N shortlisted by first_pass; "
+                         "the rest get deterministic reasoning. 0 = whole shortlist.")
     args = ap.parse_args()
     A = args.artifacts_dir
 
     sl = load_json(os.path.join(A, "shortlist.json"), default={})
     shortlist = set(sl.get("ids", []))
+    llm_targets = _llm_target_ids(A, sl, shortlist, args.top)
     backend = get_chat_backend(args.backend)
     bname = backend_name(backend)
     deterministic = bname == "DeterministicClient"
-    print(f"reasoning backend: {bname} | shortlist={len(shortlist)}")
+    print(f"reasoning backend: {bname} | shortlist={len(shortlist)} "
+          f"| llm_targets={len(llm_targets)}")
 
     out_path = os.path.join(A, "reasoning.jsonl")
     calls = 0
@@ -58,7 +63,8 @@ def main() -> int:
             if cid not in shortlist:
                 continue
             text = ""
-            if not deterministic and not (args.max_calls and calls >= args.max_calls):
+            if (not deterministic and cid in llm_targets
+                    and not (args.max_calls and calls >= args.max_calls)):
                 ans = backend.chat_json(SYSTEM, json.dumps(fact_bundle(c), ensure_ascii=False))
                 calls += 1
                 cand_text = str(ans.get("reasoning", "")) if isinstance(ans, dict) else ""

@@ -24,12 +24,53 @@ from typing import Dict
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO)
 
-from core import honeypot  # noqa: E402
+import numpy as np  # noqa: E402
+
+from core import (
+    honeypot,  # noqa: E402
+    subscores,  # noqa: E402
+)
 from core import rule_fit as rf  # noqa: E402
 from core.artifacts import load_json, manifest_add  # noqa: E402
 from core.io_jsonl import iter_candidates  # noqa: E402
 from core.schema import career, profile, skills, years_of_experience  # noqa: E402
 from precompute.nvidia_client import backend_name, get_chat_backend  # noqa: E402
+
+
+def _llm_target_ids(A: str, sl_payload: dict, shortlist: set, top: int) -> set:
+    """Return the top-`top` shortlisted ids by first_pass score (the ones most likely to
+    reach the final top-100). Prefers the per-id first_pass recorded in shortlist.json;
+    if absent, recomputes the recall-weighted first_pass from the frozen artifacts.
+    top<=0 => the whole shortlist.
+    """
+    if top <= 0:
+        return set(shortlist)
+    fp_map = sl_payload.get("first_pass") if isinstance(sl_payload, dict) else None
+    if isinstance(fp_map, dict) and fp_map:
+        ranked = sorted((cid for cid in shortlist if cid in fp_map),
+                        key=lambda c: -float(fp_map[c]))
+        return set(ranked[:top])
+    # fallback: recompute first_pass (0.30 dense + 0.25 bm25 + 0.45 rule) from artifacts
+    try:
+        idx = load_json(os.path.join(A, "candidate_index.json"))
+        ids = idx["ids"]
+        cand_emb = np.load(os.path.join(A, "cand_emb.f16.npy")).astype(np.float32)
+        jz = np.load(os.path.join(A, "jd_clause_emb.npz"))
+        S_dense = subscores.dense_scores(cand_emb, jz["clauses"], jz["weights"], jz["ideal"])
+        S_bm25 = np.load(os.path.join(A, "bm25.npz"))["bm25"].astype(np.float32)
+        proxy = 0.40 * S_dense + 0.35 * S_bm25
+        order = np.argsort(-proxy)
+        out = []
+        for r in order:
+            cid = ids[r]
+            if cid in shortlist:
+                out.append(cid)
+            if len(out) >= top:
+                break
+        return set(out)
+    except Exception:
+        return set(shortlist)
+
 
 SYSTEM = (
     "You are a senior technical recruiter screening candidates for a Senior AI Engineer "
@@ -69,6 +110,9 @@ def main() -> int:
     ap.add_argument("--artifacts-dir", default=os.path.join(REPO, "artifacts"))
     ap.add_argument("--backend", default=None, help="nvidia | claude_cli | deterministic | auto")
     ap.add_argument("--max-calls", type=int, default=0, help="0 = no cap")
+    ap.add_argument("--top", type=int, default=0,
+                    help="LLM-call only the top-N shortlisted by first_pass; rest stay "
+                         "deterministic. 0 = whole shortlist.")
     args = ap.parse_args()
     A = args.artifacts_dir
 
@@ -77,6 +121,10 @@ def main() -> int:
     if not shortlist:
         print("no shortlist found; nothing to re-rank", file=sys.stderr)
         return 1
+    llm_targets = _llm_target_ids(A, sl, shortlist, args.top)
+    if args.top > 0:
+        print(f"LLM targets (top-{args.top} by first_pass): {len(llm_targets)} "
+              f"of {len(shortlist)} shortlisted")
 
     backend = get_chat_backend(args.backend)
     bname = backend_name(backend)
@@ -106,7 +154,7 @@ def main() -> int:
             "llm_present": False,
         }
 
-        if not deterministic:
+        if not deterministic and cid in llm_targets:
             b = fact_bundle(c)
             h = bundle_hash(b)
             if h in cache:

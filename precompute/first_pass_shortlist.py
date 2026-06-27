@@ -118,7 +118,10 @@ def main() -> int:
         "recall_tier4": {"recall": r4, "in_shortlist": in4, "total": t4},
         "gate_passed": bool(r5 >= 0.999 and r4 >= 0.98),
     }
-    save_json(os.path.join(A, "shortlist.json"), {"ids": sorted(shortlist), **report})
+    # record per-id first_pass for the shortlist (drives the LLM top-N selection downstream)
+    fp_map = {ids[r]: round(float(fp[r]), 6) for r in range(n) if ids[r] in shortlist}
+    save_json(os.path.join(A, "shortlist.json"),
+              {"ids": sorted(shortlist), "first_pass": fp_map, **report})
     manifest_add("shortlist", os.path.join(A, "shortlist.json"),
                  "precompute/first_pass_shortlist.py", A)
 
