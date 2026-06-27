@@ -149,8 +149,15 @@ def main() -> int:
         rfit = rf.rule_fit(c)
         clean_hp = honeypot.is_honeypot(c)
         clean_hp_of[cid] = clean_hp
+        # Default fit_score: in fully-deterministic mode (no LLM at all) keep the rule-derived
+        # score so the degraded pipeline still ranks sensibly. When a real LLM backend is
+        # active, a shortlisted candidate that is NOT re-ranked must default to 0 so it falls
+        # to the long-tail (0.85-ceiling) path and can never outrank an LLM-vetted candidate
+        # (spec 2.6: "no un-vetted id outranks an LLM-vetted one"). A real but critical LLM
+        # score (e.g. 84) must beat an un-vetted rule-perfect 100.
+        default_fit = int(round(rfit * 100)) if deterministic else 0
         results[cid] = {
-            "fit_score": int(round(rfit * 100)),
+            "fit_score": default_fit,
             "tier": tier,
             "disqualifier_flags": ["structural_impossibility"] if clean_hp else [],
             "evidence": [],
