@@ -77,17 +77,23 @@
     },
     "llm_scores": {
       "backend": "DeterministicClient",
-      "bytes": 6150,
+      "bytes": 5274,
       "n_llm_present": 0,
       "path": "llm_scores.parquet",
       "producer": "precompute/llm_rerank.py",
-      "sha256": "8d9f97b5165674816331b71746b9e99eb12ac23e69fcc7c07386ed3dae8e259b"
+      "sha256": "59bd73232ba7f4c96be159767693a24b777fc16404dcdbed05d1bbe6e92a43bd"
     },
     "ltr_model": {
       "bytes": 1258,
       "path": "ltr_model.json",
       "producer": "precompute/train_ltr.py",
       "sha256": "98d6407fe4adff428269f310937f96e6628f16ec57a4ef481ad24c2efd6a2a3c"
+    },
+    "ltr_trees": {
+      "bytes": 3096,
+      "path": "ltr_trees.npz",
+      "producer": "precompute/train_ltr.py",
+      "sha256": "56faca5768122bea16ff42be6077694bc850b364158e2ed416f42957765b9f30"
     },
     "proxy_tiers": {
       "bytes": 288,
@@ -105,23 +111,23 @@
     },
     "reasoning": {
       "backend": "DeterministicClient",
-      "bytes": 21014,
+      "bytes": 7071,
       "n_llm": 0,
       "path": "reasoning.jsonl",
       "producer": "precompute/build_reasoning.py",
-      "sha256": "6d99411571809a7809e1645850f36f33209bfe147600982a014c93dea2a37ce6"
+      "sha256": "af0d826f7ad8542474a07b291c15ef9c505f8e59dd7a0d7bc69e73ab84b03ccb"
     },
     "shortlist": {
-      "bytes": 3223,
+      "bytes": 2762,
       "path": "shortlist.json",
       "producer": "precompute/first_pass_shortlist.py",
-      "sha256": "033031926b3f9b14eb270f418b3cc1717a21852118352fd17a1cd5a2bb95b41a"
+      "sha256": "418013f3c230d4e480549434cac73e0c8102b4a057b827610236f6dc57938029"
     },
     "tfidf_svd": {
       "bytes": 1126484,
       "path": "tfidf_svd.pkl",
       "producer": "precompute/fit_lexical.py",
-      "sha256": "4fbe9c3def645e52d54c299092e30aae4a82b6975cdb24d12db7331ca7b16389"
+      "sha256": "31ec6e587e2ad9b5d971ad8b8d8a6285b2bb177475df6b2a849b6837ea8fdbbd"
     }
   }
 }
