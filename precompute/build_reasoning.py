@@ -15,6 +15,7 @@ import argparse
 import json
 import os
 import sys
+from concurrent.futures import ThreadPoolExecutor
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO)
@@ -42,6 +43,8 @@ def main() -> int:
     ap.add_argument("--top", type=int, default=0,
                     help="LLM-write reasoning only for the top-N shortlisted by first_pass; "
                          "the rest get deterministic reasoning. 0 = whole shortlist.")
+    ap.add_argument("--concurrency", type=int, default=6,
+                    help="parallel LLM calls (the claude -p CLI has high per-call latency).")
     args = ap.parse_args()
     A = args.artifacts_dir
 
@@ -54,25 +57,47 @@ def main() -> int:
     print(f"reasoning backend: {bname} | shortlist={len(shortlist)} "
           f"| llm_targets={len(llm_targets)}")
 
-    out_path = os.path.join(A, "reasoning.jsonl")
-    calls = 0
-    n_llm = 0
-    with open(out_path, "w", encoding="utf-8") as out:
-        for c in iter_candidates(args.candidates):
+    # phase 1: collect candidates (in stream order) and the subset that gets an LLM call
+    ordered: list = []          # all shortlisted candidates, stream order
+    call_items: list = []       # (cid, prompt) for the targeted subset
+    for c in iter_candidates(args.candidates):
+        cid = c["candidate_id"]
+        if cid not in shortlist:
+            continue
+        ordered.append(c)
+        if not deterministic and cid in llm_targets:
+            call_items.append((cid, c))
+    if args.max_calls:
+        call_items = call_items[: args.max_calls]
+
+    # phase 2: run the LLM calls concurrently, fact-validate each, keep only valid lines
+    llm_text: dict = {}
+    if call_items:
+        print(f"LLM reasoning calls: {len(call_items)} @ concurrency={args.concurrency}")
+
+        def _one(item):
+            cid, c = item
+            ans = backend.chat_json(SYSTEM, json.dumps(fact_bundle(c), ensure_ascii=False))
+            cand_text = str(ans.get("reasoning", "")) if isinstance(ans, dict) else ""
+            if cand_text and rsn._validate_llm(cand_text, c):
+                return cid, rsn._csv_safe(cand_text)
+            return cid, ""
+
+        done = 0
+        with ThreadPoolExecutor(max_workers=max(1, args.concurrency)) as ex:
+            for cid, text in ex.map(_one, call_items):
+                if text:
+                    llm_text[cid] = text
+                done += 1
+                if done % 25 == 0:
+                    print(f"  {done}/{len(call_items)} reasoning calls done")
+
+    n_llm = len(llm_text)
+    calls = len(call_items)
+    with open(out_path := os.path.join(A, "reasoning.jsonl"), "w", encoding="utf-8") as out:
+        for c in ordered:
             cid = c["candidate_id"]
-            if cid not in shortlist:
-                continue
-            text = ""
-            if (not deterministic and cid in llm_targets
-                    and not (args.max_calls and calls >= args.max_calls)):
-                ans = backend.chat_json(SYSTEM, json.dumps(fact_bundle(c), ensure_ascii=False))
-                calls += 1
-                cand_text = str(ans.get("reasoning", "")) if isinstance(ans, dict) else ""
-                if cand_text and rsn._validate_llm(cand_text, c):
-                    text = rsn._csv_safe(cand_text)
-                    n_llm += 1
-            if not text:
-                text = rsn.deterministic_reasoning(c)
+            text = llm_text.get(cid) or rsn.deterministic_reasoning(c)
             out.write(json.dumps({"candidate_id": cid, "reasoning": text}, ensure_ascii=False) + "\n")
 
     manifest_add("reasoning", out_path, "precompute/build_reasoning.py", A,

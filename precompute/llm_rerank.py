@@ -19,6 +19,7 @@ import hashlib
 import json
 import os
 import sys
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Dict
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -113,6 +114,8 @@ def main() -> int:
     ap.add_argument("--top", type=int, default=0,
                     help="LLM-call only the top-N shortlisted by first_pass; rest stay "
                          "deterministic. 0 = whole shortlist.")
+    ap.add_argument("--concurrency", type=int, default=6,
+                    help="parallel LLM calls (the claude -p CLI has high per-call latency).")
     args = ap.parse_args()
     A = args.artifacts_dir
 
@@ -132,10 +135,12 @@ def main() -> int:
 
     ckpt_path = os.path.join(A, "llm_scores.checkpoint.json")
     results: Dict[str, Dict] = load_json(ckpt_path, default={}) or {}
-    cache: Dict[str, Dict] = {}
-    calls = 0
     deterministic = bname == "DeterministicClient"
 
+    # ---- phase 1: deterministic rows + collect the unique LLM work items ----
+    pending: Dict[str, list] = {}   # bundle_hash -> [cids sharing this bundle]
+    hash_payload: Dict[str, str] = {}  # bundle_hash -> serialized user prompt
+    clean_hp_of: Dict[str, bool] = {}
     for c in iter_candidates(args.candidates):
         cid = c["candidate_id"]
         if cid not in shortlist or cid in results:
@@ -143,8 +148,8 @@ def main() -> int:
         tier, _ = rf.proxy_tier(c)
         rfit = rf.rule_fit(c)
         clean_hp = honeypot.is_honeypot(c)
-
-        row = {
+        clean_hp_of[cid] = clean_hp
+        results[cid] = {
             "fit_score": int(round(rfit * 100)),
             "tier": tier,
             "disqualifier_flags": ["structural_impossibility"] if clean_hp else [],
@@ -153,36 +158,59 @@ def main() -> int:
             "reasoning": "",
             "llm_present": False,
         }
-
         if not deterministic and cid in llm_targets:
             b = fact_bundle(c)
             h = bundle_hash(b)
-            if h in cache:
-                ans = cache[h]
-            else:
-                if args.max_calls and calls >= args.max_calls:
-                    ans = {}
-                else:
-                    ans = backend.chat_json(SYSTEM, json.dumps(b, ensure_ascii=False))
-                    calls += 1
-                cache[h] = ans
-            if ans:
-                row["fit_score"] = int(ans.get("fit_score", row["fit_score"]))
-                row["tier"] = int(ans.get("tier", row["tier"]))
-                row["disqualifier_flags"] = list(ans.get("disqualifier_flags", row["disqualifier_flags"]))
-                row["evidence"] = list(ans.get("evidence", []))[:4]
-                row["concern"] = str(ans.get("concern", ""))[:140]
-                row["reasoning"] = str(ans.get("reasoning", ""))[:140].replace(",", " ")
-                row["llm_present"] = True
-            # the deterministic floor: a structural honeypot can never score high
-            if clean_hp:
-                row["fit_score"] = min(row["fit_score"], 5)
-                if "structural_impossibility" not in row["disqualifier_flags"]:
-                    row["disqualifier_flags"].append("structural_impossibility")
+            pending.setdefault(h, []).append(cid)
+            hash_payload.setdefault(h, json.dumps(b, ensure_ascii=False))
 
-        results[cid] = row
-        if len(results) % 200 == 0:
-            json.dump(results, open(ckpt_path, "w"))
+    # ---- phase 2: execute unique LLM calls (deduped) at modest concurrency ----
+    answers: Dict[str, Dict] = {}
+    calls = 0
+    if pending and not deterministic:
+        unique_hashes = list(pending.keys())
+        if args.max_calls:
+            unique_hashes = unique_hashes[: args.max_calls]
+        calls = len(unique_hashes)
+        print(f"unique LLM bundles to call: {len(unique_hashes)} "
+              f"(of {len(pending)} deduped) @ concurrency={args.concurrency}")
+
+        def _one(h: str):
+            return h, backend.chat_json(SYSTEM, hash_payload[h])
+
+        done = 0
+        with ThreadPoolExecutor(max_workers=max(1, args.concurrency)) as ex:
+            futs = [ex.submit(_one, h) for h in unique_hashes]
+            for fut in as_completed(futs):
+                h, ans = fut.result()
+                answers[h] = ans or {}
+                done += 1
+                if done % 25 == 0:
+                    print(f"  {done}/{len(unique_hashes)} LLM calls done")
+                    json.dump(results, open(ckpt_path, "w"))
+
+    # ---- merge answers back into every cid that shared the bundle ----
+    for h, cids in pending.items():
+        ans = answers.get(h)
+        if not ans:
+            continue
+        for cid in cids:
+            row = results[cid]
+            row["fit_score"] = int(ans.get("fit_score", row["fit_score"]))
+            row["tier"] = int(ans.get("tier", row["tier"]))
+            row["disqualifier_flags"] = list(ans.get("disqualifier_flags", row["disqualifier_flags"]))
+            row["evidence"] = list(ans.get("evidence", []))[:4]
+            row["concern"] = str(ans.get("concern", ""))[:140]
+            row["reasoning"] = str(ans.get("reasoning", ""))[:140].replace(",", " ")
+            row["llm_present"] = True
+
+    # ---- deterministic floor: a structural honeypot can never score high ----
+    for cid, clean_hp in clean_hp_of.items():
+        if clean_hp:
+            row = results[cid]
+            row["fit_score"] = min(row["fit_score"], 5)
+            if "structural_impossibility" not in row["disqualifier_flags"]:
+                row["disqualifier_flags"].append("structural_impossibility")
 
     # write final
     n_llm = sum(1 for r in results.values() if r.get("llm_present"))
