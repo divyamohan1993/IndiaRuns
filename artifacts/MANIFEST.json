@@ -48,11 +48,23 @@
       "producer": "features.py",
       "sha256": "3650e79a7560c873e7f285a46152f6df15d1053acc9c503ff6aa3edf072b2045"
     },
+    "funnel.json": {
+      "bytes": 15948,
+      "path": "funnel.json",
+      "producer": "build_web_artifacts.py",
+      "sha256": "a6eb5918bbfdcd010d780452f5d5bfd1028f9e2296784e0c0e5d6a6900317196"
+    },
     "honeypot_excludes": {
       "bytes": 4563,
       "path": "honeypot_excludes.json",
       "producer": "precompute/build_honeypots.py",
       "sha256": "16291948ad5b92cafb67418c8eedd5fb3c162f91be1b7478f9906d0725701df1"
+    },
+    "intent.json": {
+      "bytes": 1579,
+      "path": "intent.json",
+      "producer": "build_web_artifacts.py",
+      "sha256": "51d7dd11885249f6162fe8271036682669b67f196835f6986990e620a3ac1d39"
     },
     "jd_clause_emb": {
       "bytes": 11038,
@@ -90,11 +102,29 @@
       "producer": "precompute/make_labels.py",
       "sha256": "7a6d1f8fa2cd5be920780bb4401301e728f28978ae3391a58cbfadc82fb73e9b"
     },
+    "ranked_top100.json": {
+      "bytes": 49742,
+      "path": "ranked_top100.json",
+      "producer": "build_web_artifacts.py",
+      "sha256": "35fcff482c0de5505531707c803c90496b2488fb2d54a5253438bddff88544ee"
+    },
     "reasoning": {
       "bytes": 183172,
       "path": "reasoning.jsonl",
       "producer": "precompute/build_reasoning.py",
       "sha256": "a21fd0439d544a9d352bb002bfdbd6697d031782702bbc1de90f67a2fd79ee31"
+    },
+    "rejected_traps.json": {
+      "bytes": 2135,
+      "path": "rejected_traps.json",
+      "producer": "build_web_artifacts.py",
+      "sha256": "f910f15d57a8d47d266eb58ade4a33ab5edd5bf4ef510e78611c08ff91c1ba90"
+    },
+    "results_top.json": {
+      "bytes": 32709,
+      "path": "results_top.json",
+      "producer": "build_web_artifacts.py",
+      "sha256": "fa01627a34cfd8f29736bebf3a1d7b3e2c398ee91e23f9b62be36b70d24877c3"
     },
     "shortlist": {
       "bytes": 60157,

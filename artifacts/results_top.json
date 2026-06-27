@@ -1,0 +1,1005 @@
+{
+  "count": 100,
+  "candidates": [
+    {
+      "rank": 1,
+      "candidate_id": "CAND_0046525",
+      "score": 1.0,
+      "title": "senior machine learning engineer",
+      "company": "Genpact AI",
+      "company_type": "product",
+      "yoe": 6.1,
+      "reasoning": "6yr ML engineer with LinkedIn RAG ranking (50M+ queries/month) and Genpact hybrid search (30M corpus) maps directly to senior ranking/search"
+    },
+    {
+      "rank": 2,
+      "candidate_id": "CAND_0024466",
+      "score": 0.916246,
+      "title": "search engineer",
+      "company": "PharmEasy",
+      "company_type": "product",
+      "yoe": 5.2,
+      "reasoning": "Owned search ranking end-to-end at PharmEasy (L2R + embedding migration) and built 10M-user recs; profile truncation hides leadership depth"
+    },
+    {
+      "rank": 3,
+      "candidate_id": "CAND_0041669",
+      "score": 0.908874,
+      "title": "recommendation systems engineer",
+      "company": "CRED",
+      "company_type": "product",
+      "yoe": 8.0,
+      "reasoning": "8yr ML engineer with LTR ranking at CRED and RAG eval ownership; gap: no listed distributed systems or large-scale infra depth"
+    },
+    {
+      "rank": 4,
+      "candidate_id": "CAND_0075439",
+      "score": 0.826656,
+      "title": "machine learning engineer",
+      "company": "Flipkart",
+      "company_type": "product",
+      "yoe": 4.3,
+      "reasoning": "4.3yr ML engineer with prod RAG + eval ownership at Flipkart and 10M-user recsys at Genpact; gap: no explicit ranking model depth beyond GBM"
+    },
+    {
+      "rank": 5,
+      "candidate_id": "CAND_0026532",
+      "score": 0.755522,
+      "title": "recommendation systems engineer",
+      "company": "Zomato",
+      "company_type": "product",
+      "yoe": 4.8,
+      "reasoning": "4.8yr ML eng: production semantic search (35% over ES) + 10M-user recsys; gap: no explicit learning-to-rank experience"
+    },
+    {
+      "rank": 6,
+      "candidate_id": "CAND_0070485",
+      "score": 0.657793,
+      "title": "search engineer",
+      "company": "Saarthi.ai",
+      "company_type": "product",
+      "yoe": 6.4,
+      "reasoning": "End-to-end ranker: L2R pipeline at Dream11 and FAISS semantic search at Saarthi.ai with 35% relevance gain; gap is scale beyond 500K docs"
+    },
+    {
+      "rank": 7,
+      "candidate_id": "CAND_0053591",
+      "score": 0.583692,
+      "title": "ai engineer",
+      "company": "Ola",
+      "company_type": "product",
+      "yoe": 5.3,
+      "reasoning": "Shipped XGBoost/LightGBM discovery ranking at Ola + FAISS/BM25 search; 5.3 YoE may fall short of senior bar at larger orgs."
+    },
+    {
+      "rank": 8,
+      "candidate_id": "CAND_0011432",
+      "score": 0.519608,
+      "title": "senior data scientist",
+      "company": "Amazon",
+      "company_type": "product",
+      "yoe": 7.6,
+      "reasoning": "7.6yr ML engineer with Amazon ranking models (XGBoost/LightGBM) plus RAG and recsys at Krutrim/Nykaa; no listed LLM fine-tuning at scale or"
+    },
+    {
+      "rank": 9,
+      "candidate_id": "CAND_0051615",
+      "score": 0.432091,
+      "title": "search engineer",
+      "company": "Meta",
+      "company_type": "product",
+      "yoe": 4.6,
+      "reasoning": "4.6yr ML engineer with LTR ranking and relevance labeling at Meta plus NLP/vector search skills; Krutrim stint is only 11 months which may s"
+    },
+    {
+      "rank": 10,
+      "candidate_id": "CAND_0076251",
+      "score": 0.42645,
+      "title": "search engineer",
+      "company": "Haptik",
+      "company_type": "product",
+      "yoe": 7.6,
+      "reasoning": "Led keyword-to-embedding search migration at Haptik (500K docs FAISS+bge) with 35% relevance gain; LTR and LLM skills fit Senior AI Search w"
+    },
+    {
+      "rank": 11,
+      "candidate_id": "CAND_0014440",
+      "score": 0.404948,
+      "title": "recommendation systems engineer",
+      "company": "CRED",
+      "company_type": "product",
+      "yoe": 6.4,
+      "reasoning": "6.4yr ML engineer with LTR ranking at CRED and embedding retrieval migration; gap is no explicit GenAI/LLM production ownership beyond fine-"
+    },
+    {
+      "rank": 12,
+      "candidate_id": "CAND_0016163",
+      "score": 0.393187,
+      "title": "applied ml engineer",
+      "company": "Dream11",
+      "company_type": "product",
+      "yoe": 6.7,
+      "reasoning": "Led keyword-to-embedding retrieval migration; delivered 35% search relevance gain \u2014 no explicit ranking/LTR experience noted"
+    },
+    {
+      "rank": 13,
+      "candidate_id": "CAND_0003977",
+      "score": 0.389599,
+      "title": "recommendation systems engineer",
+      "company": "Google",
+      "company_type": "product",
+      "yoe": 4.6,
+      "reasoning": "4.6yr ML engineer at Google with embedding-based semantic search and LTR skills fits ranking/search; 6mo NLP role is brief but core experien"
+    },
+    {
+      "rank": 14,
+      "candidate_id": "CAND_0065878",
+      "score": 0.341749,
+      "title": "senior data scientist",
+      "company": "Niramai",
+      "company_type": "product",
+      "yoe": 7.8,
+      "reasoning": "7.8yr ML engineer with L2R ranking + RAG + LLM fine-tuning across HealthTech/AI firms; no explicit LLM search infra at scale yet"
+    },
+    {
+      "rank": 15,
+      "candidate_id": "CAND_0076163",
+      "score": 0.328556,
+      "title": "nlp engineer",
+      "company": "Ola",
+      "company_type": "product",
+      "yoe": 6.9,
+      "reasoning": "Owns full ranking pipeline (LTR + RAG + eval) with 6.9yr ML track; concern: both roles share identical descriptions worth clarifying"
+    },
+    {
+      "rank": 16,
+      "candidate_id": "CAND_0009024",
+      "score": 0.265304,
+      "title": "search engineer",
+      "company": "Google",
+      "company_type": "product",
+      "yoe": 5.2,
+      "reasoning": "5yr ML engineer at Google with embedding-based search migration and 10M+ user rec systems using FAISS/OpenSearch; no explicit ranking model"
+    },
+    {
+      "rank": 17,
+      "candidate_id": "CAND_0001600",
+      "score": 0.100566,
+      "title": "ai specialist",
+      "company": "InMobi",
+      "company_type": "product",
+      "yoe": 6.2,
+      "reasoning": "AI Specialist 6.2 yrs at InMobi \u2014 built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 18,
+      "candidate_id": "CAND_0078810",
+      "score": 0.040814,
+      "title": "senior software engineer (ml)",
+      "company": "Dream11",
+      "company_type": "product",
+      "yoe": 6.9,
+      "reasoning": "Senior Software Engineer (ML) 6.9 yrs at Dream11; built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 19,
+      "candidate_id": "CAND_0048375",
+      "score": 0.039949,
+      "title": "computer vision engineer",
+      "company": "Saarthi.ai",
+      "company_type": "product",
+      "yoe": 4.4,
+      "reasoning": "Computer Vision Engineer 4.4 yrs at Saarthi.ai: built ranking/search/reco systems"
+    },
+    {
+      "rank": 20,
+      "candidate_id": "CAND_0031752",
+      "score": 0.039831,
+      "title": "ml engineer",
+      "company": "Unacademy",
+      "company_type": "product",
+      "yoe": 5.0,
+      "reasoning": "ML Engineer 5 yrs at Unacademy: built ranking/search/reco systems"
+    },
+    {
+      "rank": 21,
+      "candidate_id": "CAND_0088049",
+      "score": 0.039493,
+      "title": "junior ml engineer",
+      "company": "Freshworks",
+      "company_type": "product",
+      "yoe": 5.9,
+      "reasoning": "Junior ML Engineer 5.9 yrs at Freshworks; built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 22,
+      "candidate_id": "CAND_0061479",
+      "score": 0.038654,
+      "title": "ml engineer",
+      "company": "BYJU'S",
+      "company_type": "product",
+      "yoe": 5.0,
+      "reasoning": "ML Engineer 5 yrs at BYJU'S; built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 23,
+      "candidate_id": "CAND_0007391",
+      "score": 0.036284,
+      "title": "data scientist",
+      "company": "Locobuzz",
+      "company_type": "product",
+      "yoe": 4.3,
+      "reasoning": "Data Scientist 4.3 yrs at Locobuzz \u2014 built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 24,
+      "candidate_id": "CAND_0017147",
+      "score": 0.036205,
+      "title": "ai specialist",
+      "company": "Glance",
+      "company_type": "product",
+      "yoe": 4.7,
+      "reasoning": "AI Specialist 4.7 yrs at Glance; built ranking/search/reco systems"
+    },
+    {
+      "rank": 25,
+      "candidate_id": "CAND_0072410",
+      "score": 0.03569,
+      "title": "ml engineer",
+      "company": "PharmEasy",
+      "company_type": "product",
+      "yoe": 4.9,
+      "reasoning": "ML Engineer 4.9 yrs at PharmEasy. built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 26,
+      "candidate_id": "CAND_0061819",
+      "score": 0.03463,
+      "title": "junior ml engineer",
+      "company": "Aganitha",
+      "company_type": "product",
+      "yoe": 5.0,
+      "reasoning": "Junior ML Engineer 5 yrs at Aganitha; built ranking/search/reco systems"
+    },
+    {
+      "rank": 27,
+      "candidate_id": "CAND_0077261",
+      "score": 0.034421,
+      "title": "ai specialist",
+      "company": "Meesho",
+      "company_type": "product",
+      "yoe": 5.7,
+      "reasoning": "AI Specialist 5.7 yrs at Meesho; built ranking/search/reco systems"
+    },
+    {
+      "rank": 28,
+      "candidate_id": "CAND_0042441",
+      "score": 0.033931,
+      "title": "ai research engineer",
+      "company": "Nykaa",
+      "company_type": "product",
+      "yoe": 4.1,
+      "reasoning": "AI Research Engineer 4.1 yrs at Nykaa: built ranking/search/reco systems"
+    },
+    {
+      "rank": 29,
+      "candidate_id": "CAND_0008295",
+      "score": 0.03344,
+      "title": "ai research engineer",
+      "company": "Razorpay",
+      "company_type": "product",
+      "yoe": 6.5,
+      "reasoning": "AI Research Engineer 6.5 yrs at Razorpay; built ranking/search/reco systems"
+    },
+    {
+      "rank": 30,
+      "candidate_id": "CAND_0069248",
+      "score": 0.033163,
+      "title": "ai research engineer",
+      "company": "Unacademy",
+      "company_type": "product",
+      "yoe": 5.4,
+      "reasoning": "AI Research Engineer 5.4 yrs at Unacademy: built ranking/search/reco systems"
+    },
+    {
+      "rank": 31,
+      "candidate_id": "CAND_0038328",
+      "score": 0.032726,
+      "title": "junior ml engineer",
+      "company": "PhonePe",
+      "company_type": "product",
+      "yoe": 4.0,
+      "reasoning": "Junior ML Engineer 4 yrs at PhonePe. built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 32,
+      "candidate_id": "CAND_0043304",
+      "score": 0.032342,
+      "title": "junior ml engineer",
+      "company": "TCS",
+      "company_type": "product",
+      "yoe": 6.5,
+      "reasoning": "Junior ML Engineer 6.5 yrs at TCS. built ranking/search/reco systems"
+    },
+    {
+      "rank": 33,
+      "candidate_id": "CAND_0065430",
+      "score": 0.031556,
+      "title": "ml engineer",
+      "company": "Mad Street Den",
+      "company_type": "product",
+      "yoe": 4.4,
+      "reasoning": "ML Engineer 4.4 yrs at Mad Street Den; built ranking/search/reco systems"
+    },
+    {
+      "rank": 34,
+      "candidate_id": "CAND_0001302",
+      "score": 0.031134,
+      "title": "computer vision engineer",
+      "company": "Paytm",
+      "company_type": "product",
+      "yoe": 5.8,
+      "reasoning": "Computer Vision Engineer 5.8 yrs at Paytm \u2014 built ranking/search/reco systems"
+    },
+    {
+      "rank": 35,
+      "candidate_id": "CAND_0035653",
+      "score": 0.031019,
+      "title": "data scientist",
+      "company": "Swiggy",
+      "company_type": "product",
+      "yoe": 5.6,
+      "reasoning": "Data Scientist 5.6 yrs at Swiggy \u2014 built ranking/search/reco systems"
+    },
+    {
+      "rank": 36,
+      "candidate_id": "CAND_0041625",
+      "score": 0.031019,
+      "title": "ai research engineer",
+      "company": "Infosys",
+      "company_type": "product",
+      "yoe": 4.7,
+      "reasoning": "AI Research Engineer 4.7 yrs at Infosys; built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 37,
+      "candidate_id": "CAND_0071205",
+      "score": 0.030365,
+      "title": "senior software engineer (ml)",
+      "company": "PharmEasy",
+      "company_type": "product",
+      "yoe": 4.6,
+      "reasoning": "Senior Software Engineer (ML) 4.6 yrs at PharmEasy. built ranking/search/reco systems"
+    },
+    {
+      "rank": 38,
+      "candidate_id": "CAND_0077498",
+      "score": 0.029907,
+      "title": "senior software engineer (ml)",
+      "company": "Niramai",
+      "company_type": "product",
+      "yoe": 5.4,
+      "reasoning": "Senior Software Engineer (ML) 5.4 yrs at Niramai. built ranking/search/reco systems"
+    },
+    {
+      "rank": 39,
+      "candidate_id": "CAND_0024990",
+      "score": 0.029156,
+      "title": "junior ml engineer",
+      "company": "Zoho",
+      "company_type": "product",
+      "yoe": 5.2,
+      "reasoning": "Junior ML Engineer 5.2 yrs at Zoho; built ranking/search/reco systems"
+    },
+    {
+      "rank": 40,
+      "candidate_id": "CAND_0009516",
+      "score": 0.028792,
+      "title": "ai specialist",
+      "company": "Verloop.io",
+      "company_type": "product",
+      "yoe": 6.9,
+      "reasoning": "AI Specialist 6.9 yrs at Verloop.io: built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 41,
+      "candidate_id": "CAND_0068985",
+      "score": 0.028655,
+      "title": "senior software engineer (ml)",
+      "company": "Locobuzz",
+      "company_type": "product",
+      "yoe": 5.2,
+      "reasoning": "Senior Software Engineer (ML) 5.2 yrs at Locobuzz: built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 42,
+      "candidate_id": "CAND_0001151",
+      "score": 0.027984,
+      "title": "junior ml engineer",
+      "company": "Aganitha",
+      "company_type": "product",
+      "yoe": 5.0,
+      "reasoning": "Junior ML Engineer 5 yrs at Aganitha \u2014 built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 43,
+      "candidate_id": "CAND_0038949",
+      "score": 0.02784,
+      "title": "ml engineer",
+      "company": "CRED",
+      "company_type": "product",
+      "yoe": 6.4,
+      "reasoning": "ML Engineer 6.4 yrs at CRED. built ranking/search/reco systems"
+    },
+    {
+      "rank": 44,
+      "candidate_id": "CAND_0049831",
+      "score": 0.026671,
+      "title": "computer vision engineer",
+      "company": "BYJU'S",
+      "company_type": "product",
+      "yoe": 5.4,
+      "reasoning": "Computer Vision Engineer 5.4 yrs at BYJU'S; built ranking/search/reco systems"
+    },
+    {
+      "rank": 45,
+      "candidate_id": "CAND_0081709",
+      "score": 0.025727,
+      "title": "ai research engineer",
+      "company": "PolicyBazaar",
+      "company_type": "product",
+      "yoe": 5.5,
+      "reasoning": "AI Research Engineer 5.5 yrs at PolicyBazaar; built ranking/search/reco systems"
+    },
+    {
+      "rank": 46,
+      "candidate_id": "CAND_0043318",
+      "score": 0.024914,
+      "title": "data scientist",
+      "company": "Freshworks",
+      "company_type": "product",
+      "yoe": 6.2,
+      "reasoning": "Data Scientist 6.2 yrs at Freshworks; built ranking/search/reco systems"
+    },
+    {
+      "rank": 47,
+      "candidate_id": "CAND_0040955",
+      "score": 0.024663,
+      "title": "junior ml engineer",
+      "company": "Rephrase.ai",
+      "company_type": "product",
+      "yoe": 6.6,
+      "reasoning": "Junior ML Engineer 6.6 yrs at Rephrase.ai \u2014 built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 48,
+      "candidate_id": "CAND_0015493",
+      "score": 0.024236,
+      "title": "data scientist",
+      "company": "CRED",
+      "company_type": "product",
+      "yoe": 6.4,
+      "reasoning": "Data Scientist 6.4 yrs at CRED \u2014 built ranking/search/reco systems"
+    },
+    {
+      "rank": 49,
+      "candidate_id": "CAND_0068012",
+      "score": 0.024198,
+      "title": "junior ml engineer",
+      "company": "Vedantu",
+      "company_type": "product",
+      "yoe": 5.7,
+      "reasoning": "Junior ML Engineer 5.7 yrs at Vedantu; built ranking/search/reco systems"
+    },
+    {
+      "rank": 50,
+      "candidate_id": "CAND_0038821",
+      "score": 0.023298,
+      "title": "ai specialist",
+      "company": "upGrad",
+      "company_type": "product",
+      "yoe": 4.3,
+      "reasoning": "AI Specialist 4.3 yrs at upGrad: built ranking/search/reco systems"
+    },
+    {
+      "rank": 51,
+      "candidate_id": "CAND_0047492",
+      "score": 0.022928,
+      "title": "ml engineer",
+      "company": "PolicyBazaar",
+      "company_type": "product",
+      "yoe": 4.8,
+      "reasoning": "ML Engineer 4.8 yrs at PolicyBazaar: built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 52,
+      "candidate_id": "CAND_0090584",
+      "score": 0.022645,
+      "title": "ml engineer",
+      "company": "Flipkart",
+      "company_type": "product",
+      "yoe": 5.1,
+      "reasoning": "ML Engineer 5.1 yrs at Flipkart; built ranking/search/reco systems"
+    },
+    {
+      "rank": 53,
+      "candidate_id": "CAND_0052706",
+      "score": 0.022572,
+      "title": "ai research engineer",
+      "company": "Swiggy",
+      "company_type": "product",
+      "yoe": 5.1,
+      "reasoning": "AI Research Engineer 5.1 yrs at Swiggy; built ranking/search/reco systems"
+    },
+    {
+      "rank": 54,
+      "candidate_id": "CAND_0079888",
+      "score": 0.022277,
+      "title": "junior ml engineer",
+      "company": "InMobi",
+      "company_type": "product",
+      "yoe": 4.3,
+      "reasoning": "Junior ML Engineer 4.3 yrs at InMobi; built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 55,
+      "candidate_id": "CAND_0034148",
+      "score": 0.021897,
+      "title": "ml engineer",
+      "company": "Zoho",
+      "company_type": "product",
+      "yoe": 5.0,
+      "reasoning": "ML Engineer 5 yrs at Zoho \u2014 built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 56,
+      "candidate_id": "CAND_0087264",
+      "score": 0.021517,
+      "title": "junior ml engineer",
+      "company": "Krutrim",
+      "company_type": "product",
+      "yoe": 4.0,
+      "reasoning": "Junior ML Engineer 4 yrs at Krutrim: built ranking/search/reco systems"
+    },
+    {
+      "rank": 57,
+      "candidate_id": "CAND_0060886",
+      "score": 0.020907,
+      "title": "senior software engineer (ml)",
+      "company": "Genpact AI",
+      "company_type": "product",
+      "yoe": 4.6,
+      "reasoning": "Senior Software Engineer (ML) 4.6 yrs at Genpact AI. built ranking/search/reco systems"
+    },
+    {
+      "rank": 58,
+      "candidate_id": "CAND_0008943",
+      "score": 0.020797,
+      "title": "computer vision engineer",
+      "company": "Observe.AI",
+      "company_type": "product",
+      "yoe": 6.0,
+      "reasoning": "Computer Vision Engineer 6 yrs at Observe.AI \u2014 built ranking/search/reco systems"
+    },
+    {
+      "rank": 59,
+      "candidate_id": "CAND_0057736",
+      "score": 0.020007,
+      "title": "computer vision engineer",
+      "company": "Mad Street Den",
+      "company_type": "product",
+      "yoe": 6.2,
+      "reasoning": "Computer Vision Engineer 6.2 yrs at Mad Street Den; built ranking/search/reco systems"
+    },
+    {
+      "rank": 60,
+      "candidate_id": "CAND_0043676",
+      "score": 0.019887,
+      "title": "senior software engineer (ml)",
+      "company": "Observe.AI",
+      "company_type": "product",
+      "yoe": 6.1,
+      "reasoning": "Senior Software Engineer (ML) 6.1 yrs at Observe.AI. built ranking/search/reco systems"
+    },
+    {
+      "rank": 61,
+      "candidate_id": "CAND_0072489",
+      "score": 0.019221,
+      "title": "computer vision engineer",
+      "company": "Dream11",
+      "company_type": "product",
+      "yoe": 4.4,
+      "reasoning": "Computer Vision Engineer 4.4 yrs at Dream11; built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 62,
+      "candidate_id": "CAND_0029671",
+      "score": 0.018342,
+      "title": "data scientist",
+      "company": "BYJU'S",
+      "company_type": "product",
+      "yoe": 5.7,
+      "reasoning": "Data Scientist 5.7 yrs at BYJU'S; built ranking/search/reco systems"
+    },
+    {
+      "rank": 63,
+      "candidate_id": "CAND_0078669",
+      "score": 0.016303,
+      "title": "ml engineer",
+      "company": "Vedantu",
+      "company_type": "product",
+      "yoe": 6.3,
+      "reasoning": "ML Engineer 6.3 yrs at Vedantu. built ranking/search/reco systems"
+    },
+    {
+      "rank": 64,
+      "candidate_id": "CAND_0062462",
+      "score": 0.015425,
+      "title": "computer vision engineer",
+      "company": "Tech Mahindra",
+      "company_type": "product",
+      "yoe": 5.0,
+      "reasoning": "Computer Vision Engineer 5 yrs at Tech Mahindra \u2014 built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 65,
+      "candidate_id": "CAND_0055960",
+      "score": 0.014461,
+      "title": "ai specialist",
+      "company": "Dream11",
+      "company_type": "product",
+      "yoe": 4.9,
+      "reasoning": "AI Specialist 4.9 yrs at Dream11; built ranking/search/reco systems"
+    },
+    {
+      "rank": 66,
+      "candidate_id": "CAND_0059017",
+      "score": 0.014348,
+      "title": "ai research engineer",
+      "company": "PhonePe",
+      "company_type": "product",
+      "yoe": 6.8,
+      "reasoning": "AI Research Engineer 6.8 yrs at PhonePe: built ranking/search/reco systems"
+    },
+    {
+      "rank": 67,
+      "candidate_id": "CAND_0019159",
+      "score": 0.014284,
+      "title": "ml engineer",
+      "company": "Genpact AI",
+      "company_type": "product",
+      "yoe": 6.1,
+      "reasoning": "ML Engineer 6.1 yrs at Genpact AI; built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 68,
+      "candidate_id": "CAND_0052431",
+      "score": 0.013147,
+      "title": "ml engineer",
+      "company": "Swiggy",
+      "company_type": "product",
+      "yoe": 5.3,
+      "reasoning": "ML Engineer 5.3 yrs at Swiggy: built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 69,
+      "candidate_id": "CAND_0086460",
+      "score": 0.012009,
+      "title": "ml engineer",
+      "company": "Meesho",
+      "company_type": "product",
+      "yoe": 6.2,
+      "reasoning": "ML Engineer 6.2 yrs at Meesho; built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 70,
+      "candidate_id": "CAND_0042359",
+      "score": 0.011556,
+      "title": "data scientist",
+      "company": "Aganitha",
+      "company_type": "product",
+      "yoe": 6.9,
+      "reasoning": "Data Scientist 6.9 yrs at Aganitha \u2014 built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 71,
+      "candidate_id": "CAND_0091229",
+      "score": 0.010988,
+      "title": "senior software engineer (ml)",
+      "company": "Niramai",
+      "company_type": "product",
+      "yoe": 7.0,
+      "reasoning": "Senior Software Engineer (ML) 7 yrs at Niramai \u2014 built ranking/search/reco systems"
+    },
+    {
+      "rank": 72,
+      "candidate_id": "CAND_0023093",
+      "score": 0.010318,
+      "title": "ml engineer",
+      "company": "PolicyBazaar",
+      "company_type": "product",
+      "yoe": 5.1,
+      "reasoning": "ML Engineer 5.1 yrs at PolicyBazaar. built ranking/search/reco systems"
+    },
+    {
+      "rank": 73,
+      "candidate_id": "CAND_0007567",
+      "score": 0.009583,
+      "title": "ai specialist",
+      "company": "Niramai",
+      "company_type": "product",
+      "yoe": 6.1,
+      "reasoning": "AI Specialist 6.1 yrs at Niramai \u2014 built ranking/search/reco systems"
+    },
+    {
+      "rank": 74,
+      "candidate_id": "CAND_0067535",
+      "score": 0.008247,
+      "title": "junior ml engineer",
+      "company": "Locobuzz",
+      "company_type": "product",
+      "yoe": 6.8,
+      "reasoning": "Junior ML Engineer 6.8 yrs at Locobuzz; built ranking/search/reco systems"
+    },
+    {
+      "rank": 75,
+      "candidate_id": "CAND_0059557",
+      "score": 0.00798,
+      "title": "computer vision engineer",
+      "company": "CRED",
+      "company_type": "product",
+      "yoe": 6.5,
+      "reasoning": "Computer Vision Engineer 6.5 yrs at CRED; built ranking/search/reco systems"
+    },
+    {
+      "rank": 76,
+      "candidate_id": "CAND_0098624",
+      "score": 0.00762,
+      "title": "senior software engineer (ml)",
+      "company": "CRED",
+      "company_type": "product",
+      "yoe": 6.3,
+      "reasoning": "Senior Software Engineer (ML) 6.3 yrs at CRED; built ranking/search/reco systems"
+    },
+    {
+      "rank": 77,
+      "candidate_id": "CAND_0000200",
+      "score": 0.007449,
+      "title": "ml engineer",
+      "company": "Aganitha",
+      "company_type": "product",
+      "yoe": 4.3,
+      "reasoning": "ML Engineer 4.3 yrs at Aganitha: built ranking/search/reco systems"
+    },
+    {
+      "rank": 78,
+      "candidate_id": "CAND_0089495",
+      "score": 0.007035,
+      "title": "senior software engineer (ml)",
+      "company": "Swiggy",
+      "company_type": "product",
+      "yoe": 4.3,
+      "reasoning": "Senior Software Engineer (ML) 4.3 yrs at Swiggy. built ranking/search/reco systems"
+    },
+    {
+      "rank": 79,
+      "candidate_id": "CAND_0092181",
+      "score": 0.006607,
+      "title": "data scientist",
+      "company": "Unacademy",
+      "company_type": "product",
+      "yoe": 4.6,
+      "reasoning": "Data Scientist 4.6 yrs at Unacademy: built ranking/search/reco systems"
+    },
+    {
+      "rank": 80,
+      "candidate_id": "CAND_0080291",
+      "score": 0.00625,
+      "title": "junior ml engineer",
+      "company": "Ola",
+      "company_type": "product",
+      "yoe": 6.5,
+      "reasoning": "Junior ML Engineer 6.5 yrs at Ola. built ranking/search/reco systems"
+    },
+    {
+      "rank": 81,
+      "candidate_id": "CAND_0002793",
+      "score": 0.005541,
+      "title": "ai specialist",
+      "company": "Meesho",
+      "company_type": "product",
+      "yoe": 5.5,
+      "reasoning": "AI Specialist 5.5 yrs at Meesho: built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 82,
+      "candidate_id": "CAND_0068964",
+      "score": 0.005382,
+      "title": "ml engineer",
+      "company": "Mad Street Den",
+      "company_type": "product",
+      "yoe": 4.8,
+      "reasoning": "ML Engineer 4.8 yrs at Mad Street Den. shipped ML to production at scale \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 83,
+      "candidate_id": "CAND_0096589",
+      "score": 0.004914,
+      "title": "computer vision engineer",
+      "company": "Sarvam AI",
+      "company_type": "product",
+      "yoe": 4.1,
+      "reasoning": "Computer Vision Engineer 4.1 yrs at Sarvam AI: built ranking/search/reco systems"
+    },
+    {
+      "rank": 84,
+      "candidate_id": "CAND_0001126",
+      "score": 0.004787,
+      "title": "junior ml engineer",
+      "company": "Vedantu",
+      "company_type": "product",
+      "yoe": 4.9,
+      "reasoning": "Junior ML Engineer 4.9 yrs at Vedantu: built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 85,
+      "candidate_id": "CAND_0097079",
+      "score": 0.004445,
+      "title": "computer vision engineer",
+      "company": "Freshworks",
+      "company_type": "product",
+      "yoe": 5.7,
+      "reasoning": "Computer Vision Engineer 5.7 yrs at Freshworks. built ranking/search/reco systems"
+    },
+    {
+      "rank": 86,
+      "candidate_id": "CAND_0033650",
+      "score": 0.004104,
+      "title": "junior ml engineer",
+      "company": "Glance",
+      "company_type": "product",
+      "yoe": 4.2,
+      "reasoning": "Junior ML Engineer 4.2 yrs at Glance; built ranking/search/reco systems"
+    },
+    {
+      "rank": 87,
+      "candidate_id": "CAND_0085851",
+      "score": 0.00393,
+      "title": "ml engineer",
+      "company": "Genpact AI",
+      "company_type": "product",
+      "yoe": 7.0,
+      "reasoning": "ML Engineer 7 yrs at Genpact AI \u2014 built ranking/search/reco systems"
+    },
+    {
+      "rank": 88,
+      "candidate_id": "CAND_0018701",
+      "score": 0.00391,
+      "title": "junior ml engineer",
+      "company": "Krutrim",
+      "company_type": "product",
+      "yoe": 6.0,
+      "reasoning": "Junior ML Engineer 6 yrs at Krutrim: built ranking/search/reco systems"
+    },
+    {
+      "rank": 89,
+      "candidate_id": "CAND_0002344",
+      "score": 0.003816,
+      "title": "senior software engineer (ml)",
+      "company": "upGrad",
+      "company_type": "product",
+      "yoe": 4.7,
+      "reasoning": "Senior Software Engineer (ML) 4.7 yrs at upGrad. built ranking/search/reco systems"
+    },
+    {
+      "rank": 90,
+      "candidate_id": "CAND_0080794",
+      "score": 0.002703,
+      "title": "ai research engineer",
+      "company": "Wipro",
+      "company_type": "product",
+      "yoe": 6.2,
+      "reasoning": "AI Research Engineer 6.2 yrs at Wipro. built ranking/search/reco systems"
+    },
+    {
+      "rank": 91,
+      "candidate_id": "CAND_0074342",
+      "score": 0.002693,
+      "title": "data scientist",
+      "company": "Zoho",
+      "company_type": "product",
+      "yoe": 5.7,
+      "reasoning": "Data Scientist 5.7 yrs at Zoho: built ranking/search/reco systems"
+    },
+    {
+      "rank": 92,
+      "candidate_id": "CAND_0040426",
+      "score": 0.002016,
+      "title": "data scientist",
+      "company": "Tech Mahindra",
+      "company_type": "product",
+      "yoe": 5.2,
+      "reasoning": "Data Scientist 5.2 yrs at Tech Mahindra; built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 93,
+      "candidate_id": "CAND_0018888",
+      "score": 0.001621,
+      "title": "ai research engineer",
+      "company": "Razorpay",
+      "company_type": "product",
+      "yoe": 6.5,
+      "reasoning": "AI Research Engineer 6.5 yrs at Razorpay: built ranking/search/reco systems \u2014 concern: not flagged open-to-work"
+    },
+    {
+      "rank": 94,
+      "candidate_id": "CAND_0082262",
+      "score": 0.00149,
+      "title": "senior software engineer (ml)",
+      "company": "Wipro",
+      "company_type": "product",
+      "yoe": 5.9,
+      "reasoning": "Senior Software Engineer (ML) 5.9 yrs at Wipro \u2014 built ranking/search/reco systems"
+    },
+    {
+      "rank": 95,
+      "candidate_id": "CAND_0080589",
+      "score": 0.001284,
+      "title": "computer vision engineer",
+      "company": "Niramai",
+      "company_type": "product",
+      "yoe": 5.7,
+      "reasoning": "Computer Vision Engineer 5.7 yrs at Niramai: built ranking/search/reco systems"
+    },
+    {
+      "rank": 96,
+      "candidate_id": "CAND_0012805",
+      "score": 0.001259,
+      "title": "data scientist",
+      "company": "HCL",
+      "company_type": "product",
+      "yoe": 4.9,
+      "reasoning": "Data Scientist 4.9 yrs at HCL: built ranking/search/reco systems"
+    },
+    {
+      "rank": 97,
+      "candidate_id": "CAND_0046353",
+      "score": 0.001244,
+      "title": "ml engineer",
+      "company": "Razorpay",
+      "company_type": "product",
+      "yoe": 6.4,
+      "reasoning": "ML Engineer 6.4 yrs at Razorpay. built ranking/search/reco systems"
+    },
+    {
+      "rank": 98,
+      "candidate_id": "CAND_0020344",
+      "score": 0.000535,
+      "title": "computer vision engineer",
+      "company": "Verloop.io",
+      "company_type": "product",
+      "yoe": 4.4,
+      "reasoning": "Computer Vision Engineer 4.4 yrs at Verloop.io \u2014 built ranking/search/reco systems"
+    },
+    {
+      "rank": 99,
+      "candidate_id": "CAND_0040200",
+      "score": 9.8e-05,
+      "title": "ai research engineer",
+      "company": "PharmEasy",
+      "company_type": "product",
+      "yoe": 5.5,
+      "reasoning": "AI Research Engineer 5.5 yrs at PharmEasy: built ranking/search/reco systems"
+    },
+    {
+      "rank": 100,
+      "candidate_id": "CAND_0024549",
+      "score": 0.0,
+      "title": "ai specialist",
+      "company": "Infosys",
+      "company_type": "product",
+      "yoe": 5.2,
+      "reasoning": "AI Specialist 5.2 yrs at Infosys. built ranking/search/reco systems"
+    }
+  ]
+}
