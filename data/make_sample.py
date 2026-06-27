@@ -69,7 +69,9 @@ def main() -> int:
     ap.add_argument("--out", default=os.path.join(REPO, "data", "sample_candidates.jsonl"))
     ap.add_argument("--clean-exclude", default=None,
                     help="optional honeypot clean-exclude json (list of ids) to seed the honeypot stratum")
-    ap.add_argument("--n", type=int, default=100)
+    # 160 (not 100): the structural-honeypot stratum is hard-gated, so >=100 CLEAN
+    # candidates must remain for a valid 100-row submission proof. See data/README.md.
+    ap.add_argument("--n", type=int, default=160)
     ap.add_argument("--seed", type=int, default=0)
     args = ap.parse_args()
 

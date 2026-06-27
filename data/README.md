@@ -12,13 +12,16 @@ This creates `./candidates.jsonl` at the repo root (also gitignored), which `ran
 and `precompute/*` read by streaming (never fully loaded into RAM).
 
 ## The committed sample
-`data/sample_candidates.jsonl` = **100 REAL lines** stratified from the pool so every
-code path is exercised:
+`data/sample_candidates.jsonl` = **160 REAL lines** stratified from the pool so every
+code path is exercised. (Why 160 and not 100: the ~16 structural-honeypot lines are
+hard-gated out, so >=100 CLEAN candidates must remain for the ranker to emit a valid
+100-row submission — exactly as on the full pool where 201 honeypots leave a clean
+top-100. The strata:
 - genuine AI-eng fits (probe example ids: CAND_0000165/200/422/666/981 + AI-titled),
 - keyword-stuffer traps (non-eng title + AI skills: CAND_0000097/121/201),
 - structural honeypots (from the clean-201 exclude set; includes the AI-titled honeypot
   CAND_0000031),
-- typical non-fits (seeded random).
+- typical non-fits (seeded random).)
 
 Regenerate with:
 ```bash
