@@ -1,0 +1,6 @@
+# Plane B (graded rank.py) runtime dependencies ONLY.
+# CPU-only, no network at rank time. NO torch/transformers/http libraries.
+# sklearn is permitted strictly for the OPTIONAL pre-fit TF-IDF/SVD transform
+# in the --mode self-contained audit path; the fast path is pure numpy + stdlib.
+numpy==2.4.6
+scikit-learn==1.9.0
