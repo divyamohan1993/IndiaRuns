@@ -1,0 +1,9 @@
+**/candidates.jsonl
+artifacts/cand_emb.f16.npy
+artifacts/*.parquet
+artifacts/reasoning.jsonl
+web/node_modules
+**/__pycache__
+.git
+.pytest_cache
+.ruff_cache

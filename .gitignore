@@ -53,3 +53,6 @@ web/out/
 # ---- OS / editor ----
 .DS_Store
 *.swp
+
+# environment-specific build CA (sandbox CI only; never committed)
+docker/build-ca.crt
