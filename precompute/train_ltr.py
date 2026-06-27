@@ -126,6 +126,9 @@ def export_trees(booster, n_features: int):
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--artifacts-dir", default=os.path.join(REPO, "artifacts"))
+    ap.add_argument("--ltr-margin", type=float, default=0.02,
+                    help="ship the LTR only if its CV-NDCG@10 beats the blend by at least "
+                         "this margin (ship-the-safer-one; guards against noise-level wins).")
     args = ap.parse_args()
     A = args.artifacts_dir
 
@@ -170,7 +173,23 @@ def main() -> int:
         final = xgb.train(params, dall, num_boost_round=80, verbose_eval=False)
         trees = export_trees(final, len(names))
 
-        use_ltr = ltr_ndcg >= blend_ndcg
+        # Anti-trap sanity gate: the LTR's own top-region must not be worse than the
+        # blend's. On small/noisy pools the trees can latch onto generic "shipped to
+        # production" evidence and float a rule_fit~=0 non-fit (e.g. an HR Manager) into
+        # the top. Compare the mean proxy tier of each model's top-10; if the LTR's is
+        # lower, the blend is safer regardless of the CV-NDCG number.
+        ltr_full = final.predict(xgb.DMatrix(X))
+        ltr_top10_tier = float(tiers[np.argsort(-ltr_full)[:10]].mean())
+        blend_top10_tier = float(tiers[np.argsort(-blend)[:10]].mean())
+
+        # Ship-the-safer-one (spec §2.6): require the LTR to beat the blend by a real
+        # margin, not noise, AND to keep the top-region anti-trap ordering at least as
+        # clean as the blend. A sub-epsilon "win" on a small/single-group CV is not
+        # evidence the trees generalize, and the fixed-weight blend keeps the anti-trap
+        # ordering intact, so we keep the blend unless the LTR clears both bars.
+        use_ltr = (ltr_ndcg >= blend_ndcg + args.ltr_margin
+                   and ltr_top10_tier >= blend_top10_tier)
+        print(f"top-10 mean tier: blend={blend_top10_tier:.2f} ltr={ltr_top10_tier:.2f}")
         if use_ltr:
             # pad ragged trees into rectangular arrays
             maxlen = max(len(t[0]) for t in trees)
@@ -190,6 +209,12 @@ def main() -> int:
             manifest_add("ltr_trees", os.path.join(A, "ltr_trees.npz"), "precompute/train_ltr.py", A)
     except Exception as e:  # noqa: BLE001
         print(f"LTR training unavailable ({type(e).__name__}: {e}); shipping blend.")
+
+    if not use_ltr:
+        # never leave a stale tree file that could be picked up if calibration is edited
+        stale = os.path.join(A, "ltr_trees.npz")
+        if os.path.exists(stale):
+            os.remove(stale)
 
     save_json(os.path.join(A, "ltr_model.json"),
               {"feature_order": names, "n_features": len(names), "use_ltr": use_ltr})
