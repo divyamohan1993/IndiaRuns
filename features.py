@@ -23,10 +23,24 @@ from typing import Dict, List
 
 from core import honeypot, keywords
 from core.schema import (
-    career, current_industry, current_title, country, education, last_active,
-    NOW, notice_period_days, open_to_work, profile, recruiter_response_rate,
-    salary_range, signals, skill_assessment_scores, skills, years_of_experience,
-    github_activity, offer_acceptance, fnum, inum, fbool, lower,
+    NOW,
+    career,
+    current_industry,
+    current_title,
+    fbool,
+    fnum,
+    github_activity,
+    inum,
+    last_active,
+    lower,
+    notice_period_days,
+    open_to_work,
+    profile,
+    recruiter_response_rate,
+    signals,
+    skill_assessment_scores,
+    skills,
+    years_of_experience,
 )
 
 # ----------------------------------------------------------------------------
@@ -187,7 +201,6 @@ def _median(xs: List[float]) -> float:
 
 def extract_det(c: Dict, company_first=None) -> Dict[str, float]:
     """Return the deterministic feature dict (Groups A-E). Group F is added elsewhere."""
-    p = profile(c)
     title = current_title(c)
     blob = _career_blob(c)
     skills_blob = _skills_blob(c)

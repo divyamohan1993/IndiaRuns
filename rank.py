@@ -34,8 +34,9 @@ sys.path.insert(0, REPO)
 
 import features as feat  # noqa: E402
 import reasoning as rsn  # noqa: E402
-from core import gbdt, score as scoremod, subscores  # noqa: E402
+from core import gbdt, subscores  # noqa: E402
 from core import rule_fit as rf  # noqa: E402
+from core import score as scoremod
 from core.artifacts import load_json  # noqa: E402
 from core.io_jsonl import iter_candidates  # noqa: E402
 from core.schema import parse_date  # noqa: E402
@@ -73,7 +74,6 @@ def main() -> int:
     ids = idx["ids"]
     det_names = idx["det_feature_names"]
     id_to_row = {cid: i for i, cid in enumerate(ids)}
-    n = len(ids)
 
     cand_emb = np.load(os.path.join(A, "cand_emb.f16.npy"), mmap_mode="r")
     jz = np.load(os.path.join(A, "jd_clause_emb.npz"))
@@ -158,7 +158,6 @@ def main() -> int:
     lex_aligned[valid] = lex[rows_emb[valid]]
 
     has_llm = S_llm > 0
-    blend_w = calib.get("blend_weights", {"S_llm": 0.50, "S_dense": 0.20, "S_rule": 0.18, "S_bm25": 0.12})
     base_sl = subscores.base_fit_shortlisted(S_llm, S_dense_aligned, S_rule, S_bm25_aligned)
     base_lt = subscores.base_fit_longtail(S_rule, S_dense_aligned, S_bm25_aligned)
     base_fit = np.where(has_llm, base_sl, base_lt).astype(np.float32)

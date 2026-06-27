@@ -2,7 +2,6 @@
 modest. (Full-pool budget is enforced by scripts/check_budget.py + the Docker harness;
 this guards against gross regressions in CI.)"""
 
-import os
 import resource
 import time
 

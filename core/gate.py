@@ -11,8 +11,7 @@ out-bought by keywords. role_skill_mismatch (x0.15) is the deterministic FLOOR.
 
 from __future__ import annotations
 
-import math
-from typing import Dict, List
+from typing import Dict
 
 from core import honeypot
 

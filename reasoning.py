@@ -21,8 +21,14 @@ from typing import Dict, List, Optional
 
 from core import keywords
 from core.schema import (
-    career, current_title, last_active, NOW, open_to_work, profile,
-    recruiter_response_rate, years_of_experience, lower,
+    NOW,
+    career,
+    last_active,
+    lower,
+    open_to_work,
+    profile,
+    recruiter_response_rate,
+    years_of_experience,
 )
 
 MAX_LEN = 140
@@ -119,7 +125,6 @@ def _validate_llm(text: str, c: Dict) -> bool:
     """Reject an LLM reasoning that names a company/skill not present in the record."""
     if not text:
         return False
-    low = text.lower()
     known = set()
     p = profile(c)
     if p.get("current_company"):

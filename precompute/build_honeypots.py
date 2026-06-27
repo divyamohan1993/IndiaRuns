@@ -24,7 +24,7 @@ sys.path.insert(0, REPO)
 from core import honeypot  # noqa: E402
 from core.artifacts import manifest_add, save_json  # noqa: E402
 from core.io_jsonl import iter_candidates  # noqa: E402
-from core.schema import NOW, parse_date  # noqa: E402
+from core.schema import parse_date  # noqa: E402
 
 
 def build_company_first(path: str) -> dict:

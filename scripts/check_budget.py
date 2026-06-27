@@ -38,11 +38,14 @@ def main() -> int:
     print(f"wall_clock={dt:.1f}s peak_child_rss={rss_kb/1024:.0f}MiB rc={res.returncode}")
     ok = True
     if res.returncode != 0:
-        print("FAIL: rank.py non-zero exit"); ok = False
+        print("FAIL: rank.py non-zero exit")
+        ok = False
     if dt >= TIME_LIMIT_S:
-        print(f"FAIL: exceeded {TIME_LIMIT_S}s"); ok = False
+        print(f"FAIL: exceeded {TIME_LIMIT_S}s")
+        ok = False
     if rss_kb >= RSS_LIMIT_KB:
-        print(f"FAIL: exceeded 16 GiB"); ok = False
+        print("FAIL: exceeded 16 GiB")
+        ok = False
     if ok:
         print("OK: within budget.")
     return 0 if ok else 1

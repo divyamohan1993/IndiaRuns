@@ -19,7 +19,7 @@ from __future__ import annotations
 
 from typing import Dict, Optional, Set
 
-from core.schema import NOW, education, parse_date, profile, career, skills
+from core.schema import NOW, career, education, parse_date, profile, skills
 
 # The clean, high-precision structural-impossibility signatures (hard gate).
 CLEAN_SIGNATURES = (

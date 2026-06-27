@@ -1,6 +1,5 @@
 """rank.py is byte-deterministic: two runs produce identical CSVs."""
 
-import os
 
 from tests.conftest import run_rank
 

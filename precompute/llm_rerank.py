@@ -28,7 +28,7 @@ from core import honeypot  # noqa: E402
 from core import rule_fit as rf  # noqa: E402
 from core.artifacts import load_json, manifest_add  # noqa: E402
 from core.io_jsonl import iter_candidates  # noqa: E402
-from core.schema import career, current_title, profile, skills, years_of_experience  # noqa: E402
+from core.schema import career, profile, skills, years_of_experience  # noqa: E402
 from precompute.nvidia_client import backend_name, get_chat_backend  # noqa: E402
 
 SYSTEM = (

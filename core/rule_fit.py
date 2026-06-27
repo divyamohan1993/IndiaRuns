@@ -15,8 +15,16 @@ from typing import Dict, Tuple
 
 from core import honeypot, keywords
 from core.schema import (
-    career, current_industry, current_title, last_active, NOW, open_to_work,
-    profile, recruiter_response_rate, years_of_experience, lower,
+    NOW,
+    career,
+    current_industry,
+    current_title,
+    last_active,
+    lower,
+    open_to_work,
+    profile,
+    recruiter_response_rate,
+    years_of_experience,
 )
 
 

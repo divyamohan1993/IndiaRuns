@@ -17,7 +17,7 @@ import re
 import shutil
 import subprocess
 import time
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 
 def _strip_json(text: str) -> Optional[dict]:
