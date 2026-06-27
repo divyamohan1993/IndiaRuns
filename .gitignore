@@ -12,8 +12,13 @@ artifacts/cand_emb.f16.npy
 artifacts/cand_features.f16.npy
 artifacts/cand_svd32.f16.npy
 
-# Sample-sized artifacts produced during testing live here and ARE committed selectively;
-# the .gitignore for *.npy/*.npz is overridden per-file via `git add -f` only when intended.
+# Sample-sized artifacts produced during testing live in artifacts_sample/ and ARE
+# committed selectively (small JSON/text + the sample .npy/.npz which are tiny);
+# the *.npy/*.npz ignore above is overridden for that dir below.
+!artifacts_sample/
+!artifacts_sample/*.npy
+!artifacts_sample/*.npz
+!artifacts_sample/*.pkl
 
 # ---- Python ----
 __pycache__/
