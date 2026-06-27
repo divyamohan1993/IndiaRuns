@@ -102,3 +102,101 @@ build_features 40 s · fit_lexical 69 s · embed (SVD) 6 s · make_labels 21 s �
 build_honeypots 12 s · first_pass_shortlist 68 s · llm_rerank ≈ 27 min ·
 train_ltr 30 s · build_reasoning ≈ 17 min. Deterministic stages ≈ 4 min; LLM stages
 ≈ 44 min; **end-to-end ≈ 48 min** offline.
+
+---
+
+## Verification — graded `rank.py` proof on the real full pool
+
+Every number below was measured by re-running the graded path on the real 100,000-line
+`candidates.jsonl` with `OMP_NUM_THREADS=1 PYTHONHASHSEED=0`.
+
+### Budget (hard requirement: ≤ 5 min, ≤ 16 GB)
+
+Measured with `/usr/bin/time -v python rank.py --candidates candidates.jsonl --out submission.csv`:
+
+| Metric | Measured | Budget | Margin |
+|---|---|---|---|
+| Wall-clock | **1:13.48 (73.5 s)** | 300 s | 4.1× headroom |
+| User CPU time | 71.97 s | — | — |
+| Peak RSS | **2,107,064 KB ≈ 2.01 GB** | 16 GB | 8× headroom |
+| Exit status | 0 | — | — |
+
+### Validator (vendored `validate_submission.py`)
+
+```
+$ python validate_submission.py submission.csv
+Submission is valid.    (exit 0)
+```
+100 data rows, header `candidate_id,rank,score,reasoning`, ranks 1–100 unique bare ints,
+score non-increasing, ties candidate_id-ascending.
+
+### Honeypot gate (`scripts/assert_no_honeypots.py`, full pool)
+
+```
+ranked=100 frozen_set=201 honeypots_in_top100=0 in_top10=0
+OK: 0 honeypots in top-100.    (exit 0)
+```
+Cross-checks the frozen clean-201 set AND a live re-run of the clean structural checks
+over the ranked ids. **0 honeypots in top-100, 0 in top-10.** No non-eng-title
+keyword-stuffer (Marketing/HR/Sales/etc.) appears anywhere in the top-50 — all top-50
+titles are AI/ML/eng (Search/Recommendation/ML/AI/Data Scientist).
+
+### Determinism (byte-identical across runs)
+
+Two independent full runs + the committed file all hash identically:
+```
+694f86dd462772b7884e18e5b47a04e6b828f12abc91636c78c23b1b98cc457f  run_a.csv
+694f86dd462772b7884e18e5b47a04e6b828f12abc91636c78c23b1b98cc457f  run_b.csv
+694f86dd462772b7884e18e5b47a04e6b828f12abc91636c78c23b1b98cc457f  submission.csv
+```
+**Byte-identical: YES.** Single-thread BLAS + `PYTHONHASHSEED=0` + a stable explicit
+`(-final, candidate_id)` sort key + frozen artifact bytes remove all nondeterminism.
+
+### No-network / CPU proof (Docker `--network none`)
+
+`docker/Dockerfile.sandbox` (extends `Dockerfile.ranker`) bakes the 100-line stratified
+real sample + the sample-sized frozen artifacts. Run with the network namespace removed:
+```
+$ docker run --rm --network none --cpus=4 --memory=16g -v "$PWD/out:/out" indiaruns-sandbox
+wrote /out/submission.csv (100 rows) — self-validation passed.   (exit 0)
+$ python validate_submission.py out/submission.csv
+Submission is valid.
+```
+The container succeeds with **no network reachable at all**. Additionally
+`tests/test_no_network.py` passes: (a) the rank path imports no networked/heavy-ML libs
+(torch/transformers/httpx/requests/xgboost/openai), and (b) running the full pipeline
+in-process with `socket.socket`/`create_connection` monkeypatched to raise makes **zero**
+socket calls. (Build-time pip uses the network; rank-time does not — the boundary the
+spec requires.)
+
+### Internal NDCG vs the naive keyword-count baseline (synthetic proxy, NOT truth)
+
+Scored against the `proxy_tiers` synthetic relevance vector over 100K (relevance gain =
+tier 0–5; relevant for MAP/P@k = tier ≥ 3). This is a **relative** sanity check that our
+ranker beats the deliberately-wrong `sample_submission` instinct — it is **not** ground
+truth (our ranker is partly built from the same proxy signal, so its absolute 1.0 is
+expected and not a quality claim).
+
+| Ranking | NDCG@10 | NDCG@50 | MAP | P@10 | **Composite** |
+|---|---|---|---|---|---|
+| **ATLAS submission** | 1.0000 | 1.0000 | 1.0000 | 1.0000 | **1.0000** |
+| naive keyword-count baseline | 0.0716 | 0.0761 | 0.3232 | 0.2000 | **0.1171** |
+| **Lift** | | | | | **+0.8829 (+753.9 %)** |
+
+Composite weighting = `0.50·NDCG@10 + 0.30·NDCG@50 + 0.15·MAP + 0.05·P@10`.
+Top-100 tier≥3: ATLAS 100 vs baseline 30. Top-10 tier≥4: ATLAS 10 vs baseline 0. The
+keyword baseline ranks non-fits (NDCG@10 = 0.07), confirming the anti-keyword design.
+
+### Web / results artifacts (built from the SAME data as the CSV)
+
+`precompute/build_web_artifacts.py` emits, into `artifacts/` (copied to
+`web/public/artifacts/`): `ranked_top100.json` (verified **0 mismatches** vs
+`submission.csv` — provably the submission), `funnel.json` (recall funnel + clean-201
+honeypot burn list + a deterministic 2D PCA projection of the top-100), `rejected_traps.json`
+(per-signature counts + example ids + the salary-inversion "not a trap" note + the
+baseline foil), `intent.json` (JD chip cloud), and `results_top.json` (compact API payload).
+
+### Test suite
+
+`python -m pytest` → **39 passed** (validator, determinism, no-network, sentinels,
+gate-blocks-honeypots, salary-not-flagged, features-no-skew, reasoning-quality, budget).
