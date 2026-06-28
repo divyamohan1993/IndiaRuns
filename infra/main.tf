@@ -48,6 +48,12 @@ variable "nvidia_api_key" {
   description = "Optional. If empty, the secret is created with no usable version and the API runs deterministic."
 }
 
+variable "nvidia_model" {
+  type        = string
+  default     = ""
+  description = "Optional model id for the hosted NVIDIA endpoint used by the web app's route handlers. If empty, the web app degrades to deterministic output even when a key is present."
+}
+
 provider "google" {
   project = var.project_id
   region  = var.region
@@ -197,8 +203,31 @@ resource "google_cloud_run_v2_service" "web" {
         name  = "API_URL"
         value = google_cloud_run_v2_service.api.uri
       }
+      # The public web UI's live features are Next.js route handlers that run ON the web
+      # service, so the NVIDIA key must be visible here too — otherwise the web app stays
+      # deterministic even when a key is supplied. Mounted only when a version exists.
+      dynamic "env" {
+        for_each = var.nvidia_api_key == "" ? [] : [1]
+        content {
+          name = "NVIDIA_API_KEY"
+          value_source {
+            secret_key_ref {
+              secret  = google_secret_manager_secret.nvidia.secret_id
+              version = "latest"
+            }
+          }
+        }
+      }
+      dynamic "env" {
+        for_each = var.nvidia_model == "" ? [] : [1]
+        content {
+          name  = "NVIDIA_MODEL"
+          value = var.nvidia_model
+        }
+      }
     }
   }
+  depends_on = [google_secret_manager_secret_iam_member.nvidia_access]
 }
 
 resource "google_cloud_run_v2_service_iam_member" "web_public" {

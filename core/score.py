@@ -85,19 +85,38 @@ def select_top100_with_paranoia(
     order = [i for i in order if final[i] > gate.NEG_INF / 2]
     top = order[:100]
     rest = order[100:]
-    # top-10 paranoia: each of the first 10 must pass; else swap with next qualifying
-    for slot in range(min(10, len(top))):
-        i = top[slot]
-        if gate.top10_ok(cands[i], dets[i], frozen_exclude, company_first=company_first):
-            continue
-        for j_pos, j in enumerate(rest):
-            if gate.top10_ok(cands[j], dets[j], frozen_exclude, company_first=company_first):
-                top[slot] = j
-                rest.pop(j_pos)
-                rest.insert(0, i)
-                break
-    # re-sort the final top set by score for a valid non-increasing column
+
+    def _ok(i: int) -> bool:
+        return gate.top10_ok(cands[i], dets[i], frozen_exclude, company_first=company_first)
+
+    # top-10 paranoia as a FIXPOINT: re-sort, then re-verify the final top-10; whenever a
+    # final top-10 slot fails, swap it out for the highest-scoring qualifying replacement and
+    # repeat. A plain single pass is insufficient because the post-swap re-sort can promote an
+    # original slot-11+ candidate (never top-10-checked) into the final top-10. Bounded by the
+    # number of candidates and fully deterministic (rest stays score-ordered; ties by id).
     top = sorted(top, key=lambda i: (-final[i], cids[i]))
+    while True:
+        changed = False
+        for slot in range(min(10, len(top))):
+            i = top[slot]
+            if _ok(i):
+                continue
+            for j_pos, j in enumerate(rest):
+                if _ok(j):
+                    top[slot] = j
+                    rest.pop(j_pos)
+                    # return the displaced candidate to the score-ordered remainder
+                    rest.append(i)
+                    rest.sort(key=lambda k: (-final[k], cids[k]))
+                    top = sorted(top, key=lambda k: (-final[k], cids[k]))
+                    changed = True
+                    break
+            else:
+                # no qualifying replacement remains; leave the slot as-is
+                continue
+            break  # re-sort happened; restart the scan from the top
+        if not changed:
+            break
     return top[:100]
 
 

@@ -98,6 +98,11 @@ def main() -> int:
             import pickle
             with open(os.path.join(A, "tfidf_svd.pkl"), "rb") as f:
                 blob = pickle.load(f)
+            # Z is built in INPUT order; everything downstream indexes embeddings by the frozen
+            # artifact row map (rows_emb / id_to_row), so scatter Z back into artifact-row order
+            # by candidate_id. Without this, a shuffled candidates file misaligns the recomputed
+            # dense/JD scores onto the wrong candidate ids in audit mode.
+            in_ids = [c["candidate_id"] for c in iter_candidates(args.candidates)]
             narr = [feat.narrative_text(c) for c in iter_candidates(args.candidates)]
             Z = blob["svd"].transform(blob["vectorizer"].transform(narr)).astype(np.float32)
             dim = cand_emb.shape[1]
@@ -107,7 +112,13 @@ def main() -> int:
                 Z = Zp
             norms = np.linalg.norm(Z, axis=1, keepdims=True)
             norms[norms == 0] = 1.0
-            cand_emb = Z / norms
+            Z = Z / norms
+            cand_emb_recomputed = np.zeros((len(ids), dim), dtype=np.float32)
+            for in_pos, cid in enumerate(in_ids):
+                r = id_to_row.get(cid)
+                if r is not None:
+                    cand_emb_recomputed[r] = Z[in_pos]
+            cand_emb = cand_emb_recomputed
         except Exception as e:  # noqa: BLE001
             print(f"self-contained recompute failed ({e}); using frozen embeddings", file=sys.stderr)
 

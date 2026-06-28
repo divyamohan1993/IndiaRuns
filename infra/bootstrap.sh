@@ -99,14 +99,22 @@ gcloud run deploy "${API_SVC}" \
 API_URL="$(gcloud run services describe "${API_SVC}" --region="${REGION}" --format='value(status.url)')"
 echo "   API_URL=${API_URL}"
 
-echo ">> Deploy web (points at the API via same-origin /api by default)…"
+echo ">> Deploy web (its Next.js /api/* route handlers need the NVIDIA key to go live)…"
+# The public web UI's live features run as Next.js route handlers ON the web service, so the
+# NVIDIA key must be mounted here too — otherwise the web app stays deterministic even when a
+# key is supplied. NVIDIA_MODEL (optional) selects the hosted model the web routes call.
+WEB_ENV_VARS="API_URL=${API_URL}"
+if [[ -n "${NVIDIA_MODEL:-}" ]]; then
+  WEB_ENV_VARS="${WEB_ENV_VARS},NVIDIA_MODEL=${NVIDIA_MODEL}"
+fi
 gcloud run deploy "${WEB_SVC}" \
   --image="${IMG_BASE}/web:latest" \
   --region="${REGION}" --platform=managed \
   --service-account="${RUNTIME_SA}" \
   --cpu=1 --memory=512Mi --min-instances=0 --max-instances=4 \
   --allow-unauthenticated \
-  --set-env-vars="API_URL=${API_URL}" \
+  --set-env-vars="${WEB_ENV_VARS}" \
+  --set-secrets="NVIDIA_API_KEY=${SECRET_NAME}:latest" \
   --quiet
 
 WEB_URL="$(gcloud run services describe "${WEB_SVC}" --region="${REGION}" --format='value(status.url)')"
