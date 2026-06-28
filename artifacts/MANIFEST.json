@@ -13,16 +13,21 @@
       "sha256": "710dd3ee8ea22c6dfce378a578d9e616fcb2ffa9ae784761a90447e58415842a"
     },
     "calibration": {
-      "bytes": 301,
+      "bytes": 316,
       "path": "calibration.json",
       "producer": "precompute/train_ltr.py",
-      "sha256": "ea4c61e9d9edf908aa9106e359e5b815eea58bd03709ed67939953ca3493fedb"
+      "sha256": "4def46f30349b0d30ee3216762c1df1b3de6ad3ab6e1fe554d98fa2be7aae943"
     },
     "cand_emb": {
-      "bytes": 76800128,
+      "backend": "nvidia/nv-embedqa-e5-v5",
+      "bytes": 204800128,
       "path": "cand_emb.f16.npy",
       "producer": "precompute/embed.py",
-      "sha256": "d99f87bd79870a0988e0b86c2360df843031cbff4e86574c0421933628397842"
+      "sha256": "7a5032d91f9433fe3fec15044c6b987f04898a2a32f66ea9118e1cc80d81f0b7",
+      "shape": [
+        100000,
+        1024
+      ]
     },
     "cand_features": {
       "bytes": 8000128,
@@ -49,10 +54,10 @@
       "sha256": "3650e79a7560c873e7f285a46152f6df15d1053acc9c503ff6aa3edf072b2045"
     },
     "funnel.json": {
-      "bytes": 15948,
+      "bytes": 15929,
       "path": "funnel.json",
       "producer": "build_web_artifacts.py",
-      "sha256": "a6eb5918bbfdcd010d780452f5d5bfd1028f9e2296784e0c0e5d6a6900317196"
+      "sha256": "b0aeca7b146a74edf0e4d29ae0d0ac9edff3c1f3041892af7b76f3c3350b2728"
     },
     "honeypot_excludes": {
       "bytes": 4563,
@@ -67,16 +72,16 @@
       "sha256": "51d7dd11885249f6162fe8271036682669b67f196835f6986990e620a3ac1d39"
     },
     "jd_clause_emb": {
-      "bytes": 11038,
+      "bytes": 27678,
       "path": "jd_clause_emb.npz",
       "producer": "precompute/embed.py",
-      "sha256": "76c175c87dc9081cd3e64082c64c156ec668a6b27cfa3756571d20ecb081b04a"
+      "sha256": "89ac5c928289da45d59d5e8def412435d5b918cad72f6c70c11b855b860568f2"
     },
     "jd_meta": {
-      "bytes": 2718,
+      "bytes": 2724,
       "path": "jd_meta.json",
       "producer": "precompute/embed.py",
-      "sha256": "0a1fec0c2fbc12777906d2431ca0520786671e5a4fcb30d0c8b25d954f4d367e"
+      "sha256": "63500444e9beb17e669a6db4dc1d69f20babbd63a291a943696e95ea6b62441b"
     },
     "lexical_cos_jd": {
       "bytes": 200128,
@@ -85,10 +90,12 @@
       "sha256": "9b1955291a54d6587e7330900ea4d1b6e7ceb93cf342fcba4793d0f620a4f5e8"
     },
     "llm_scores": {
-      "bytes": 143310,
+      "backend": "NvidiaClient",
+      "bytes": 38490,
+      "n_llm_present": 1226,
       "path": "llm_scores.parquet",
       "producer": "precompute/llm_rerank.py",
-      "sha256": "ee825b17d7daafd9fa0ac3be28a011dbb61ed4f571eefd53aead2ddf58c7d5d4"
+      "sha256": "b43922241a4e597e294a02555699b8b01f98c5a4d43f937aa6ebbc9324aee7f8"
     },
     "ltr_model": {
       "bytes": 1258,
@@ -103,16 +110,18 @@
       "sha256": "7a6d1f8fa2cd5be920780bb4401301e728f28978ae3391a58cbfadc82fb73e9b"
     },
     "ranked_top100.json": {
-      "bytes": 49742,
+      "bytes": 44807,
       "path": "ranked_top100.json",
       "producer": "build_web_artifacts.py",
-      "sha256": "35fcff482c0de5505531707c803c90496b2488fb2d54a5253438bddff88544ee"
+      "sha256": "83f8f182e44a10f4f43023d10d9483a3aabd5a3ee2668c51e0c87e78032854a1"
     },
     "reasoning": {
-      "bytes": 183172,
+      "backend": "NvidiaClient",
+      "bytes": 120079,
+      "n_llm": 1226,
       "path": "reasoning.jsonl",
       "producer": "precompute/build_reasoning.py",
-      "sha256": "a21fd0439d544a9d352bb002bfdbd6697d031782702bbc1de90f67a2fd79ee31"
+      "sha256": "27af88719d86fc3efa5a6989cd7adf865ceb2c8430109e2ac285ff6cf7b87c8d"
     },
     "rejected_traps.json": {
       "bytes": 2135,
@@ -121,16 +130,16 @@
       "sha256": "f910f15d57a8d47d266eb58ade4a33ab5edd5bf4ef510e78611c08ff91c1ba90"
     },
     "results_top.json": {
-      "bytes": 32709,
+      "bytes": 27807,
       "path": "results_top.json",
       "producer": "build_web_artifacts.py",
-      "sha256": "fa01627a34cfd8f29736bebf3a1d7b3e2c398ee91e23f9b62be36b70d24877c3"
+      "sha256": "0eeed206a45526babcb37a603a9126fe6bbf18b8518d45e6d4200ca75a33c6e5"
     },
     "shortlist": {
-      "bytes": 60157,
+      "bytes": 61539,
       "path": "shortlist.json",
       "producer": "precompute/first_pass_shortlist.py",
-      "sha256": "4905ff7dd8c5382c982d8990764efb9278c97e1145e0d92bf703920af1525c6c"
+      "sha256": "9ad76e41f2424daf37951def23e89f4864b1095c43a7a8fce8d1d0285fe415c7"
     },
     "tfidf_svd": {
       "bytes": 5566785,
