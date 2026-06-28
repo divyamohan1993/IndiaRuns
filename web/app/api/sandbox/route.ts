@@ -35,6 +35,14 @@ export async function POST() {
   const rankPy = path.join(REPO_ROOT, "rank.py");
   const sample = path.join(REPO_ROOT, "data", "sample_candidates.jsonl");
   const validator = path.join(REPO_ROOT, "validate_submission.py");
+  // The sandbox runs the SAMPLE pool, so it must use the matching sample artifacts.
+  // A fresh clone intentionally omits the full-pool artifacts/ row map + binaries, while
+  // the sample artifacts live in artifacts_sample/. In the Docker web image the sample
+  // artifacts are copied to /repo/artifacts (no artifacts_sample/ there), so prefer
+  // artifacts_sample/ when present (local `npm run dev`) and fall back to artifacts/.
+  const sampleArtifacts = fs.existsSync(path.join(REPO_ROOT, "artifacts_sample"))
+    ? path.join(REPO_ROOT, "artifacts_sample")
+    : path.join(REPO_ROOT, "artifacts");
   const outDir = fs.mkdtempSync(path.join(os.tmpdir(), "atlas-sandbox-"));
   const outCsv = path.join(outDir, "submission.csv");
 
@@ -74,14 +82,14 @@ export async function POST() {
   const stream = new ReadableStream({
     start(controller) {
       sse(controller, "meta", {
-        cmd: `python3 rank.py --candidates data/sample_candidates.jsonl --out <tmp>/submission.csv`,
+        cmd: `python3 rank.py --candidates data/sample_candidates.jsonl --out <tmp>/submission.csv --artifacts ${path.basename(sampleArtifacts)}`,
         network: "disabled (proxy → 127.0.0.1:9, no_proxy=*)",
         sample,
       });
 
       const child = spawn(
         "python3",
-        ["rank.py", "--candidates", sample, "--out", outCsv],
+        ["rank.py", "--candidates", sample, "--out", outCsv, "--artifacts", sampleArtifacts],
         { cwd: REPO_ROOT, env: cleanEnv }
       );
 

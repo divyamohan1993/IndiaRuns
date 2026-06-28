@@ -123,15 +123,24 @@ def select_top100_with_paranoia(
 def to_rows(cids: List[str], final: np.ndarray, chosen: List[int],
             reasoning_fn: Callable[[int], str]) -> List[Tuple[str, int, float, str]]:
     """Build (candidate_id, rank, score, reasoning) rows with a clamped non-increasing
-    score column and id-ascending tie order already guaranteed by `chosen` ordering."""
+    score column and id-ascending tie order on the PRINTED score.
+
+    The rank order must be deterministic on the *rounded* score that actually goes in the
+    CSV, not the raw float: two distinct raw `final` values can round to the same 6-decimal
+    score, and the vendored validator requires equal printed scores to be candidate_id
+    ascending. So we round first, then order rows by (-rounded_score, candidate_id) — this
+    makes every printed tie id-ascending by construction, regardless of the incoming
+    `chosen` order (which only tie-breaks on EXACT raw ties)."""
     sub = np.array([final[i] for i in chosen], dtype=np.float64)
     scores01 = rescale01(sub) if len(sub) else sub
+    # round to the printed precision, then re-sort by printed score desc, candidate_id asc.
+    rounded = [(round(float(s01), 6), cids[i], i) for i, s01 in zip(chosen, scores01)]
+    rounded.sort(key=lambda t: (-t[0], t[1]))
     rows = []
     prev = None
-    for rank, (i, s01) in enumerate(zip(chosen, scores01), start=1):
-        score = round(float(s01), 6)
+    for rank, (score, _cid, i) in enumerate(rounded, start=1):
         if prev is not None and score > prev:
-            score = prev  # clamp non-increasing
+            score = prev  # clamp non-increasing (guards float rescale edge cases)
         prev = score
         rows.append((cids[i], rank, score, reasoning_fn(i)))
     return rows

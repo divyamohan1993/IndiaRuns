@@ -15,6 +15,9 @@ substitutions:
   _REPO: indiaruns
   _SECRET: nvidia-api-key
   _RUNTIME_SA: atlas-run@${PROJECT_ID}.iam.gserviceaccount.com
+  # Optional model id for the hosted NVIDIA endpoint used by the web app's Next.js route
+  # handlers. Empty -> the web app degrades to deterministic output even when a key is set.
+  _NVIDIA_MODEL: ""
 
 options:
   logging: CLOUD_LOGGING_ONLY
@@ -87,6 +90,10 @@ steps:
     waitFor: [push-api]
 
   # --- deploy web ---
+  # The public web UI's live features (co-pilot / outreach / compare) are Next.js route
+  # handlers that run ON the web service and read NVIDIA_API_KEY / NVIDIA_MODEL, so the key
+  # must be mounted here too — otherwise tag deployments leave the web app deterministic
+  # even when the API service is live. Mirrors deploy-api and infra/main.tf.
   - id: deploy-web
     name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
     entrypoint: gcloud
@@ -103,5 +110,7 @@ steps:
       - --min-instances=0
       - --max-instances=4
       - --allow-unauthenticated
+      - --set-secrets=NVIDIA_API_KEY=${_SECRET}:latest
+      - --set-env-vars=NVIDIA_MODEL=${_NVIDIA_MODEL}
       - --quiet
     waitFor: [push-web]
