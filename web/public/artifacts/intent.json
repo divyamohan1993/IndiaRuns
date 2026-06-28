@@ -1,0 +1,79 @@
+{
+  "job_title": "Senior AI Engineer",
+  "company": "Redrob",
+  "must_haves": [
+    {
+      "label": "Shipped ranking/search/recsys at scale",
+      "kind": "must"
+    },
+    {
+      "label": "Production embeddings / retrieval",
+      "kind": "must"
+    },
+    {
+      "label": "Vector DB / hybrid search infra",
+      "kind": "must"
+    },
+    {
+      "label": "Ranking eval (NDCG/MRR/MAP, A/B)",
+      "kind": "must"
+    },
+    {
+      "label": "Applied ML at a product company",
+      "kind": "must"
+    },
+    {
+      "label": "5\u20139 yrs (ideal 6\u20138)",
+      "kind": "must"
+    },
+    {
+      "label": "Strong Python / production code",
+      "kind": "must"
+    }
+  ],
+  "anti_patterns": [
+    {
+      "label": "AI keywords + non-eng title",
+      "kind": "anti"
+    },
+    {
+      "label": "Services-only career (no product stint)",
+      "kind": "anti"
+    },
+    {
+      "label": "CV/speech/robotics without NLP/IR",
+      "kind": "anti"
+    },
+    {
+      "label": "Recent-only LangChain, no pre-LLM IR",
+      "kind": "anti"
+    },
+    {
+      "label": "Pure research, no production",
+      "kind": "anti"
+    },
+    {
+      "label": "Title-chaser (many short stints)",
+      "kind": "anti"
+    }
+  ],
+  "behavioral": [
+    {
+      "label": "Open to work",
+      "kind": "behavioral"
+    },
+    {
+      "label": "Responsive recruiter rate",
+      "kind": "behavioral"
+    },
+    {
+      "label": "Notice \u2264 30 days",
+      "kind": "behavioral"
+    },
+    {
+      "label": "Active in last 3 months",
+      "kind": "behavioral"
+    }
+  ],
+  "clause_count": 11
+}

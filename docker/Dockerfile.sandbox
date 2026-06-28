@@ -1,0 +1,48 @@
+# Judge-reproduction sandbox: extends the ranker, bakes in the 100-line stratified
+# real sample + the sample-sized frozen artifacts, and produces /out/submission.csv.
+#
+# Build:  docker build -f docker/Dockerfile.sandbox -t indiaruns-sandbox .
+# Run  :  docker run --rm --network none --cpus=4 --memory=16g \
+#             -v "$PWD/out:/out" indiaruns-sandbox \
+#             --candidates /app/data/sample_candidates.jsonl \
+#             --out /out/submission.csv --artifacts /app/artifacts
+#
+# --network none removes the network namespace entirely: the graded path cannot
+# reach the network even if it tried. The container exits 0 with a valid CSV.
+FROM python:3.11.15-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    OMP_NUM_THREADS=1 \
+    OPENBLAS_NUM_THREADS=1 \
+    MKL_NUM_THREADS=1 \
+    PYTHONHASHSEED=0
+
+WORKDIR /app
+
+# Optional build-only proxy/CA passthrough for sandboxed CI environments where the
+# build host reaches PyPI through a TLS-terminating proxy. Empty by default, so a
+# normal `docker build` on an open network is unaffected. NEVER used at run time.
+ARG HTTPS_PROXY=
+ARG BUILD_CA=
+
+COPY requirements-rank.txt ./
+# If a build-time CA bundle was provided in the context, trust it for this pip step.
+# docker/ca/ is a tracked dir (holds .gitkeep) so this COPY always succeeds; the actual
+# build-ca.crt is gitignored and present only in sandboxed-CI build contexts.
+COPY docker/ca/ /tmp/ca/
+RUN if [ -s /tmp/ca/build-ca.crt ]; then export PIP_CERT=/tmp/ca/build-ca.crt; fi; \
+    pip install --no-cache-dir -r requirements-rank.txt && rm -rf /tmp/ca
+
+COPY rank.py features.py reasoning.py validate_submission.py ./
+COPY core/ ./core/
+
+# Bake the stratified 100-line real sample + the matching sample-sized artifacts.
+COPY data/sample_candidates.jsonl ./data/sample_candidates.jsonl
+COPY artifacts_sample/ ./artifacts/
+
+RUN mkdir -p /out
+
+ENTRYPOINT ["python", "rank.py"]
+CMD ["--candidates", "/app/data/sample_candidates.jsonl", \
+     "--out", "/out/submission.csv", "--artifacts", "/app/artifacts"]

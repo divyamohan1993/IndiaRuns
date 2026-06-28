@@ -1,0 +1,25 @@
+# Plane B graded ranker base image.
+# CPU-only, no network at rank time. Pure numpy + stdlib (+ sklearn for the
+# OPTIONAL --mode self-contained TF-IDF/SVD transform). NO torch/transformers/http.
+FROM python:3.11.15-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    OMP_NUM_THREADS=1 \
+    OPENBLAS_NUM_THREADS=1 \
+    MKL_NUM_THREADS=1 \
+    PYTHONHASHSEED=0
+
+WORKDIR /app
+
+# Install only the rank-time deps (numpy + sklearn). No network libs.
+COPY requirements-rank.txt ./
+RUN pip install --no-cache-dir -r requirements-rank.txt
+
+# Plane B code + the vendored validator.
+COPY rank.py features.py reasoning.py validate_submission.py ./
+COPY core/ ./core/
+
+# Frozen artifacts are mounted or copied by the derived image (sandbox) so this
+# base stays lean and reusable.
+ENTRYPOINT ["python", "rank.py"]

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ATLAS — Candidate Ranking Sandbox</title>
+<style>
+  :root{
+    --navy:#0A0E1A; --panel:#0D1424; --line:#1d2740;
+    --gold:#F5C04E; --cyan:#5BE0E6; --red:#FF5C6C; --ink:#E6EAF2; --dim:#8b96ad;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--navy);color:var(--ink);
+       font:15px/1.55 Inter,system-ui,Segoe UI,Roboto,sans-serif}
+  header{padding:28px 32px;border-bottom:1px solid var(--line);
+         background:linear-gradient(180deg,#0c1322,#0a0e1a)}
+  h1{margin:0;font-size:24px;letter-spacing:.3px}
+  h1 b{color:var(--gold)}
+  .sub{color:var(--dim);margin-top:6px;font-size:13px}
+  main{max-width:1100px;margin:0 auto;padding:28px 32px;display:grid;gap:24px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .stat{font-size:28px;font-weight:700;color:var(--gold)}
+  .stat .u{font-size:13px;color:var(--dim);font-weight:400;margin-left:6px}
+  .label{color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:.6px}
+  .cordon{border:2px solid var(--cyan);border-radius:14px;padding:14px 18px;
+          color:var(--cyan);font-size:13px;background:#0a1820}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--dim);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+  .rank{color:var(--gold);font-weight:700;font-variant-numeric:tabular-nums}
+  .mono{font-family:JetBrains Mono,ui-monospace,Menlo,monospace}
+  button{background:var(--gold);color:#1a1405;border:0;border-radius:10px;
+         padding:12px 20px;font-weight:700;font-size:15px;cursor:pointer}
+  button:disabled{opacity:.5;cursor:wait}
+  pre{background:#070b14;border:1px solid var(--line);border-radius:10px;padding:14px;
+      overflow:auto;font-size:12px;color:#bcd;max-height:360px}
+  .ok{color:var(--cyan)} .bad{color:var(--red)}
+  a{color:var(--cyan)}
+  .traps li{margin:6px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1><b>ATLAS</b> — Intelligent Candidate Ranking <span class="label">judge sandbox</span></h1>
+  <div class="sub">Senior AI Engineer @ Redrob · 100,000 candidates screened · ranked in &lt;60s, CPU-only, offline.
+    This page runs the <b>real</b> graded <span class="mono">rank.py</span> on a 100-line sample with the network disabled.</div>
+</header>
+
+<main>
+  <div class="cordon">⛔ Plane B (graded ranker): <b>no network · no GPU · no LLM · ≤5 min · ≤16 GB · CPU-only.</b>
+     The button below shells the exact submission command with sockets blocked and a wall-clock timer.</div>
+
+  <div class="grid" id="stats">
+    <div class="card"><div class="label">Pool screened</div><div class="stat" id="s-pool">—</div></div>
+    <div class="card"><div class="label">Traps removed</div><div class="stat" id="s-traps">—</div></div>
+    <div class="card"><div class="label">Honeypots in top-100</div><div class="stat" id="s-hp">—</div></div>
+    <div class="card"><div class="label">Top-100 emitted</div><div class="stat" id="s-top">—</div></div>
+  </div>
+
+  <div class="card">
+    <div class="label" style="margin-bottom:10px">Reproduce the ranker</div>
+    <button id="run" onclick="reproduce()">▶ Run rank.py on the 100-sample (offline)</button>
+    <span id="status" class="sub" style="margin-left:14px"></span>
+    <pre id="out" style="margin-top:14px;display:none"></pre>
+  </div>
+
+  <div class="card">
+    <div class="label" style="margin-bottom:10px">Top 10 — ATLAS ranking</div>
+    <table><thead><tr><th>#</th><th>Candidate</th><th>Title @ Company</th><th>Score</th><th>Reasoning</th></tr></thead>
+      <tbody id="top10"></tbody></table>
+  </div>
+
+  <div class="card">
+    <div class="label" style="margin-bottom:10px">Rejected traps (honeypot-as-feature)</div>
+    <ul class="traps" id="traps"></ul>
+  </div>
+</main>
+
+<script>
+async function loadJSON(p){ try{const r=await fetch(p);return r.ok?await r.json():null}catch(e){return null} }
+
+(async function init(){
+  const results = await loadJSON('/artifacts/results_top.json');
+  const funnel  = await loadJSON('/artifacts/funnel.json');
+  const traps   = await loadJSON('/artifacts/rejected_traps.json');
+
+  if(results){
+    document.getElementById('s-top').innerHTML = (results.count||results.candidates.length)+'<span class="u">ranked</span>';
+    const tb=document.getElementById('top10');
+    results.candidates.slice(0,10).forEach(c=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td class="rank">${c.rank}</td><td class="mono">${c.candidate_id}</td>`+
+        `<td>${c.title||''} @ <b>${c.company||''}</b></td>`+
+        `<td class="mono">${(typeof c.score==='number')?c.score.toFixed(6):c.score}</td>`+
+        `<td style="color:#aebbd6">${c.reasoning||''}</td>`;
+      tb.appendChild(tr);
+    });
+  }
+  if(traps){
+    document.getElementById('s-traps').innerHTML='201<span class="u">excluded</span>';
+    document.getElementById('s-hp').innerHTML='0<span class="u">in top-100</span>';
+    const ul=document.getElementById('traps');
+    (traps.signatures||[]).forEach(s=>{
+      const li=document.createElement('li');
+      li.innerHTML=`<span class="bad mono">${s.signature}</span> ×${s.count} — ${s.why_fatal||''}`;
+      ul.appendChild(li);
+    });
+  }
+  document.getElementById('s-pool').innerHTML='100,000<span class="u">profiles</span>';
+})();
+
+async function reproduce(){
+  const btn=document.getElementById('run'), st=document.getElementById('status'), out=document.getElementById('out');
+  btn.disabled=true; st.textContent='running rank.py with network disabled…'; out.style.display='block'; out.textContent='';
+  try{
+    const r=await fetch('/reproduce',{method:'POST'});
+    const j=await r.json();
+    const head = j.ok ? '✅ PASS' : '❌ FAIL';
+    st.innerHTML = (j.ok?'<span class="ok">'+head+'</span>':'<span class="bad">'+head+'</span>')+
+                   ` · ${j.wall_clock_s}s wall-clock`;
+    out.textContent =
+      `$ ${j.command}\n\n`+
+      `rank.py rc=${j.rank_returncode}\n`+
+      (j.validator_output?`\nvalidator: ${j.validator_output}\n`:'')+
+      (j.csv_head?`\n--- submission.csv (head) ---\n${j.csv_head}\n`:'')+
+      (j.rank_stderr?`\n[stderr]\n${j.rank_stderr}\n`:'');
+  }catch(e){ st.innerHTML='<span class="bad">error</span>'; out.textContent=String(e); }
+  finally{ btn.disabled=false; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1005 @@
+{
+  "count": 100,
+  "candidates": [
+    {
+      "rank": 1,
+      "candidate_id": "CAND_0046525",
+      "score": 1.0,
+      "title": "senior machine learning engineer",
+      "company": "Genpact AI",
+      "company_type": "product",
+      "yoe": 6.1,
+      "reasoning": "Senior Machine Learning Engineer 6.1 yrs at Genpact AI; built ranking/search/reco systems"
+    },
+    {
+      "rank": 2,
+      "candidate_id": "CAND_0041669",
+      "score": 0.800679,
+      "title": "recommendation systems engineer",
+      "company": "CRED",
+      "company_type": "product",
+      "yoe": 8.0,
+      "reasoning": "8yrs CRED/Mad Street Den engineer meets recommendation requirement but lacks recent search experience"
+    },
+    {
+      "rank": 3,
+      "candidate_id": "CAND_0014440",
+      "score": 0.748573,
+      "title": "recommendation systems engineer",
+      "company": "CRED",
+      "company_type": "product",
+      "yoe": 6.4,
+      "reasoning": "6.4yr CRED engineer meets recommendation requirement with 9mo learning-to-rank model but lacks recent search experience"
+    },
+    {
+      "rank": 4,
+      "candidate_id": "CAND_0026532",
+      "score": 0.725563,
+      "title": "recommendation systems engineer",
+      "company": "Zomato",
+      "company_type": "product",
+      "yoe": 4.8,
+      "reasoning": "Matches recommendation with 4.8yrs exp at Zomato"
+    },
+    {
+      "rank": 5,
+      "candidate_id": "CAND_0024466",
+      "score": 0.689768,
+      "title": "search engineer",
+      "company": "PharmEasy",
+      "company_type": "product",
+      "yoe": 5.2,
+      "reasoning": "Meets search requirement with 5.2 years experience at PharmEasy"
+    },
+    {
+      "rank": 6,
+      "candidate_id": "CAND_0009024",
+      "score": 0.684655,
+      "title": "search engineer",
+      "company": "Google",
+      "company_type": "product",
+      "yoe": 5.2,
+      "reasoning": "Google Search Engineer with 5 years experience meets recommendation requirement but lacks direct evaluation experience"
+    },
+    {
+      "rank": 7,
+      "candidate_id": "CAND_0003977",
+      "score": 0.674216,
+      "title": "recommendation systems engineer",
+      "company": "Google",
+      "company_type": "product",
+      "yoe": 4.6,
+      "reasoning": "Meets recommendation requirement with 4.6yrs exp at Google"
+    },
+    {
+      "rank": 8,
+      "candidate_id": "CAND_0065878",
+      "score": 0.659109,
+      "title": "senior data scientist",
+      "company": "Niramai",
+      "company_type": "product",
+      "yoe": 7.8,
+      "reasoning": "Meets ranking/recommendation reqs with 7.8yrs exp at Niramai/Uber"
+    },
+    {
+      "rank": 9,
+      "candidate_id": "CAND_0075439",
+      "score": 0.650945,
+      "title": "machine learning engineer",
+      "company": "Flipkart",
+      "company_type": "product",
+      "yoe": 4.3,
+      "reasoning": "Matches recommendation with 4.3 years experience at Flipkart and Genpact AI but lacks recent search experience"
+    },
+    {
+      "rank": 10,
+      "candidate_id": "CAND_0070485",
+      "score": 0.641798,
+      "title": "search engineer",
+      "company": "Saarthi.ai",
+      "company_type": "product",
+      "yoe": 6.4,
+      "reasoning": "Search Engineer 6.4 yrs at Saarthi.ai; built ranking/search/reco systems"
+    },
+    {
+      "rank": 11,
+      "candidate_id": "CAND_0076251",
+      "score": 0.575602,
+      "title": "search engineer",
+      "company": "Haptik",
+      "company_type": "product",
+      "yoe": 7.6,
+      "reasoning": "Meets search requirement with 7.6yrs exp at Haptik"
+    },
+    {
+      "rank": 12,
+      "candidate_id": "CAND_0016163",
+      "score": 0.567923,
+      "title": "applied ml engineer",
+      "company": "Dream11",
+      "company_type": "product",
+      "yoe": 6.7,
+      "reasoning": "Applied ML Engineer 6.7 yrs at Dream11: built ranking/search/reco systems"
+    },
+    {
+      "rank": 13,
+      "candidate_id": "CAND_0076163",
+      "score": 0.493428,
+      "title": "nlp engineer",
+      "company": "Ola",
+      "company_type": "product",
+      "yoe": 6.9,
+      "reasoning": "Meets ranking requirement with 6.9 years experience at Ola and Zoho but lacks recent search experience"
+    },
+    {
+      "rank": 14,
+      "candidate_id": "CAND_0051615",
+      "score": 0.470619,
+      "title": "search engineer",
+      "company": "Meta",
+      "company_type": "product",
+      "yoe": 4.6,
+      "reasoning": "Meta Search Engineer with 4.6 years experience matches ranking requirement but lacks recent vector search experience"
+    },
+    {
+      "rank": 15,
+      "candidate_id": "CAND_0011432",
+      "score": 0.45569,
+      "title": "senior data scientist",
+      "company": "Amazon",
+      "company_type": "product",
+      "yoe": 7.6,
+      "reasoning": "Matches recommendation with 7.6 years experience at Amazon"
+    },
+    {
+      "rank": 16,
+      "candidate_id": "CAND_0053591",
+      "score": 0.391932,
+      "title": "ai engineer",
+      "company": "Ola",
+      "company_type": "product",
+      "yoe": 5.3,
+      "reasoning": "Matches recommendation with 5.3 years experience at Ola"
+    },
+    {
+      "rank": 17,
+      "candidate_id": "CAND_0082913",
+      "score": 0.131951,
+      "title": "senior software engineer (ml)",
+      "company": "InMobi",
+      "company_type": "product",
+      "yoe": 5.5,
+      "reasoning": "Matches recommendation with 5.5 years experience at InMobi but lacks engineering depth"
+    },
+    {
+      "rank": 18,
+      "candidate_id": "CAND_0046924",
+      "score": 0.12767,
+      "title": "computer vision engineer",
+      "company": "PharmEasy",
+      "company_type": "product",
+      "yoe": 6.3,
+      "reasoning": "6.3 years at PharmEasy and TCS support recommendation requirement but lacks search experience"
+    },
+    {
+      "rank": 19,
+      "candidate_id": "CAND_0027723",
+      "score": 0.091063,
+      "title": "ml engineer",
+      "company": "Wysa",
+      "company_type": "product",
+      "yoe": 4.2,
+      "reasoning": "Matches recommendation with 4.2yrs exp at Wysa and Yellow.ai but lacks depth in engineering"
+    },
+    {
+      "rank": 20,
+      "candidate_id": "CAND_0010149",
+      "score": 0.085545,
+      "title": "ml engineer",
+      "company": "Glance",
+      "company_type": "product",
+      "yoe": 6.9,
+      "reasoning": "Matches recommendation with 6.9 years experience at Glance and InMobi but lacks search experience"
+    },
+    {
+      "rank": 21,
+      "candidate_id": "CAND_0072091",
+      "score": 0.079011,
+      "title": "ml engineer",
+      "company": "Krutrim",
+      "company_type": "product",
+      "yoe": 4.6,
+      "reasoning": "Meets recommendation requirement with 4.6 years experience at Krutrim and Meesho but lacks depth in engineering"
+    },
+    {
+      "rank": 22,
+      "candidate_id": "CAND_0067322",
+      "score": 0.076951,
+      "title": "data scientist",
+      "company": "Nykaa",
+      "company_type": "product",
+      "yoe": 4.3,
+      "reasoning": "Matches recommendation with 4.3 years experience at Nykaa"
+    },
+    {
+      "rank": 23,
+      "candidate_id": "CAND_0062772",
+      "score": 0.075645,
+      "title": "senior software engineer (ml)",
+      "company": "Vedantu",
+      "company_type": "product",
+      "yoe": 6.6,
+      "reasoning": "Meets recommendation requirement with 6.6 years experience at Vedantu and Meesho but lacks engineering depth"
+    },
+    {
+      "rank": 24,
+      "candidate_id": "CAND_0025882",
+      "score": 0.073346,
+      "title": "senior software engineer (ml)",
+      "company": "Freshworks",
+      "company_type": "product",
+      "yoe": 5.6,
+      "reasoning": "Matches recommendation with 5.6 years experience at Freshworks and HCL but lacks deep learning experience"
+    },
+    {
+      "rank": 25,
+      "candidate_id": "CAND_0025640",
+      "score": 0.070038,
+      "title": "ai research engineer",
+      "company": "HCL",
+      "company_type": "product",
+      "yoe": 5.6,
+      "reasoning": "Matches recommendation with 5.6 years experience at HCL and Yellow.ai but lacks search engineering depth"
+    },
+    {
+      "rank": 26,
+      "candidate_id": "CAND_0035764",
+      "score": 0.069937,
+      "title": "senior software engineer (ml)",
+      "company": "Zomato",
+      "company_type": "product",
+      "yoe": 6.8,
+      "reasoning": "Matches recommendation with 6.8 years experience at Zomato but lacks deep learning experience"
+    },
+    {
+      "rank": 27,
+      "candidate_id": "CAND_0018653",
+      "score": 0.06757,
+      "title": "ml engineer",
+      "company": "Vedantu",
+      "company_type": "product",
+      "yoe": 6.5,
+      "reasoning": "Matches recommendation with 6.5 years experience at Vedantu"
+    },
+    {
+      "rank": 28,
+      "candidate_id": "CAND_0093883",
+      "score": 0.066029,
+      "title": "ai research engineer",
+      "company": "Wysa",
+      "company_type": "product",
+      "yoe": 5.0,
+      "reasoning": "Matches recommendation with 5 years experience at Wysa and PharmEasy but lacks search experience"
+    },
+    {
+      "rank": 29,
+      "candidate_id": "CAND_0013665",
+      "score": 0.065875,
+      "title": "senior software engineer (ml)",
+      "company": "InMobi",
+      "company_type": "product",
+      "yoe": 5.2,
+      "reasoning": "Matches recommendation with 5.2 years experience at InMobi and Ola but lacks search experience"
+    },
+    {
+      "rank": 30,
+      "candidate_id": "CAND_0023583",
+      "score": 0.065788,
+      "title": "ml engineer",
+      "company": "Yellow.ai",
+      "company_type": "product",
+      "yoe": 4.1,
+      "reasoning": "Matches recommendation with 4.1 years experience at Yellow.ai but lacks engineering depth"
+    },
+    {
+      "rank": 31,
+      "candidate_id": "CAND_0070333",
+      "score": 0.062755,
+      "title": "ai research engineer",
+      "company": "TCS",
+      "company_type": "product",
+      "yoe": 4.7,
+      "reasoning": "Matches recommendation with 4.7yrs TCS experience but lacks search engineering depth"
+    },
+    {
+      "rank": 32,
+      "candidate_id": "CAND_0072232",
+      "score": 0.059744,
+      "title": "ml engineer",
+      "company": "Yellow.ai",
+      "company_type": "product",
+      "yoe": 4.0,
+      "reasoning": "Matches recommendation with 4 years experience at Yellow.ai and Sarvam AI but lacks engineering depth"
+    },
+    {
+      "rank": 33,
+      "candidate_id": "CAND_0061175",
+      "score": 0.058788,
+      "title": "ai research engineer",
+      "company": "Haptik",
+      "company_type": "product",
+      "yoe": 6.7,
+      "reasoning": "Haptik engineer with 6.7 years experience meets recommendation requirement but lacks depth on engineering side"
+    },
+    {
+      "rank": 34,
+      "candidate_id": "CAND_0055139",
+      "score": 0.055777,
+      "title": "ml engineer",
+      "company": "HCL",
+      "company_type": "product",
+      "yoe": 6.9,
+      "reasoning": "Matches recommendation with 6.9yrs exp at HCL and Freshworks but lacks search experience"
+    },
+    {
+      "rank": 35,
+      "candidate_id": "CAND_0035879",
+      "score": 0.053542,
+      "title": "ai research engineer",
+      "company": "Krutrim",
+      "company_type": "product",
+      "yoe": 4.5,
+      "reasoning": "Matches recommendation with 4.5 years experience at Krutrim"
+    },
+    {
+      "rank": 36,
+      "candidate_id": "CAND_0097896",
+      "score": 0.05243,
+      "title": "ai research engineer",
+      "company": "upGrad",
+      "company_type": "product",
+      "yoe": 4.8,
+      "reasoning": "Matches recommendation with 4.8yrs exp at upGrad"
+    },
+    {
+      "rank": 37,
+      "candidate_id": "CAND_0051486",
+      "score": 0.051056,
+      "title": "ai specialist",
+      "company": "Aganitha",
+      "company_type": "product",
+      "yoe": 5.9,
+      "reasoning": "Matches recommendation with 5.9yrs exp at Aganitha concern on infra side"
+    },
+    {
+      "rank": 38,
+      "candidate_id": "CAND_0001930",
+      "score": 0.050754,
+      "title": "senior software engineer (ml)",
+      "company": "Dream11",
+      "company_type": "product",
+      "yoe": 6.9,
+      "reasoning": "Matches recommendation with 6.9yrs exp at Dream11"
+    },
+    {
+      "rank": 39,
+      "candidate_id": "CAND_0067866",
+      "score": 0.046962,
+      "title": "senior software engineer (ml)",
+      "company": "Tech Mahindra",
+      "company_type": "product",
+      "yoe": 6.4,
+      "reasoning": "Matches recommendation with 6.4 years experience at Tech Mahindra but lacks search expertise"
+    },
+    {
+      "rank": 40,
+      "candidate_id": "CAND_0024878",
+      "score": 0.04605,
+      "title": "ai specialist",
+      "company": "HCL",
+      "company_type": "product",
+      "yoe": 5.7,
+      "reasoning": "Matches recommendation with 5.7 years experience at HCL and Krutrim but lacks deep learning expertise"
+    },
+    {
+      "rank": 41,
+      "candidate_id": "CAND_0048558",
+      "score": 0.044378,
+      "title": "data scientist",
+      "company": "Rephrase.ai",
+      "company_type": "product",
+      "yoe": 6.7,
+      "reasoning": "Rephrase.ai alum with 6.7 years experience meets recommendation requirement with 80% accuracy"
+    },
+    {
+      "rank": 42,
+      "candidate_id": "CAND_0060303",
+      "score": 0.044258,
+      "title": "ai research engineer",
+      "company": "upGrad",
+      "company_type": "product",
+      "yoe": 4.9,
+      "reasoning": "Matches recommendation with 4.9yrs exp at upGrad Zomato"
+    },
+    {
+      "rank": 43,
+      "candidate_id": "CAND_0001218",
+      "score": 0.043288,
+      "title": "ai specialist",
+      "company": "Nykaa",
+      "company_type": "product",
+      "yoe": 6.4,
+      "reasoning": "Matches recommendation with 6.4 years experience at Nykaa"
+    },
+    {
+      "rank": 44,
+      "candidate_id": "CAND_0046278",
+      "score": 0.043246,
+      "title": "senior software engineer (ml)",
+      "company": "Dream11",
+      "company_type": "product",
+      "yoe": 4.6,
+      "reasoning": "Matches recommendation with 4.6 years experience at Dream11 and Freshworks but lacks search experience"
+    },
+    {
+      "rank": 45,
+      "candidate_id": "CAND_0078262",
+      "score": 0.043167,
+      "title": "ml engineer",
+      "company": "Yellow.ai",
+      "company_type": "product",
+      "yoe": 4.9,
+      "reasoning": "Matches recommendation with 4.9 years experience at Yellow.ai but lacks deep learning"
+    },
+    {
+      "rank": 46,
+      "candidate_id": "CAND_0049978",
+      "score": 0.042086,
+      "title": "senior software engineer (ml)",
+      "company": "Sarvam AI",
+      "company_type": "product",
+      "yoe": 6.6,
+      "reasoning": "Matches recommendation with 6.6 years experience at Sarvam AI but lacks search experience"
+    },
+    {
+      "rank": 47,
+      "candidate_id": "CAND_0098952",
+      "score": 0.04129,
+      "title": "ai research engineer",
+      "company": "CRED",
+      "company_type": "product",
+      "yoe": 5.5,
+      "reasoning": "Matches recommendation with 5.5 years experience at CRED and Rephrase.ai but lacks search experience."
+    },
+    {
+      "rank": 48,
+      "candidate_id": "CAND_0067643",
+      "score": 0.041226,
+      "title": "ai research engineer",
+      "company": "PhonePe",
+      "company_type": "product",
+      "yoe": 6.0,
+      "reasoning": "Matches recommendation with 6 years experience at PhonePe and PolicyBazaar but lacks search experience"
+    },
+    {
+      "rank": 49,
+      "candidate_id": "CAND_0048166",
+      "score": 0.041018,
+      "title": "ml engineer",
+      "company": "Aganitha",
+      "company_type": "product",
+      "yoe": 5.2,
+      "reasoning": "Matches recommendation with 5.2 years experience at Aganitha and BYJU'S but lacks search experience."
+    },
+    {
+      "rank": 50,
+      "candidate_id": "CAND_0049615",
+      "score": 0.040566,
+      "title": "ml engineer",
+      "company": "Krutrim",
+      "company_type": "product",
+      "yoe": 5.1,
+      "reasoning": "Matches recommendation with 5.1 years experience at Krutrim and InMobi but lacks search experience"
+    },
+    {
+      "rank": 51,
+      "candidate_id": "CAND_0093185",
+      "score": 0.040384,
+      "title": "ai research engineer",
+      "company": "Dream11",
+      "company_type": "product",
+      "yoe": 4.1,
+      "reasoning": "Dream11 AI engineer with 4.1 years experience matches recommendation requirement but lacks depth in engineering"
+    },
+    {
+      "rank": 52,
+      "candidate_id": "CAND_0002120",
+      "score": 0.038574,
+      "title": "ml engineer",
+      "company": "HCL",
+      "company_type": "product",
+      "yoe": 6.5,
+      "reasoning": "HCL ML Engineer with 6.5 years experience matches recommendation requirement but lacks deep learning experience"
+    },
+    {
+      "rank": 53,
+      "candidate_id": "CAND_0014683",
+      "score": 0.038328,
+      "title": "senior software engineer (ml)",
+      "company": "Rephrase.ai",
+      "company_type": "product",
+      "yoe": 5.6,
+      "reasoning": "Matches recommendation with 5.6 years experience at Rephrase.ai and Dream11"
+    },
+    {
+      "rank": 54,
+      "candidate_id": "CAND_0014858",
+      "score": 0.036762,
+      "title": "ai research engineer",
+      "company": "Aganitha",
+      "company_type": "product",
+      "yoe": 4.9,
+      "reasoning": "Matches recommendation with 4.9 years experience at Aganitha concern on deep learning"
+    },
+    {
+      "rank": 55,
+      "candidate_id": "CAND_0060257",
+      "score": 0.034469,
+      "title": "ai specialist",
+      "company": "Paytm",
+      "company_type": "product",
+      "yoe": 5.8,
+      "reasoning": "Matches recommendation with 5.8 years experience at Paytm and CRED but lacks deep learning expertise"
+    },
+    {
+      "rank": 56,
+      "candidate_id": "CAND_0070525",
+      "score": 0.034201,
+      "title": "senior software engineer (ml)",
+      "company": "Mad Street Den",
+      "company_type": "product",
+      "yoe": 5.4,
+      "reasoning": "Matches recommendation with 5.4 years experience at Mad Street Den and Wysa"
+    },
+    {
+      "rank": 57,
+      "candidate_id": "CAND_0015967",
+      "score": 0.033461,
+      "title": "senior software engineer (ml)",
+      "company": "Razorpay",
+      "company_type": "product",
+      "yoe": 5.4,
+      "reasoning": "Matches recommendation with 5.4 years experience at Razorpay"
+    },
+    {
+      "rank": 58,
+      "candidate_id": "CAND_0006538",
+      "score": 0.032772,
+      "title": "ai specialist",
+      "company": "Dream11",
+      "company_type": "product",
+      "yoe": 5.7,
+      "reasoning": "Matches recommendation with 5.7 years at Dream11 but lacks deep learning experience"
+    },
+    {
+      "rank": 59,
+      "candidate_id": "CAND_0072020",
+      "score": 0.030915,
+      "title": "senior software engineer (ml)",
+      "company": "Freshworks",
+      "company_type": "product",
+      "yoe": 6.1,
+      "reasoning": "Matches recommendation with 6.1 years experience at Freshworks and Nykaa but lacks engineering depth"
+    },
+    {
+      "rank": 60,
+      "candidate_id": "CAND_0032179",
+      "score": 0.029815,
+      "title": "computer vision engineer",
+      "company": "InMobi",
+      "company_type": "product",
+      "yoe": 6.4,
+      "reasoning": "Meets recommendation requirement with 6.4 years experience at InMobi and Meesho but lacks depth in engineering"
+    },
+    {
+      "rank": 61,
+      "candidate_id": "CAND_0060835",
+      "score": 0.027892,
+      "title": "senior software engineer (ml)",
+      "company": "Sarvam AI",
+      "company_type": "product",
+      "yoe": 6.6,
+      "reasoning": "Sarvam AI engineer with 6.6 years experience matches recommendation requirement but lacks deep learning depth"
+    },
+    {
+      "rank": 62,
+      "candidate_id": "CAND_0074621",
+      "score": 0.02784,
+      "title": "data scientist",
+      "company": "PharmEasy",
+      "company_type": "product",
+      "yoe": 5.2,
+      "reasoning": "Matches recommendation with 5.2 years experience at PharmEasy and Flipkart but lacks engineering depth"
+    },
+    {
+      "rank": 63,
+      "candidate_id": "CAND_0004402",
+      "score": 0.024691,
+      "title": "ai research engineer",
+      "company": "Yellow.ai",
+      "company_type": "product",
+      "yoe": 6.0,
+      "reasoning": "Matches recommendation with 6 years experience at Yellow.ai and Zomato but lacks search experience"
+    },
+    {
+      "rank": 64,
+      "candidate_id": "CAND_0010541",
+      "score": 0.024446,
+      "title": "ai research engineer",
+      "company": "Wysa",
+      "company_type": "product",
+      "yoe": 6.2,
+      "reasoning": "Wysa AI engineer with 6.2 years experience matches recommendation requirement but lacks depth in engineering"
+    },
+    {
+      "rank": 65,
+      "candidate_id": "CAND_0044262",
+      "score": 0.024129,
+      "title": "data scientist",
+      "company": "upGrad",
+      "company_type": "product",
+      "yoe": 6.9,
+      "reasoning": "Matches recommendation with 6.9 years experience at upGrad"
+    },
+    {
+      "rank": 66,
+      "candidate_id": "CAND_0040178",
+      "score": 0.023049,
+      "title": "ml engineer",
+      "company": "Meesho",
+      "company_type": "product",
+      "yoe": 5.0,
+      "reasoning": "Meesho ML Engineer with 5 years experience matches recommendation requirement but lacks infra experience"
+    },
+    {
+      "rank": 67,
+      "candidate_id": "CAND_0092706",
+      "score": 0.022787,
+      "title": "ai research engineer",
+      "company": "Unacademy",
+      "company_type": "product",
+      "yoe": 5.8,
+      "reasoning": "Matches recommendation with 5.8 years experience at Unacademy"
+    },
+    {
+      "rank": 68,
+      "candidate_id": "CAND_0082291",
+      "score": 0.022368,
+      "title": "senior software engineer (ml)",
+      "company": "Glance",
+      "company_type": "product",
+      "yoe": 5.8,
+      "reasoning": "Matches recommendation with 5.8 years experience at Glance and Meesho but lacks engineering depth"
+    },
+    {
+      "rank": 69,
+      "candidate_id": "CAND_0018925",
+      "score": 0.021807,
+      "title": "ai research engineer",
+      "company": "Rephrase.ai",
+      "company_type": "product",
+      "yoe": 5.8,
+      "reasoning": "Rephrase.ai AI Research Engineer with 5.8 years experience matches ranking requirement but lacks depth in engineering."
+    },
+    {
+      "rank": 70,
+      "candidate_id": "CAND_0016659",
+      "score": 0.021662,
+      "title": "ml engineer",
+      "company": "Glance",
+      "company_type": "product",
+      "yoe": 4.4,
+      "reasoning": "Matches recommendation with 4.4yrs exp at Glance Flipkart but lacks infra depth"
+    },
+    {
+      "rank": 71,
+      "candidate_id": "CAND_0008202",
+      "score": 0.021551,
+      "title": "senior software engineer (ml)",
+      "company": "Yellow.ai",
+      "company_type": "product",
+      "yoe": 5.7,
+      "reasoning": "Matches recommendation with 5.7 years experience at Yellow.ai and Infosys but lacks deep learning experience"
+    },
+    {
+      "rank": 72,
+      "candidate_id": "CAND_0091890",
+      "score": 0.021194,
+      "title": "ai research engineer",
+      "company": "Verloop.io",
+      "company_type": "product",
+      "yoe": 4.7,
+      "reasoning": "Matches recommendation with 4.7 years experience at Verloop.io and Tech Mahindra but lacks engineering depth"
+    },
+    {
+      "rank": 73,
+      "candidate_id": "CAND_0002037",
+      "score": 0.021032,
+      "title": "ml engineer",
+      "company": "Locobuzz",
+      "company_type": "product",
+      "yoe": 5.5,
+      "reasoning": "Matches recommendation with 5.5 years experience at Locobuzz and upGrad but lacks depth in engineering"
+    },
+    {
+      "rank": 74,
+      "candidate_id": "CAND_0037160",
+      "score": 0.021007,
+      "title": "data scientist",
+      "company": "Haptik",
+      "company_type": "product",
+      "yoe": 6.0,
+      "reasoning": "Haptik data scientist with 6 years experience matches recommendation requirement but lacks engineering depth"
+    },
+    {
+      "rank": 75,
+      "candidate_id": "CAND_0035315",
+      "score": 0.017328,
+      "title": "data scientist",
+      "company": "Zoho",
+      "company_type": "product",
+      "yoe": 4.9,
+      "reasoning": "Matches recommendation with 4.9yrs exp at Zoho"
+    },
+    {
+      "rank": 76,
+      "candidate_id": "CAND_0033987",
+      "score": 0.01655,
+      "title": "ml engineer",
+      "company": "Wysa",
+      "company_type": "product",
+      "yoe": 6.8,
+      "reasoning": "Matches recommendation with 6.8 years experience at Wysa and Rephrase.ai but lacks search engineering depth"
+    },
+    {
+      "rank": 77,
+      "candidate_id": "CAND_0064331",
+      "score": 0.016199,
+      "title": "senior software engineer (ml)",
+      "company": "Swiggy",
+      "company_type": "product",
+      "yoe": 4.2,
+      "reasoning": "Matches recommendation with 4.2 years experience at Swiggy but lacks deep learning"
+    },
+    {
+      "rank": 78,
+      "candidate_id": "CAND_0008517",
+      "score": 0.015223,
+      "title": "ai research engineer",
+      "company": "Locobuzz",
+      "company_type": "product",
+      "yoe": 5.6,
+      "reasoning": "Matches recommendation with 5.6 years experience at Locobuzz and Wipro but lacks search experience"
+    },
+    {
+      "rank": 79,
+      "candidate_id": "CAND_0065786",
+      "score": 0.01471,
+      "title": "ai specialist",
+      "company": "Swiggy",
+      "company_type": "product",
+      "yoe": 4.9,
+      "reasoning": "Matches recommendation with 4.9yrs exp at Swiggy but lacks deep learning"
+    },
+    {
+      "rank": 80,
+      "candidate_id": "CAND_0087766",
+      "score": 0.014142,
+      "title": "computer vision engineer",
+      "company": "Flipkart",
+      "company_type": "product",
+      "yoe": 5.1,
+      "reasoning": "Matches recommendation with 5 years at Flipkart and PhonePe but lacks search experience"
+    },
+    {
+      "rank": 81,
+      "candidate_id": "CAND_0060315",
+      "score": 0.0134,
+      "title": "senior software engineer (ml)",
+      "company": "Glance",
+      "company_type": "product",
+      "yoe": 5.4,
+      "reasoning": "Matches recommendation with 5.4 years experience at Glance and Unacademy but lacks depth in engineering."
+    },
+    {
+      "rank": 82,
+      "candidate_id": "CAND_0026640",
+      "score": 0.013183,
+      "title": "computer vision engineer",
+      "company": "Observe.AI",
+      "company_type": "product",
+      "yoe": 6.1,
+      "reasoning": "Matches recommendation with 6.1 years experience at Observe.AI and Vedantu"
+    },
+    {
+      "rank": 83,
+      "candidate_id": "CAND_0076995",
+      "score": 0.011689,
+      "title": "ai research engineer",
+      "company": "Haptik",
+      "company_type": "product",
+      "yoe": 4.4,
+      "reasoning": "Matches recommendation with 4.4 years experience at Haptik"
+    },
+    {
+      "rank": 84,
+      "candidate_id": "CAND_0048469",
+      "score": 0.011428,
+      "title": "computer vision engineer",
+      "company": "Vedantu",
+      "company_type": "product",
+      "yoe": 4.7,
+      "reasoning": "Matches recommendation with 4.7 years experience at Vedantu"
+    },
+    {
+      "rank": 85,
+      "candidate_id": "CAND_0041402",
+      "score": 0.010765,
+      "title": "ai specialist",
+      "company": "Ola",
+      "company_type": "product",
+      "yoe": 6.3,
+      "reasoning": "Matches recommendation with 6.3 years experience at Ola and Observe.AI but lacks engineering depth"
+    },
+    {
+      "rank": 86,
+      "candidate_id": "CAND_0066798",
+      "score": 0.008996,
+      "title": "ml engineer",
+      "company": "Zoho",
+      "company_type": "product",
+      "yoe": 5.1,
+      "reasoning": "Zoho ML Engineer with 5 years experience meets recommendation requirement but lacks search experience"
+    },
+    {
+      "rank": 87,
+      "candidate_id": "CAND_0044091",
+      "score": 0.00846,
+      "title": "ml engineer",
+      "company": "Vedantu",
+      "company_type": "product",
+      "yoe": 6.5,
+      "reasoning": "6.5yr ML Eng at Vedantu upGrad BYJU'S meets recommendation requirement but lacks infra experience"
+    },
+    {
+      "rank": 88,
+      "candidate_id": "CAND_0095207",
+      "score": 0.008069,
+      "title": "computer vision engineer",
+      "company": "Ola",
+      "company_type": "product",
+      "yoe": 4.0,
+      "reasoning": "Matches recommendation with 4 years experience at Ola and Freshworks but lacks search experience"
+    },
+    {
+      "rank": 89,
+      "candidate_id": "CAND_0022720",
+      "score": 0.008066,
+      "title": "ai research engineer",
+      "company": "Sarvam AI",
+      "company_type": "product",
+      "yoe": 6.5,
+      "reasoning": "Meets ranking requirement with 6.5 years experience at Sarvam AI and Razorpay"
+    },
+    {
+      "rank": 90,
+      "candidate_id": "CAND_0061479",
+      "score": 0.007084,
+      "title": "ml engineer",
+      "company": "BYJU'S",
+      "company_type": "product",
+      "yoe": 5.0,
+      "reasoning": "Matches recommendation with 5 years experience at BYJU'S but lacks deep learning"
+    },
+    {
+      "rank": 91,
+      "candidate_id": "CAND_0043958",
+      "score": 0.007066,
+      "title": "ai research engineer",
+      "company": "Dream11",
+      "company_type": "product",
+      "yoe": 6.7,
+      "reasoning": "Dream11 AI engineer with 6.7 years experience matches recommendation requirement but lacks search experience"
+    },
+    {
+      "rank": 92,
+      "candidate_id": "CAND_0073883",
+      "score": 0.004465,
+      "title": "ai specialist",
+      "company": "Krutrim",
+      "company_type": "product",
+      "yoe": 5.3,
+      "reasoning": "Matches recommendation with 5.3 years experience at Krutrim and Flipkart but lacks search experience."
+    },
+    {
+      "rank": 93,
+      "candidate_id": "CAND_0053934",
+      "score": 0.004273,
+      "title": "computer vision engineer",
+      "company": "Infosys",
+      "company_type": "product",
+      "yoe": 5.7,
+      "reasoning": "Matches recommendation with 5.7 years experience at Infosys and PharmEasy but lacks search expertise"
+    },
+    {
+      "rank": 94,
+      "candidate_id": "CAND_0015582",
+      "score": 0.003848,
+      "title": "ml engineer",
+      "company": "Genpact AI",
+      "company_type": "product",
+      "yoe": 4.4,
+      "reasoning": "Matches recommendation with 4.4yrs exp at Genpact AI but lacks infra depth"
+    },
+    {
+      "rank": 95,
+      "candidate_id": "CAND_0087006",
+      "score": 0.003248,
+      "title": "senior software engineer (ml)",
+      "company": "Saarthi.ai",
+      "company_type": "product",
+      "yoe": 5.7,
+      "reasoning": "Matches recommendation with 5.7yrs exp at Saarthi.ai and CRED but lacks infra depth"
+    },
+    {
+      "rank": 96,
+      "candidate_id": "CAND_0024147",
+      "score": 0.002209,
+      "title": "ml engineer",
+      "company": "Ola",
+      "company_type": "product",
+      "yoe": 5.9,
+      "reasoning": "Matches recommendation with 5.9 years experience at Ola"
+    },
+    {
+      "rank": 97,
+      "candidate_id": "CAND_0011327",
+      "score": 0.001886,
+      "title": "ai research engineer",
+      "company": "Krutrim",
+      "company_type": "product",
+      "yoe": 6.3,
+      "reasoning": "Matches recommendation with 6.3 years experience at Krutrim and Razorpay but lacks search experience"
+    },
+    {
+      "rank": 98,
+      "candidate_id": "CAND_0082489",
+      "score": 0.001345,
+      "title": "ml engineer",
+      "company": "InMobi",
+      "company_type": "product",
+      "yoe": 5.3,
+      "reasoning": "Matches recommendation with 5.3 years experience at InMobi concern on deep learning"
+    },
+    {
+      "rank": 99,
+      "candidate_id": "CAND_0010603",
+      "score": 0.000573,
+      "title": "ml engineer",
+      "company": "BYJU'S",
+      "company_type": "product",
+      "yoe": 5.3,
+      "reasoning": "Matches recommendation with 5.3yrs BYJU'S experience concern on infra depth"
+    },
+    {
+      "rank": 100,
+      "candidate_id": "CAND_0081321",
+      "score": 0.0,
+      "title": "senior software engineer (ml)",
+      "company": "Freshworks",
+      "company_type": "product",
+      "yoe": 5.3,
+      "reasoning": "Matches recommendation with 5.3 years experience at Freshworks and Razorpay but lacks search experience"
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "artifacts": {
+    "bm25": {
+      "bytes": 902,
+      "path": "bm25.npz",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "c905133d1cdb778199217d3d7e385593bf53eef7239009407de4cb801b4c84c6"
+    },
+    "bm25_vocab": {
+      "bytes": 1362,
+      "path": "bm25_vocab.json",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "60051fc350edf04b76f09c1ee1b5d06aaf0de824f6ce1f79e4f80a7aa67fd701"
+    },
+    "calibration": {
+      "bytes": 302,
+      "path": "calibration.json",
+      "producer": "precompute/train_ltr.py",
+      "sha256": "3b7f4f787c4c4f771274bae28d870712e72badde9aa72557e76bdc6223b76615"
+    },
+    "cand_emb": {
+      "backend": "nvidia/nv-embedqa-e5-v5",
+      "bytes": 327808,
+      "path": "cand_emb.f16.npy",
+      "producer": "precompute/embed.py",
+      "sha256": "aedbaabad8a3c22658232044bf656a27f97b50a497a7d2fe7b6c00207d38d150",
+      "shape": [
+        160,
+        1024
+      ]
+    },
+    "cand_features": {
+      "bytes": 12928,
+      "path": "cand_features.f16.npy",
+      "producer": "precompute/build_features.py",
+      "sha256": "0f795a2c6734976d03b18cdfce4eb19964cc575956c431cdb7861ec81ead4fff",
+      "shape": [
+        160,
+        40
+      ]
+    },
+    "cand_svd32": {
+      "bytes": 10368,
+      "path": "cand_svd32.f16.npy",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "19195857264487b30b40b381bedc27e3d1163d2106a15d4c8dddd5fee0137314"
+    },
+    "candidate_index": {
+      "bytes": 4317,
+      "path": "candidate_index.json",
+      "producer": "precompute/build_features.py",
+      "sha256": "9e5f56a29ec791092e18d9c5eb1107b5e18c28a6f230151ca673129079239272"
+    },
+    "honeypot_excludes": {
+      "bytes": 780,
+      "path": "honeypot_excludes.json",
+      "producer": "precompute/build_honeypots.py",
+      "sha256": "c87e056c87c90bd397f3172b37bf408f9e288de5b92a5b758e2e874fe8ff670a"
+    },
+    "jd_clause_emb": {
+      "bytes": 27678,
+      "path": "jd_clause_emb.npz",
+      "producer": "precompute/embed.py",
+      "sha256": "89ac5c928289da45d59d5e8def412435d5b918cad72f6c70c11b855b860568f2"
+    },
+    "jd_meta": {
+      "bytes": 2724,
+      "path": "jd_meta.json",
+      "producer": "precompute/embed.py",
+      "sha256": "63500444e9beb17e669a6db4dc1d69f20babbd63a291a943696e95ea6b62441b"
+    },
+    "lexical_cos_jd": {
+      "bytes": 448,
+      "path": "lexical_cos_jd.f16.npy",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "bbd562e15e3f1239ad3c5aa8ed12d50cf4de7ea9ac95f1a5e6702e1a8f925ed1"
+    },
+    "llm_scores": {
+      "backend": "DeterministicClient",
+      "bytes": 6138,
+      "n_llm_present": 0,
+      "path": "llm_scores.parquet",
+      "producer": "precompute/llm_rerank.py",
+      "sha256": "184db1aa4c3e4a73dcd06f9549b3443e3998c28a8c299fcb4527c824b4aadb88"
+    },
+    "ltr_model": {
+      "bytes": 1258,
+      "path": "ltr_model.json",
+      "producer": "precompute/train_ltr.py",
+      "sha256": "98d6407fe4adff428269f310937f96e6628f16ec57a4ef481ad24c2efd6a2a3c"
+    },
+    "ltr_trees": {
+      "bytes": 3096,
+      "path": "ltr_trees.npz",
+      "producer": "precompute/train_ltr.py",
+      "sha256": "56faca5768122bea16ff42be6077694bc850b364158e2ed416f42957765b9f30"
+    },
+    "proxy_tiers": {
+      "bytes": 288,
+      "hist": {
+        "0": 63,
+        "1": 57,
+        "2": 8,
+        "3": 27,
+        "4": 0,
+        "5": 5
+      },
+      "path": "proxy_tiers.npy",
+      "producer": "precompute/make_labels.py",
+      "sha256": "98dcf22ae9be77808aa8470b7646a58b5b5bdbcc457fa0f6ae176bbefaca25ae"
+    },
+    "reasoning": {
+      "backend": "DeterministicClient",
+      "bytes": 21014,
+      "n_llm": 0,
+      "path": "reasoning.jsonl",
+      "producer": "precompute/build_reasoning.py",
+      "sha256": "6d99411571809a7809e1645850f36f33209bfe147600982a014c93dea2a37ce6"
+    },
+    "shortlist": {
+      "bytes": 7553,
+      "path": "shortlist.json",
+      "producer": "precompute/first_pass_shortlist.py",
+      "sha256": "006b797781c1cc92163ff47a70a563623a58bd0154723753b718d8292b764551"
+    },
+    "tfidf_svd": {
+      "bytes": 1126484,
+      "path": "tfidf_svd.pkl",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "31ec6e587e2ad9b5d971ad8b8d8a6285b2bb177475df6b2a849b6837ea8fdbbd"
+    }
+  }
+}

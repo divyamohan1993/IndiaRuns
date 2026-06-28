@@ -1,0 +1,52 @@
+# ATLAS Plane-C API (FastAPI) — serves frozen artifacts + proxies live LLM.
+#
+# Backend chain (runtime-selected, env-driven): nvidia -> claude-cli -> deterministic.
+# BUILDABLE WITH NO SECRETS: no key is read at build time, and the server starts and
+# serves every read-only artifact endpoint with zero keys. The NVIDIA key (if any) is
+# read only at request time from the environment / Secret Manager.
+#
+# Build:  docker build -f docker/Dockerfile.api -t indiaruns-api .
+# Run  :  docker run --rm -p 8080:8080 indiaruns-api
+#         (add -e NVIDIA_API_KEY=... to enable the live LLM path)
+FROM python:3.11.15-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    ARTIFACTS_DIR=/app/artifacts \
+    PORT=8080
+
+WORKDIR /app
+
+# Optional build-only CA passthrough for TLS-terminating CI proxies. Empty by default,
+# so a normal `docker build` on an open network is unaffected. NEVER used at run time.
+# docker/ca/ is a tracked dir (holds .gitkeep) so this COPY always succeeds; the actual
+# build-ca.crt is gitignored and present only in sandboxed-CI build contexts.
+COPY docker/ca/ /tmp/ca/
+
+COPY docker/api/requirements.txt ./requirements.txt
+RUN if [ -s /tmp/ca/build-ca.crt ]; then export PIP_CERT=/tmp/ca/build-ca.crt; fi; \
+    pip install --no-cache-dir -r requirements.txt && rm -rf /tmp/ca
+
+# Application code.
+COPY docker/api/app.py ./app.py
+
+# Frozen Plane-B output artifacts (the same JSON the submission was built from).
+# These are read-only and contain no secrets.
+COPY artifacts/results_top.json \
+     artifacts/ranked_top100.json \
+     artifacts/funnel.json \
+     artifacts/rejected_traps.json \
+     artifacts/intent.json \
+     ./artifacts/
+
+EXPOSE 8080
+
+# Non-root for least privilege.
+RUN useradd -m -u 10001 atlas && chown -R atlas:atlas /app
+USER atlas
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD python -c "import urllib.request,os;urllib.request.urlopen('http://127.0.0.1:'+os.environ.get('PORT','8080')+'/api/health').read()" || exit 1
+
+# Cloud Run injects $PORT; default 8080. uvicorn binds it via the shell form.
+CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT:-8080}"]

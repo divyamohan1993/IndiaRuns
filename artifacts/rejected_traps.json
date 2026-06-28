@@ -1,0 +1,73 @@
+{
+  "headline": "Caught before they could be hired \u2014 201 excluded",
+  "signatures": [
+    {
+      "signature": "too_many_experts",
+      "count": 167,
+      "why_fatal": "Claims 5\u201312 'expert' skills \u2014 expert is 0.137% of all skills; a real person almost never does this.",
+      "examples": [
+        "CAND_0000031",
+        "CAND_0001610",
+        "CAND_0002025",
+        "CAND_0005260",
+        "CAND_0005538"
+      ]
+    },
+    {
+      "signature": "career_sum_exceeds_yoe",
+      "count": 24,
+      "why_fatal": "Sum of role tenures exceeds 1.5\u00d7 stated years of experience \u2014 the math is impossible.",
+      "examples": [
+        "CAND_0001610",
+        "CAND_0007353",
+        "CAND_0008960",
+        "CAND_0010294",
+        "CAND_0018515"
+      ]
+    },
+    {
+      "signature": "expert_zero_duration",
+      "count": 21,
+      "why_fatal": "Claims 'expert' mastery in a skill used for zero months.",
+      "examples": [
+        "CAND_0003582",
+        "CAND_0016000",
+        "CAND_0033817",
+        "CAND_0033972",
+        "CAND_0036839"
+      ]
+    },
+    {
+      "signature": "tenure_exceeds_company_age",
+      "count": 3,
+      "why_fatal": "Tenure at a company longer than the company has plausibly existed.",
+      "examples": [
+        "CAND_0010294",
+        "CAND_0040075",
+        "CAND_0084182"
+      ]
+    },
+    {
+      "signature": "career_span_exceeds_yoe",
+      "count": 3,
+      "why_fatal": "Earliest job start to today exceeds stated experience by 3+ years.",
+      "examples": [
+        "CAND_0019480",
+        "CAND_0037000",
+        "CAND_0093547"
+      ]
+    }
+  ],
+  "not_a_trap": {
+    "signature": "salary_min_greater_than_max",
+    "fires_on": 18865,
+    "note": "Salary inversion is a DATASET NORM (18.9%); excluding it would nuke a fifth of the pool. NOT a honeypot."
+  },
+  "soft_demoted": {
+    "edu_degree_order_impossible": 4715,
+    "skill_duration_exceeds_career": 9231
+  },
+  "baseline_foil": {
+    "note": "The naive keyword-count baseline (sample_submission instinct) ranks an HR Manager / Content Writer #1\u2013#4 on stuffed AI skills. ATLAS ranks them 0."
+  }
+}

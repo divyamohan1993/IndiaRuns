@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0a0e1a;
+}
+
+html,
+body {
+  background-color: var(--bg);
+  color: #e6eaf2;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-feature-settings: "tnum" 1, "cv01" 1;
+  min-height: 100vh;
+  background-image: radial-gradient(
+      1200px 600px at 50% -10%,
+      rgba(245, 192, 78, 0.06),
+      transparent 60%
+    ),
+    radial-gradient(900px 500px at 90% 10%, rgba(91, 224, 230, 0.05), transparent 60%);
+}
+
+/* Glass surface used across cards/dock. */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(230, 234, 242, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+/* Focus ring — keyboard accessibility, never color-only. */
+:focus-visible {
+  outline: 2px solid #5be0e6;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Honor reduced-motion globally: kill non-essential animation/transitions. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print: isolate the one-page top-10 sheet for the share PDF export. */
+@media print {
+  body {
+    background: #fff !important;
+    color: #111 !important;
+  }
+  header,
+  .print\:hidden {
+    display: none !important;
+  }
+  #print-sheet {
+    border: none !important;
+    box-shadow: none !important;
+    background: #fff !important;
+  }
+  #print-sheet * {
+    color: #111 !important;
+  }
+}
+
+/* Custom scrollbar (cosmetic). */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(230, 234, 242, 0.12);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}

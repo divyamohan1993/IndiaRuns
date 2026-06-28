@@ -1,0 +1,64 @@
+{
+  "backend": "nvidia/nv-embedqa-e5-v5",
+  "clauses": [
+    {
+      "id": "C1",
+      "text": "Shipped an end-to-end ranking, search, or recommendation system to real users at scale at a product company.",
+      "weight": 0.22
+    },
+    {
+      "id": "C2",
+      "text": "Production embeddings-based retrieval; handling embedding drift, index refresh, and retrieval-quality regression.",
+      "weight": 0.16
+    },
+    {
+      "id": "C3",
+      "text": "Vector databases and hybrid search infrastructure: FAISS, Elasticsearch, OpenSearch, Pinecone, Qdrant, Milvus, Weaviate.",
+      "weight": 0.12
+    },
+    {
+      "id": "C4",
+      "text": "Designed evaluation frameworks for ranking: NDCG, MRR, MAP, offline to online correlation, and A/B testing.",
+      "weight": 0.12
+    },
+    {
+      "id": "C5",
+      "text": "Applied machine learning at product companies, roughly four to five years of applied ML within six to eight years total experience.",
+      "weight": 0.1
+    },
+    {
+      "id": "C6",
+      "text": "Strong Python and software engineering; writes production code recently.",
+      "weight": 0.08
+    },
+    {
+      "id": "C7",
+      "text": "LLM judgment: when to fine-tune versus prompt, LoRA, QLoRA, PEFT, and learning to rank.",
+      "weight": 0.06
+    },
+    {
+      "id": "C8",
+      "text": "Scrappy product engineering: ships a working ranker fast and learns from real users.",
+      "weight": 0.06
+    },
+    {
+      "id": "C9",
+      "text": "Pre-LLM-era machine learning in production; understood retrieval and ranking before it was fashionable.",
+      "weight": 0.04
+    },
+    {
+      "id": "C10",
+      "text": "HR-tech, recruiting, or marketplace product; distributed systems and large-scale inference.",
+      "weight": 0.02
+    },
+    {
+      "id": "C11",
+      "text": "Open-source contributions, papers, or talks providing external validation.",
+      "weight": 0.02
+    }
+  ],
+  "dim": 1024,
+  "ideal_lambda": 0.25,
+  "ideal_text": "The ideal candidate is a senior AI engineer who has personally built and shipped an end-to-end ranking, search, or recommendation system serving real users at scale at a product company. They understand production embeddings retrieval, vector search infra, and rigorous ranking evaluation (NDCG, MRR, MAP, A/B testing). They write strong production Python, have roughly 5-9 years of applied ML experience, and learn fast. They are NOT a keyword-stuffer with AI buzzwords on a non-engineering profile, not a pure-research academic without production work, and not a services-only career.",
+  "role_anchor_text": "Senior AI/ML engineer, machine learning engineer, applied scientist, search and ranking engineer, recommendation systems engineer."
+}

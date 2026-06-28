@@ -1,0 +1,101 @@
+candidate_id,rank,score,reasoning
+CAND_0046525,1,1.000000,Senior Machine Learning Engineer 6.1 yrs at Genpact AI; built ranking/search/reco systems
+CAND_0041669,2,0.800679,8yrs CRED/Mad Street Den engineer meets recommendation requirement but lacks recent search experience
+CAND_0014440,3,0.748573,6.4yr CRED engineer meets recommendation requirement with 9mo learning-to-rank model but lacks recent search experience
+CAND_0026532,4,0.725563,Matches recommendation with 4.8yrs exp at Zomato
+CAND_0024466,5,0.689768,Meets search requirement with 5.2 years experience at PharmEasy
+CAND_0009024,6,0.684655,Google Search Engineer with 5 years experience meets recommendation requirement but lacks direct evaluation experience
+CAND_0003977,7,0.674216,Meets recommendation requirement with 4.6yrs exp at Google
+CAND_0065878,8,0.659109,Meets ranking/recommendation reqs with 7.8yrs exp at Niramai/Uber
+CAND_0075439,9,0.650945,Matches recommendation with 4.3 years experience at Flipkart and Genpact AI but lacks recent search experience
+CAND_0070485,10,0.641798,Search Engineer 6.4 yrs at Saarthi.ai; built ranking/search/reco systems
+CAND_0076251,11,0.575602,Meets search requirement with 7.6yrs exp at Haptik
+CAND_0016163,12,0.567923,Applied ML Engineer 6.7 yrs at Dream11: built ranking/search/reco systems
+CAND_0076163,13,0.493428,Meets ranking requirement with 6.9 years experience at Ola and Zoho but lacks recent search experience
+CAND_0051615,14,0.470619,Meta Search Engineer with 4.6 years experience matches ranking requirement but lacks recent vector search experience
+CAND_0011432,15,0.455690,Matches recommendation with 7.6 years experience at Amazon
+CAND_0053591,16,0.391932,Matches recommendation with 5.3 years experience at Ola
+CAND_0082913,17,0.131951,Matches recommendation with 5.5 years experience at InMobi but lacks engineering depth
+CAND_0046924,18,0.127670,6.3 years at PharmEasy and TCS support recommendation requirement but lacks search experience
+CAND_0027723,19,0.091063,Matches recommendation with 4.2yrs exp at Wysa and Yellow.ai but lacks depth in engineering
+CAND_0010149,20,0.085545,Matches recommendation with 6.9 years experience at Glance and InMobi but lacks search experience
+CAND_0072091,21,0.079011,Meets recommendation requirement with 4.6 years experience at Krutrim and Meesho but lacks depth in engineering
+CAND_0067322,22,0.076951,Matches recommendation with 4.3 years experience at Nykaa
+CAND_0062772,23,0.075645,Meets recommendation requirement with 6.6 years experience at Vedantu and Meesho but lacks engineering depth
+CAND_0025882,24,0.073346,Matches recommendation with 5.6 years experience at Freshworks and HCL but lacks deep learning experience
+CAND_0025640,25,0.070038,Matches recommendation with 5.6 years experience at HCL and Yellow.ai but lacks search engineering depth
+CAND_0035764,26,0.069937,Matches recommendation with 6.8 years experience at Zomato but lacks deep learning experience
+CAND_0018653,27,0.067570,Matches recommendation with 6.5 years experience at Vedantu
+CAND_0093883,28,0.066029,Matches recommendation with 5 years experience at Wysa and PharmEasy but lacks search experience
+CAND_0013665,29,0.065875,Matches recommendation with 5.2 years experience at InMobi and Ola but lacks search experience
+CAND_0023583,30,0.065788,Matches recommendation with 4.1 years experience at Yellow.ai but lacks engineering depth
+CAND_0070333,31,0.062755,Matches recommendation with 4.7yrs TCS experience but lacks search engineering depth
+CAND_0072232,32,0.059744,Matches recommendation with 4 years experience at Yellow.ai and Sarvam AI but lacks engineering depth
+CAND_0061175,33,0.058788,Haptik engineer with 6.7 years experience meets recommendation requirement but lacks depth on engineering side
+CAND_0055139,34,0.055777,Matches recommendation with 6.9yrs exp at HCL and Freshworks but lacks search experience
+CAND_0035879,35,0.053542,Matches recommendation with 4.5 years experience at Krutrim
+CAND_0097896,36,0.052430,Matches recommendation with 4.8yrs exp at upGrad
+CAND_0051486,37,0.051056,Matches recommendation with 5.9yrs exp at Aganitha concern on infra side
+CAND_0001930,38,0.050754,Matches recommendation with 6.9yrs exp at Dream11
+CAND_0067866,39,0.046962,Matches recommendation with 6.4 years experience at Tech Mahindra but lacks search expertise
+CAND_0024878,40,0.046050,Matches recommendation with 5.7 years experience at HCL and Krutrim but lacks deep learning expertise
+CAND_0048558,41,0.044378,Rephrase.ai alum with 6.7 years experience meets recommendation requirement with 80% accuracy
+CAND_0060303,42,0.044258,Matches recommendation with 4.9yrs exp at upGrad Zomato
+CAND_0001218,43,0.043288,Matches recommendation with 6.4 years experience at Nykaa
+CAND_0046278,44,0.043246,Matches recommendation with 4.6 years experience at Dream11 and Freshworks but lacks search experience
+CAND_0078262,45,0.043167,Matches recommendation with 4.9 years experience at Yellow.ai but lacks deep learning
+CAND_0049978,46,0.042086,Matches recommendation with 6.6 years experience at Sarvam AI but lacks search experience
+CAND_0098952,47,0.041290,Matches recommendation with 5.5 years experience at CRED and Rephrase.ai but lacks search experience.
+CAND_0067643,48,0.041226,Matches recommendation with 6 years experience at PhonePe and PolicyBazaar but lacks search experience
+CAND_0048166,49,0.041018,Matches recommendation with 5.2 years experience at Aganitha and BYJU'S but lacks search experience.
+CAND_0049615,50,0.040566,Matches recommendation with 5.1 years experience at Krutrim and InMobi but lacks search experience
+CAND_0093185,51,0.040384,Dream11 AI engineer with 4.1 years experience matches recommendation requirement but lacks depth in engineering
+CAND_0002120,52,0.038574,HCL ML Engineer with 6.5 years experience matches recommendation requirement but lacks deep learning experience
+CAND_0014683,53,0.038328,Matches recommendation with 5.6 years experience at Rephrase.ai and Dream11
+CAND_0014858,54,0.036762,Matches recommendation with 4.9 years experience at Aganitha concern on deep learning
+CAND_0060257,55,0.034469,Matches recommendation with 5.8 years experience at Paytm and CRED but lacks deep learning expertise
+CAND_0070525,56,0.034201,Matches recommendation with 5.4 years experience at Mad Street Den and Wysa
+CAND_0015967,57,0.033461,Matches recommendation with 5.4 years experience at Razorpay
+CAND_0006538,58,0.032772,Matches recommendation with 5.7 years at Dream11 but lacks deep learning experience
+CAND_0072020,59,0.030915,Matches recommendation with 6.1 years experience at Freshworks and Nykaa but lacks engineering depth
+CAND_0032179,60,0.029815,Meets recommendation requirement with 6.4 years experience at InMobi and Meesho but lacks depth in engineering
+CAND_0060835,61,0.027892,Sarvam AI engineer with 6.6 years experience matches recommendation requirement but lacks deep learning depth
+CAND_0074621,62,0.027840,Matches recommendation with 5.2 years experience at PharmEasy and Flipkart but lacks engineering depth
+CAND_0004402,63,0.024691,Matches recommendation with 6 years experience at Yellow.ai and Zomato but lacks search experience
+CAND_0010541,64,0.024446,Wysa AI engineer with 6.2 years experience matches recommendation requirement but lacks depth in engineering
+CAND_0044262,65,0.024129,Matches recommendation with 6.9 years experience at upGrad
+CAND_0040178,66,0.023049,Meesho ML Engineer with 5 years experience matches recommendation requirement but lacks infra experience
+CAND_0092706,67,0.022787,Matches recommendation with 5.8 years experience at Unacademy
+CAND_0082291,68,0.022368,Matches recommendation with 5.8 years experience at Glance and Meesho but lacks engineering depth
+CAND_0018925,69,0.021807,Rephrase.ai AI Research Engineer with 5.8 years experience matches ranking requirement but lacks depth in engineering.
+CAND_0016659,70,0.021662,Matches recommendation with 4.4yrs exp at Glance Flipkart but lacks infra depth
+CAND_0008202,71,0.021551,Matches recommendation with 5.7 years experience at Yellow.ai and Infosys but lacks deep learning experience
+CAND_0091890,72,0.021194,Matches recommendation with 4.7 years experience at Verloop.io and Tech Mahindra but lacks engineering depth
+CAND_0002037,73,0.021032,Matches recommendation with 5.5 years experience at Locobuzz and upGrad but lacks depth in engineering
+CAND_0037160,74,0.021007,Haptik data scientist with 6 years experience matches recommendation requirement but lacks engineering depth
+CAND_0035315,75,0.017328,Matches recommendation with 4.9yrs exp at Zoho
+CAND_0033987,76,0.016550,Matches recommendation with 6.8 years experience at Wysa and Rephrase.ai but lacks search engineering depth
+CAND_0064331,77,0.016199,Matches recommendation with 4.2 years experience at Swiggy but lacks deep learning
+CAND_0008517,78,0.015223,Matches recommendation with 5.6 years experience at Locobuzz and Wipro but lacks search experience
+CAND_0065786,79,0.014710,Matches recommendation with 4.9yrs exp at Swiggy but lacks deep learning
+CAND_0087766,80,0.014142,Matches recommendation with 5 years at Flipkart and PhonePe but lacks search experience
+CAND_0060315,81,0.013400,Matches recommendation with 5.4 years experience at Glance and Unacademy but lacks depth in engineering.
+CAND_0026640,82,0.013183,Matches recommendation with 6.1 years experience at Observe.AI and Vedantu
+CAND_0076995,83,0.011689,Matches recommendation with 4.4 years experience at Haptik
+CAND_0048469,84,0.011428,Matches recommendation with 4.7 years experience at Vedantu
+CAND_0041402,85,0.010765,Matches recommendation with 6.3 years experience at Ola and Observe.AI but lacks engineering depth
+CAND_0066798,86,0.008996,Zoho ML Engineer with 5 years experience meets recommendation requirement but lacks search experience
+CAND_0044091,87,0.008460,6.5yr ML Eng at Vedantu upGrad BYJU'S meets recommendation requirement but lacks infra experience
+CAND_0095207,88,0.008069,Matches recommendation with 4 years experience at Ola and Freshworks but lacks search experience
+CAND_0022720,89,0.008066,Meets ranking requirement with 6.5 years experience at Sarvam AI and Razorpay
+CAND_0061479,90,0.007084,Matches recommendation with 5 years experience at BYJU'S but lacks deep learning
+CAND_0043958,91,0.007066,Dream11 AI engineer with 6.7 years experience matches recommendation requirement but lacks search experience
+CAND_0073883,92,0.004465,Matches recommendation with 5.3 years experience at Krutrim and Flipkart but lacks search experience.
+CAND_0053934,93,0.004273,Matches recommendation with 5.7 years experience at Infosys and PharmEasy but lacks search expertise
+CAND_0015582,94,0.003848,Matches recommendation with 4.4yrs exp at Genpact AI but lacks infra depth
+CAND_0087006,95,0.003248,Matches recommendation with 5.7yrs exp at Saarthi.ai and CRED but lacks infra depth
+CAND_0024147,96,0.002209,Matches recommendation with 5.9 years experience at Ola
+CAND_0011327,97,0.001886,Matches recommendation with 6.3 years experience at Krutrim and Razorpay but lacks search experience
+CAND_0082489,98,0.001345,Matches recommendation with 5.3 years experience at InMobi concern on deep learning
+CAND_0010603,99,0.000573,Matches recommendation with 5.3yrs BYJU'S experience concern on infra depth
+CAND_0081321,100,0.000000,Matches recommendation with 5.3 years experience at Freshworks and Razorpay but lacks search experience

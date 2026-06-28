@@ -1,0 +1,6 @@
+# ATLAS Plane-C API runtime deps. No NVIDIA SDK; httpx is the only HTTP client and is
+# used lazily, only when a key is present at runtime.
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+httpx==0.28.1
+pydantic==2.10.4

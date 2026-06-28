@@ -1,0 +1,156 @@
+{
+  "artifacts": {
+    "bm25": {
+      "bytes": 400262,
+      "path": "bm25.npz",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "c26a3d0ac5f9addf03779680d46ac957203975df39b82b2dbaec794167bdc266"
+    },
+    "bm25_vocab": {
+      "bytes": 1362,
+      "path": "bm25_vocab.json",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "710dd3ee8ea22c6dfce378a578d9e616fcb2ffa9ae784761a90447e58415842a"
+    },
+    "calibration": {
+      "bytes": 316,
+      "path": "calibration.json",
+      "producer": "precompute/train_ltr.py",
+      "sha256": "4def46f30349b0d30ee3216762c1df1b3de6ad3ab6e1fe554d98fa2be7aae943"
+    },
+    "cand_emb": {
+      "backend": "nvidia/nv-embedqa-e5-v5",
+      "bytes": 204800128,
+      "path": "cand_emb.f16.npy",
+      "producer": "precompute/embed.py",
+      "sha256": "7a5032d91f9433fe3fec15044c6b987f04898a2a32f66ea9118e1cc80d81f0b7",
+      "shape": [
+        100000,
+        1024
+      ]
+    },
+    "cand_features": {
+      "bytes": 8000128,
+      "path": "cand_features.f16.npy",
+      "producer": "precompute/build_features.py",
+      "sha256": "1a9ebe485244650cb72ca3fb421bcaae467695b84d7c01359266d7a00ed01a09"
+    },
+    "cand_svd32": {
+      "bytes": 6400128,
+      "path": "cand_svd32.f16.npy",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "9d5eda6432895f7f8413e719e17ad2208a96a4e026d4b0d08efe6fc5a25a4500"
+    },
+    "candidate_index": {
+      "bytes": 2001120,
+      "path": "candidate_index.json",
+      "producer": "precompute/build_features.py",
+      "sha256": "b6f885993bde39e1e95b004da18ea801405028f9a3a0a0211e4e7744003f0ac5"
+    },
+    "feature_meta": {
+      "bytes": 4521,
+      "path": "feature_meta.json",
+      "producer": "features.py",
+      "sha256": "3650e79a7560c873e7f285a46152f6df15d1053acc9c503ff6aa3edf072b2045"
+    },
+    "funnel.json": {
+      "bytes": 15929,
+      "path": "funnel.json",
+      "producer": "build_web_artifacts.py",
+      "sha256": "b0aeca7b146a74edf0e4d29ae0d0ac9edff3c1f3041892af7b76f3c3350b2728"
+    },
+    "honeypot_excludes": {
+      "bytes": 4563,
+      "path": "honeypot_excludes.json",
+      "producer": "precompute/build_honeypots.py",
+      "sha256": "16291948ad5b92cafb67418c8eedd5fb3c162f91be1b7478f9906d0725701df1"
+    },
+    "intent.json": {
+      "bytes": 1579,
+      "path": "intent.json",
+      "producer": "build_web_artifacts.py",
+      "sha256": "51d7dd11885249f6162fe8271036682669b67f196835f6986990e620a3ac1d39"
+    },
+    "jd_clause_emb": {
+      "bytes": 27678,
+      "path": "jd_clause_emb.npz",
+      "producer": "precompute/embed.py",
+      "sha256": "89ac5c928289da45d59d5e8def412435d5b918cad72f6c70c11b855b860568f2"
+    },
+    "jd_meta": {
+      "bytes": 2724,
+      "path": "jd_meta.json",
+      "producer": "precompute/embed.py",
+      "sha256": "63500444e9beb17e669a6db4dc1d69f20babbd63a291a943696e95ea6b62441b"
+    },
+    "lexical_cos_jd": {
+      "bytes": 200128,
+      "path": "lexical_cos_jd.f16.npy",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "9b1955291a54d6587e7330900ea4d1b6e7ceb93cf342fcba4793d0f620a4f5e8"
+    },
+    "llm_scores": {
+      "backend": "NvidiaClient",
+      "bytes": 38490,
+      "n_llm_present": 1226,
+      "path": "llm_scores.parquet",
+      "producer": "precompute/llm_rerank.py",
+      "sha256": "b43922241a4e597e294a02555699b8b01f98c5a4d43f937aa6ebbc9324aee7f8"
+    },
+    "ltr_model": {
+      "bytes": 1258,
+      "path": "ltr_model.json",
+      "producer": "precompute/train_ltr.py",
+      "sha256": "98d6407fe4adff428269f310937f96e6628f16ec57a4ef481ad24c2efd6a2a3c"
+    },
+    "proxy_tiers": {
+      "bytes": 100128,
+      "path": "proxy_tiers.npy",
+      "producer": "precompute/make_labels.py",
+      "sha256": "7a6d1f8fa2cd5be920780bb4401301e728f28978ae3391a58cbfadc82fb73e9b"
+    },
+    "ranked_top100.json": {
+      "bytes": 49085,
+      "path": "ranked_top100.json",
+      "producer": "build_web_artifacts.py",
+      "sha256": "9cf5ebf1d99c43f21810e707f5147a2f893d1163284127f154cc5fadf43d9ca0"
+    },
+    "reasoning": {
+      "backend": "NvidiaClient",
+      "bytes": 174431,
+      "llm_target_top": 300,
+      "n_deterministic": 931,
+      "n_llm": 295,
+      "n_reprompt": 300,
+      "n_reprompt_ok": 295,
+      "path": "reasoning.jsonl",
+      "producer": "precompute/build_reasoning.py",
+      "sha256": "022826a8812146033a9d6967b8a13dca0696812edc66140bbb97f55cd54e087c",
+      "specificity_gate": true
+    },
+    "rejected_traps.json": {
+      "bytes": 2135,
+      "path": "rejected_traps.json",
+      "producer": "build_web_artifacts.py",
+      "sha256": "f910f15d57a8d47d266eb58ade4a33ab5edd5bf4ef510e78611c08ff91c1ba90"
+    },
+    "results_top.json": {
+      "bytes": 32085,
+      "path": "results_top.json",
+      "producer": "build_web_artifacts.py",
+      "sha256": "a20dbfc5a4e0003476cf1047c5bfaeed4b424321af23d137176756f8c52cd2ac"
+    },
+    "shortlist": {
+      "bytes": 61539,
+      "path": "shortlist.json",
+      "producer": "precompute/first_pass_shortlist.py",
+      "sha256": "9ad76e41f2424daf37951def23e89f4864b1095c43a7a8fce8d1d0285fe415c7"
+    },
+    "tfidf_svd": {
+      "bytes": 5566785,
+      "path": "tfidf_svd.pkl",
+      "producer": "precompute/fit_lexical.py",
+      "sha256": "98fedccb1b8fc1849eaacb78bdb3c24aa5f1dda1e49b95c07d7d210f30a8b67a"
+    }
+  }
+}

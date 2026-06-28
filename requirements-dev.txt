@@ -1,0 +1,4 @@
+# Development + CI tooling.
+-r requirements-rank.txt
+pytest>=8.0
+ruff>=0.6

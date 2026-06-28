@@ -1,0 +1,32 @@
+{
+  "clean_exclude": [
+    "CAND_0000031",
+    "CAND_0001610",
+    "CAND_0002025",
+    "CAND_0003582",
+    "CAND_0005260",
+    "CAND_0005538",
+    "CAND_0007411",
+    "CAND_0008239",
+    "CAND_0010685",
+    "CAND_0011162",
+    "CAND_0016000",
+    "CAND_0020350",
+    "CAND_0022812",
+    "CAND_0027801",
+    "CAND_0030348",
+    "CAND_0036839"
+  ],
+  "count": 16,
+  "note": "Clean structural-impossibility union ONLY. Salary inversion is the dataset norm and is NEVER included. The two soft signatures are demoted.",
+  "signature_counts": {
+    "career_sum_exceeds_yoe": 1,
+    "expert_zero_duration": 3,
+    "too_many_experts": 14
+  },
+  "soft_signature_counts_demoted": {
+    "edu_degree_order_impossible": 8,
+    "skill_duration_exceeds_career": 18
+  },
+  "total_scanned": 160
+}
