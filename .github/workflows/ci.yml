@@ -1,0 +1,109 @@
+# Core CI gate for Plane B (the graded ranker). ZERO cloud secrets.
+# lint -> pytest (no-network / sentinel / gate / determinism / budget) ->
+# build ranker + sandbox -> docker run --network none -> validate -> assert 0 honeypots
+# in the sample top-100 -> determinism byte-diff.
+name: ci
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    env:
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps (rank + dev)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-rank.txt
+          pip install -r requirements-dev.txt
+
+      - name: Lint (ruff)
+        run: ruff check .
+
+      - name: Tests (incl. no-network, sentinel, gate, salary-not-flagged, determinism, budget)
+        run: pytest -q
+
+      - name: Rank the sample (host) + validate
+        run: |
+          python rank.py --candidates data/sample_candidates.jsonl \
+            --out submission_ci.csv --artifacts artifacts_sample
+          python validate_submission.py submission_ci.csv
+
+      - name: Determinism — run twice and byte-diff
+        run: |
+          python rank.py --candidates data/sample_candidates.jsonl \
+            --out submission_ci_a.csv --artifacts artifacts_sample
+          python rank.py --candidates data/sample_candidates.jsonl \
+            --out submission_ci_b.csv --artifacts artifacts_sample
+          diff submission_ci_a.csv submission_ci_b.csv
+          echo "OK: byte-identical across runs."
+
+      - name: Assert 0 honeypots in sample top-100
+        run: |
+          python scripts/assert_no_honeypots.py \
+            --submission submission_ci.csv \
+            --candidates data/sample_candidates.jsonl \
+            --excludes artifacts_sample/honeypot_excludes.json
+
+      - name: Budget check (< 300s, < 16 GiB)
+        run: |
+          python scripts/check_budget.py \
+            --candidates data/sample_candidates.jsonl \
+            --artifacts artifacts_sample \
+            --out submission_budget.csv
+
+  docker-offline:
+    runs-on: ubuntu-latest
+    needs: python
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build ranker image (no secrets)
+        run: docker build -f docker/Dockerfile.ranker -t indiaruns-ranker .
+
+      - name: Build sandbox image (no secrets)
+        run: docker build -f docker/Dockerfile.sandbox -t indiaruns-sandbox .
+
+      - name: Run sandbox with --network none (offline) -> CSV
+        run: |
+          mkdir -p out
+          docker run --rm --network none --cpus=4 --memory=16g \
+            -v "$PWD/out:/out" indiaruns-sandbox
+          test -s out/submission.csv
+
+      - name: Validate the offline CSV (in the ranker image)
+        run: |
+          docker run --rm --network none -v "$PWD/out:/out" \
+            --entrypoint python indiaruns-ranker validate_submission.py /out/submission.csv
+
+      - name: Determinism byte-diff across two offline runs
+        run: |
+          mkdir -p out2
+          docker run --rm --network none -v "$PWD/out2:/out" indiaruns-sandbox
+          diff out/submission.csv out2/submission.csv
+          echo "OK: container output byte-identical."
+
+      - name: Assert 0 honeypots in offline top-100
+        run: |
+          pip install --quiet numpy scikit-learn
+          python scripts/assert_no_honeypots.py \
+            --submission out/submission.csv \
+            --candidates data/sample_candidates.jsonl \
+            --excludes artifacts_sample/honeypot_excludes.json

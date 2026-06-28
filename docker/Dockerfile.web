@@ -1,0 +1,86 @@
+# ATLAS Plane-C web (Next.js 14, Node runtime).
+#
+# The app has server-side API routes (e.g. /sandbox shells the real rank.py), so it is
+# served by a Node server, NOT a static export. Two-stage: install + build, then run.
+# Supports Next.js `output: 'standalone'` (minimal runtime) and falls back to `next start`.
+#
+# BUILDABLE WITH NO SECRETS: the build never reads an NVIDIA key; only NEXT_PUBLIC_API_BASE
+# (a public URL, default same-origin /api) is baked in. The runtime NVIDIA key, if any, is
+# read by the API service — the web container does not need it.
+#
+# Build:  docker build -f docker/Dockerfile.web -t indiaruns-web .
+# Run  :  docker run --rm -p 8080:8080 indiaruns-web
+ARG NEXT_PUBLIC_API_BASE=/api
+
+# --- builder ---------------------------------------------------------------------------
+FROM node:22-slim AS builder
+WORKDIR /app
+ARG NEXT_PUBLIC_API_BASE
+# NOTE: do NOT set NODE_ENV=production in the builder — `npm ci` would then skip
+# devDependencies (tailwindcss, postcss, typescript, eslint-config-next), which the
+# Next.js build requires. NODE_ENV is set to production only in the runtime stage.
+ENV NEXT_PUBLIC_API_BASE=${NEXT_PUBLIC_API_BASE} \
+    NEXT_TELEMETRY_DISABLED=1
+
+# Optional build-only CA passthrough for TLS-terminating CI proxies (empty by default).
+COPY docker/build-ca.cr[t] /tmp/build-ca.crt
+RUN if [ -s /tmp/build-ca.crt ]; then \
+      mkdir -p /usr/local/share/ca-certificates && \
+      cp /tmp/build-ca.crt /usr/local/share/ca-certificates/build-ca.crt && \
+      (command -v update-ca-certificates >/dev/null 2>&1 && update-ca-certificates || true) && \
+      npm config set cafile /tmp/build-ca.crt; \
+    fi
+# Make Node's fetch (used by next/font build-time downloads) trust the build CA when one
+# is supplied via a TLS-terminating CI proxy. Harmless when no CA is present.
+ENV NODE_EXTRA_CA_CERTS=/tmp/build-ca.crt
+
+# Install deps first (better layer caching). package-lock present -> reproducible install.
+COPY web/package.json web/package-lock.json* ./
+RUN if [ -f package-lock.json ]; then npm ci --include=dev --no-audit --no-fund; \
+    else npm install --include=dev --no-audit --no-fund; fi
+
+# App sources (node_modules/.next excluded via .dockerignore for a clean build).
+COPY web/ ./
+RUN npm run build
+
+# --- runtime ---------------------------------------------------------------------------
+FROM node:22-slim AS runtime
+WORKDIR /app
+ENV NODE_ENV=production \
+    NEXT_TELEMETRY_DISABLED=1 \
+    PORT=8080 \
+    HOSTNAME=0.0.0.0
+
+# Bring in whichever build output exists: standalone (preferred) or full app.
+# Standalone produces .next/standalone/server.js + .next/static + public.
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+
+# Provide the repo-root rank.py + sample + artifacts so the server-side /sandbox route can
+# shell the real ranker. These are read-only and contain no secrets.
+COPY rank.py features.py reasoning.py validate_submission.py /repo/
+COPY core/ /repo/core/
+COPY scripts/netguard.py /repo/scripts/netguard.py
+COPY data/sample_candidates.jsonl /repo/data/sample_candidates.jsonl
+COPY artifacts_sample/ /repo/artifacts/
+# Minimal python for the /sandbox route (numpy + sklearn for rank.py).
+# Optional build-only CA passthrough (empty by default) so pip works behind a
+# TLS-terminating CI proxy. NEVER used at run time.
+COPY docker/build-ca.cr[t] /tmp/build-ca.crt
+RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-pip \
+    && { [ -s /tmp/build-ca.crt ] && export PIP_CERT=/tmp/build-ca.crt || true; } \
+    && pip3 install --no-cache-dir --break-system-packages numpy scikit-learn \
+    && rm -f /tmp/build-ca.crt && rm -rf /var/lib/apt/lists/*
+ENV REPO_ROOT=/repo
+
+EXPOSE 8080
+RUN useradd -m -u 10001 atlas && chown -R atlas:atlas /app /repo
+USER atlas
+
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
+    CMD node -e "require('http').get('http://127.0.0.1:'+(process.env.PORT||8080)+'/',r=>process.exit(r.statusCode<500?0:1)).on('error',()=>process.exit(1))"
+
+# Prefer the standalone server if it was emitted; otherwise fall back to `next start`.
+CMD ["sh", "-c", "if [ -f .next/standalone/server.js ]; then node .next/standalone/server.js; else node_modules/.bin/next start -p ${PORT:-8080} -H 0.0.0.0; fi"]

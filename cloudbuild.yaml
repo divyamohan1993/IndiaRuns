@@ -1,0 +1,107 @@
+# Cloud Build: build + push + deploy the ATLAS api + web images, then deploy to Cloud Run.
+# Triggered on tag `v*` via a Cloud Build trigger that uses Workload Identity Federation
+# (no long-lived JSON key). No secret is needed to BUILD; the NVIDIA key is mounted into
+# the API service at runtime from Secret Manager.
+#
+# Substitutions (set on the trigger or via --substitutions):
+#   _REGION   default asia-south1 (Mumbai)
+#   _REPO     default indiaruns       (Artifact Registry repo)
+#   _SECRET   default nvidia-api-key  (Secret Manager secret name)
+#   _RUNTIME_SA  Cloud Run runtime service account email
+# TAG_NAME is provided automatically for tag triggers.
+
+substitutions:
+  _REGION: asia-south1
+  _REPO: indiaruns
+  _SECRET: nvidia-api-key
+  _RUNTIME_SA: atlas-run@${PROJECT_ID}.iam.gserviceaccount.com
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  machineType: E2_HIGHCPU_8
+
+images:
+  - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:${TAG_NAME}"
+  - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:latest"
+  - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/web:${TAG_NAME}"
+  - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/web:latest"
+
+steps:
+  # --- build api ---
+  - id: build-api
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -f
+      - docker/Dockerfile.api
+      - -t
+      - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:${TAG_NAME}
+      - -t
+      - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:latest
+      - .
+
+  # --- build web ---
+  - id: build-web
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -f
+      - docker/Dockerfile.web
+      - -t
+      - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/web:${TAG_NAME}
+      - -t
+      - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/web:latest
+      - .
+
+  # --- push api ---
+  - id: push-api
+    name: gcr.io/cloud-builders/docker
+    args: [push, --all-tags, "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api"]
+    waitFor: [build-api]
+
+  # --- push web ---
+  - id: push-web
+    name: gcr.io/cloud-builders/docker
+    args: [push, --all-tags, "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/web"]
+    waitFor: [build-web]
+
+  # --- deploy api (key from Secret Manager; runtime-only) ---
+  - id: deploy-api
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - indiaruns-api
+      - --image=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:${TAG_NAME}
+      - --region=${_REGION}
+      - --platform=managed
+      - --service-account=${_RUNTIME_SA}
+      - --cpu=1
+      - --memory=1Gi
+      - --min-instances=0
+      - --max-instances=4
+      - --allow-unauthenticated
+      - --set-secrets=NVIDIA_API_KEY=${_SECRET}:latest
+      - --quiet
+    waitFor: [push-api]
+
+  # --- deploy web ---
+  - id: deploy-web
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - indiaruns-web
+      - --image=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/web:${TAG_NAME}
+      - --region=${_REGION}
+      - --platform=managed
+      - --service-account=${_RUNTIME_SA}
+      - --cpu=1
+      - --memory=512Mi
+      - --min-instances=0
+      - --max-instances=4
+      - --allow-unauthenticated
+      - --quiet
+    waitFor: [push-web]

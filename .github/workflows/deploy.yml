@@ -1,0 +1,55 @@
+# Deploy ATLAS (api + web) to Cloud Run on tag v* via Workload Identity Federation.
+# Gated on the repo variable GCP_ENABLED == 'true'. Skips cleanly with no credentials, so
+# it never blocks merges and needs no long-lived JSON key.
+name: deploy
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # required for WIF / OIDC
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    outputs:
+      enabled: ${{ vars.GCP_ENABLED == 'true' }}
+    steps:
+      - name: Report gate
+        run: |
+          if [ "${{ vars.GCP_ENABLED }}" = "true" ]; then
+            echo "GCP_ENABLED=true — deploy will run."
+          else
+            echo "GCP_ENABLED is not 'true' — deploy will be skipped (no creds needed)."
+          fi
+
+  deploy:
+    needs: guard
+    if: needs.guard.outputs.enabled == 'true'
+    runs-on: ubuntu-latest
+    env:
+      REGION: ${{ vars.GCP_REGION }}
+      PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to GCP via Workload Identity Federation (no JSON key)
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.GCP_DEPLOY_SA }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Submit Cloud Build (build + push + deploy on tag)
+        run: |
+          gcloud builds submit \
+            --project="${PROJECT_ID}" \
+            --region="${REGION}" \
+            --config=cloudbuild.yaml \
+            --substitutions=_REGION="${REGION}",TAG_NAME="${GITHUB_REF_NAME}" \
+            .

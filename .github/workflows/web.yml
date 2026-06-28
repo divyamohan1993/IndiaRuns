@@ -1,0 +1,77 @@
+# Build the Plane-C web + api images and smoke-test the API health endpoint WITHOUT any
+# NVIDIA key (offline / deterministic mode). ZERO cloud secrets.
+name: web
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "docker/Dockerfile.api"
+      - "docker/Dockerfile.web"
+      - "docker/api/**"
+      - "docker/nginx.conf"
+      - "web/**"
+      - "artifacts/*.json"
+      - ".github/workflows/web.yml"
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build API image (no secrets)
+        run: docker build -f docker/Dockerfile.api -t indiaruns-api .
+
+      - name: Build web image (no secrets)
+        run: docker build -f docker/Dockerfile.web -t indiaruns-web .
+
+      - name: Start API with NO NVIDIA key (deterministic mode)
+        run: |
+          docker run -d --name atlas-api -p 8080:8080 indiaruns-api
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8080/api/health >/dev/null 2>&1; then break; fi
+            sleep 1
+          done
+
+      - name: Smoke /api/health (assert deterministic backend, no key)
+        run: |
+          set -e
+          BODY="$(curl -fsS http://127.0.0.1:8080/api/health)"
+          echo "$BODY"
+          echo "$BODY" | grep -q '"status": "ok"' || echo "$BODY" | grep -q '"status":"ok"'
+          echo "$BODY" | grep -q '"llm_backend": "deterministic"' \
+            || echo "$BODY" | grep -q '"llm_backend":"deterministic"'
+          echo "$BODY" | grep -q '"nvidia_key_present": false' \
+            || echo "$BODY" | grep -q '"nvidia_key_present":false'
+
+      - name: Smoke artifact + live (degraded) endpoints
+        run: |
+          set -e
+          curl -fsS http://127.0.0.1:8080/api/results  >/dev/null
+          curl -fsS http://127.0.0.1:8080/api/funnel   >/dev/null
+          curl -fsS http://127.0.0.1:8080/api/rejected >/dev/null
+          # live endpoint must degrade gracefully (deterministic backend) without a key:
+          curl -fsS -X POST http://127.0.0.1:8080/api/copilot \
+            -H 'content-type: application/json' \
+            -d '{"message":"who are the top matches?"}' | grep -q '"backend"'
+
+      - name: Start web image and smoke /healthz
+        run: |
+          docker run -d --name atlas-web -p 8090:8080 indiaruns-web
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8090/healthz >/dev/null 2>&1; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8090/healthz | grep -q '"status"'
+
+      - name: Logs on failure
+        if: failure()
+        run: |
+          docker logs atlas-api || true
+          docker logs atlas-web || true
