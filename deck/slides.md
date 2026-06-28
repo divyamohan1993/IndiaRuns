@@ -57,8 +57,8 @@ This dataset makes that hard *on purpose.*
 We took the best idea from three competing designs and grafted them into one pipeline:
 
 1. **Recall first-pass** — `0.30*dense + 0.25*bm25 + 0.45*rule` over all 100K, then keep the top 1,200, force-include every AI-titled and strong-evidence candidate, drop the honeypots. **Recall gate passes: 100% of proxy-Tier-5 and 100% of proxy-Tier-4 land in the shortlist.**
-2. **LLM re-rank** — judge only the shortlist, where ~80% of the scoring metric lives. 299 real LLM judgments over the top-300; 294 LLM-written, fact-validated reasoning lines.
-3. **Blend / LTR fusion** — a monotone-constrained blender fuses LLM fit, dense, BM25, rule and behavioral into one margin. We *ship the safer one*: the fixed-weight blend won 5-fold CV-NDCG@10 1.0000 vs LTR 0.766, so it ships.
+2. **LLM re-rank** — judge the shortlist with `meta/llama-3.3-70b-instruct`, where ~80% of the scoring metric lives. 1,226 real LLM judgments over the full shortlist; LLM-written, fact-validated reasoning lines.
+3. **Blend / LTR fusion** — a monotone-constrained blender fuses LLM fit, dense, BM25, rule and behavioral into one margin. We *ship the safer one*: the fixed-weight blend's 5-fold CV-NDCG@10 (0.892) vs LTR (0.910) edge was inside the safety margin, so the simpler blend ships.
 4. **Behavioral multiplier** `[0.80, 1.12]` — availability and reachability modulate, never dominate. "No data" sentinels never penalize.
 5. **Honeypot hard-gate** — structural impossibilities are excluded to `-inf`, with a live re-verify of survivors.
 
@@ -90,11 +90,11 @@ We took the best idea from three competing designs and grafted them into one pip
 
 | Metric | Result | Cap |
 |---|---|---|
-| Wall-clock (full 100K) | **73.5 s** | 300 s |
-| Peak memory | **2.01 GB** | 16 GB |
+| Wall-clock (full 100K) | **87.9 s** | 300 s |
+| Peak memory | **2.25 GB** | 16 GB |
 | Network / GPU at rank time | **none** | required |
 | Validator | **"Submission is valid."** | — |
-| Determinism | **byte-identical** (sha256 694f86dd...) | — |
+| Determinism | **byte-identical** (sha256 f39f5fa5...) | — |
 | Honeypots in top-100 / top-10 | **0 / 0** | <=10 to avoid DQ |
 | Internal lift vs naive keyword baseline | **~1.00 vs ~0.07 NDCG@10** | — |
 
@@ -118,8 +118,8 @@ A cinematic recruiter experience that makes the ranking legible and trustworthy:
 
 ## Slide 10 — NVIDIA + GCP + LLM, and the compliance boundary
 
-- **NVIDIA (offline, Plane A only):** hosted embeddings and a 70B-class instruct model for the shortlist re-rank and fact-validated reasoning. The full NVIDIA path is built and degrades cleanly with no key.
-- **LLM judging:** 299 real judgments over the top-300 shortlist; 294 fact-validated reasoning lines. A local CLI LLM backend and a deterministic fallback are both wired, so the pipeline runs *with or without* any key.
+- **NVIDIA (offline, Plane A only):** `nvidia/nv-embedqa-e5-v5` (1024-d) embeddings and `meta/llama-3.3-70b-instruct` for the full-shortlist re-rank and fact-validated reasoning. The path degrades cleanly with no key.
+- **LLM judging:** 1,226 real `meta/llama-3.3-70b-instruct` judgments over the full shortlist; fact-validated reasoning lines. A `claude -p` CLI backend and a deterministic fallback are both wired, so the pipeline runs *with or without* any key.
 - **GCP (production, Plane C only):** Cloud Run for the API and web, Secret Manager for the key, optional Vertex job for Plane A. Documented and credential-gated — never needed to build, test, or grade.
 - **The boundary:** every AI/network call lives in Plane A or C. **Plane B — the graded `rank.py` — makes zero network, GPU, or LLM calls,** proven by a no-socket test and a `--network none` run.
 
@@ -135,7 +135,7 @@ docker run --rm --network none --cpus=4 --memory=16g \
 ```
 
 - Verified: produced a valid CSV offline, **PASS**.
-- `python rank.py --candidates candidates.jsonl --out submission.csv` finishes in 73.5 s at 2.01 GB peak RSS, CPU-only.
+- `python rank.py --candidates candidates.jsonl --out submission.csv` finishes in 87.9 s at 2.25 GB peak RSS, CPU-only.
 - Run it twice and byte-diff: **identical** (`PYTHONHASHSEED=0`, `OMP_NUM_THREADS=1`, frozen artifact bytes tracked by sha256 in the manifest).
 - The vendored `validate_submission.py` runs inside `rank.py`, which refuses to write a non-conforming file.
 

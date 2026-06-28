@@ -18,11 +18,11 @@ flowchart TB
   subgraph A["PLANE A — OFFLINE PRE-COMPUTE  (network + GPU + API allowed · regenerable)"]
     direction TB
     A1[build_features<br/>D-feature matrix]
-    A2["embed<br/>NVIDIA nv-embedqa / BGE / TF-IDF"]
+    A2["embed<br/>NVIDIA nv-embedqa-e5-v5 1024d<br/>(BGE / TF-IDF no-key fallback)"]
     A3[fit_lexical<br/>BM25 + TFIDF/SVD]
     A4[make_labels<br/>proxy tier 0-5]
     A5{{first_pass fuse<br/>SHORTLIST K=1200<br/>recall gate}}
-    A6["llm_rerank<br/>shortlist only"]
+    A6["llm_rerank<br/>meta/llama-3.3-70b<br/>full shortlist"]
     A7[train_ltr<br/>monotone trees]
     A8[build_honeypots<br/>CLEAN 201 exclude]
     A9[build_reasoning<br/>fact-validated]
@@ -39,7 +39,7 @@ flowchart TB
     ART[(cand_emb · cand_features · bm25<br/>llm_scores · ltr/calibration<br/>honeypot_excludes · reasoning · jd_clause_emb)]
   end
 
-  subgraph B["PLANE B — GRADED rank.py  NO network · NO GPU · NO LLM · 73.5s · 2.0GB · CPU"]
+  subgraph B["PLANE B — GRADED rank.py  NO network · NO GPU · NO LLM · 87.9s · 2.25GB · CPU"]
     direction TB
     B1[load artifacts] --> B2[stream JSONL<br/>live signals + id map]
     B2 --> B3[dense + bm25 + rule + llm_fit fuse]
@@ -114,7 +114,7 @@ flowchart LR
 ## 3. rank.py runtime path
 
 The graded step: load, stream, fuse, gate, sort, attach, validate, write. No network, no
-GPU, no LLM — measured 73.5 s / 2.01 GB on the full 100K.
+GPU, no LLM — measured 87.9 s / 2.25 GB on the full 100K.
 
 ```mermaid
 flowchart TB
@@ -201,16 +201,16 @@ flowchart TB
 
 ## 5. The funnel
 
-100,000 → shortlist 1,198 → LLM-judged top 300 → top 100 → top 10, with the trap burn in
-the middle.
+100,000 → shortlist 1,226 → LLM-judged full shortlist → top 100 → top 10, with the trap
+burn in the middle.
 
 ```mermaid
 flowchart TB
   A[100,000 candidates<br/>full pool] --> B
   B[first_pass fuse<br/>0.30 dense + 0.25 bm25 + 0.45 rule]
   B --> C[minus 201 clean honeypots burned<br/>0 will reach top-100]
-  C --> D[SHORTLIST 1,198<br/>K=1200 + 905 AI-titled + 845 strong-evidence<br/>recall gate PASS: T5 100% · T4 100%]
-  D --> E[LLM re-rank top 300 by first_pass<br/>299 real judgments]
+  C --> D[SHORTLIST 1,226<br/>K=1200 + 905 AI-titled + 845 strong-evidence<br/>recall gate PASS: T5 100% · T4 100%]
+  D --> E[LLM re-rank FULL shortlist<br/>meta/llama-3.3-70b · 1,226 real judgments]
   E --> F[blend fusion · anti-trap caps · behavioral × · gate]
   F --> G[TOP 100<br/>validator: valid · 0 honeypots]
   G --> H[TOP 10<br/>all genuine ranking/search/recsys engineers]

@@ -58,7 +58,7 @@ function Points({ funnel, act, count }: Props) {
     const total = funnel.stages[0]?.count ?? 100000;
     const trapFrac = funnel.honeypot_burn.total / total; // ~0.002
     const shortFrac =
-      (funnel.stages.find((s) => /shortlist/i.test(s.name))?.count ?? 1198) /
+      (funnel.stages.find((s) => /shortlist/i.test(s.name))?.count ?? 1226) /
       total; // ~0.012
     const topFrac = 100 / total;
 

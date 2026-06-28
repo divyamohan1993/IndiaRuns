@@ -13,7 +13,7 @@ A 13-slide narrative. Every number is measured on the real 100,000-candidate poo
 | 5 | The hybrid funnel | Recall -> LLM rerank -> blend -> behavioral -> honeypot gate. |
 | 6 | Anti-keyword reasoning | Evidence beats title; the x0.15 role/skill-mismatch cap. |
 | 7 | Honeypot defense | Clean-201 exclude, 0 in top-100, salary-inversion-is-the-norm correction. |
-| 8 | Results | 73.5 s / 2.01 GB / CPU / offline, validator valid, byte-identical determinism, top-10, internal lift vs baseline. |
+| 8 | Results | 87.9 s / 2.25 GB / CPU / offline, validator valid, byte-identical determinism, top-10, internal lift vs baseline. |
 | 9 | The ATLAS product | Ranking cinema, evidence cards, honeypot reveal, recruiter co-pilot, shareable shortlist. |
 | 10 | NVIDIA + GCP + LLM usage | Where each runs, and the Plane-B compliance boundary that keeps the graded path clean. |
 | 11 | Reproducibility | One command, `--network none`, twice -> byte-identical. |

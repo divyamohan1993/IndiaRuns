@@ -5,6 +5,17 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Changed
+- **Plane A upgraded to real NVIDIA NIM endpoints.** Embeddings are now
+  `nvidia/nv-embedqa-e5-v5` (1024-d) over all 100K narratives + JD clauses, and the
+  shortlist re-rank & reasoning are real `meta/llama-3.3-70b-instruct` judgments over the
+  **full 1,226-row shortlist** (1,226 real judgments), frozen into checksummed artifacts.
+  The local BGE / TF-IDF embeddings and the `claude -p` LLM-judge path remain shipped as
+  the no-key degradation chain. The graded `rank.py` reads only the frozen artifacts and
+  still needs no key or network (reproduces after key rotation).
+- Refreshed frozen artifacts, sample artifacts, web artifacts, `submission.csv`, and all
+  docs/metadata to the NVIDIA-derived numbers.
+
 ### Added
 - Monorepo scaffold: packaging, requirements (rank / precompute / dev), license, Makefile.
 - Plane B graded ranker (`rank.py`) — CPU-only, no-network, frozen-artifact pipeline.
@@ -24,8 +35,8 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
   `pre_computation_required: true`, honest `ai_usage_summary`, <=200-word methodology).
 
 ### Verified (real full 100K pool)
-- `rank.py`: 73.5 s wall-clock, 2.01 GB peak RSS, CPU-only, no network; caps 300 s / 16 GB.
-- Determinism: byte-identical, `sha256 694f86dd462772b7884e18e5b47a04e6b828f12abc91636c78c23b1b98cc457f`.
+- `rank.py`: 87.9 s wall-clock, 2.25 GB peak RSS, CPU-only, no network; caps 300 s / 16 GB.
+- Determinism: byte-identical, `sha256 f39f5fa551b26cbab98d79c3cd1d72c0a6a4dacde49df6e1337f1083e421c60c`.
 - Validator: "Submission is valid." 0 honeypots in top-100 and top-10.
 - Shortlist recall gate PASS (proxy-Tier-5 100%, Tier-4 100% inside K=1200); fusion ships BLEND.
 - `docker run --network none --cpus=4 --memory=16g` produced a valid CSV offline.

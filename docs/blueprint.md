@@ -84,11 +84,12 @@ Every sub-score is normalized to [0, 1].
 - **`role_title_cos`** — cosine of candidate title-text vs an AI-engineering anchor. High
   skill/dense cosine + low title cosine = the keyword-stuffer signature.
 
-**Embedding backend in this run.** The local-BGE and NVIDIA `nv-embedqa` paths are both
-shipped; in this environment the model download/runtime was not reliable, so the
-deterministic TF-IDF + TruncatedSVD dense signal was frozen (the documented degradation
-floor). `rank.py` is byte-identical regardless of which backend produced the embeddings —
-it reads whatever artifact exists.
+**Embedding backend in this run.** This submission's embeddings are real
+`nvidia/nv-embedqa-e5-v5` (1024-d) vectors over all 100K narratives, produced in offline
+pre-compute and frozen. The local-BGE path and the deterministic TF-IDF + TruncatedSVD
+floor remain shipped as the no-key fallback chain. `rank.py` is byte-identical regardless of
+which backend produced the embeddings — it reads whatever frozen artifact exists, with no
+key and no network.
 
 ---
 
@@ -104,8 +105,8 @@ shortlist  = top-K by first_pass  (K = 1200)
 
 **Recall gate (hard build step, verified).** We run the JD-encoded tier proxy over all
 100K and assert that **100% of proxy-Tier-5 and ≥98% of proxy-Tier-4** land inside the
-shortlist before freezing. Measured result: **K=1200, shortlist size 1198** (after
-force-includes − 201 honeypots), with **905 AI-titled + 845 strong-evidence**
+shortlist before freezing. Measured result: **K=1200, shortlist size 1226** (after
+force-includes − honeypots), with **905 AI-titled + 845 strong-evidence**
 force-included; recall gate **PASS** at **Tier-5 100% (700/700)** and **Tier-4 100%
 (216/216)**. This is the empirical recall validation the LLM-rerank angle was missing.
 
@@ -120,13 +121,15 @@ disqualifier checklist. It returns `fit_score` (0–100), `tier` (0–5),
 
 Engineering: dedup by sha256 of the normalized fact bundle (templated bios collapse to one
 call), bounded concurrency, token-bucket throttle, exponential backoff, resumable
-checkpoint, and a `--max-calls` cap. Backends: an NVIDIA hosted instruct model (when `NVIDIA_API_KEY` is
-set), the `claude` CLI (live offline judge), or a deterministic fallback.
+checkpoint, and a `--max-calls` cap. Backends: NVIDIA hosted `meta/llama-3.3-70b-instruct`
+(when `NVIDIA_API_KEY` is set), the `claude` CLI (live offline judge fallback), or a
+deterministic fallback.
 
-**This run.** The `claude` CLI backend produced **299 real LLM judgments** over the top
-300 of the shortlist by `first_pass` (1 unparseable → deterministic), wall ≈ 27 min. The
-judge was appropriately critical: genuine fits scored 79–84, keyword-stuffers 5–18, and it
-emitted disqualifier flags on 292/299 rows. Frozen to `artifacts/llm_scores.parquet`.
+**This run.** The NVIDIA `meta/llama-3.3-70b-instruct` backend produced **1,226 real LLM
+judgments** over the **full shortlist** (`response_format={"type":"json_object"}`,
+temperature 0, concurrency 4–8), wall ≈ 45–60 min. The judge was appropriately critical
+(genuine fits scored high, keyword-stuffers low) and emitted disqualifier flags. Frozen to
+`artifacts/llm_scores.parquet`.
 
 ---
 
@@ -199,9 +202,10 @@ A monotone-constrained blender (`core/gbdt.py` frozen numpy trees) can turn the 
 feature vector into the margin, but we keep it **only if it beats the fixed-weight blend on
 5-fold proxy CV-NDCG@10**.
 
-**This run.** Blend CV-NDCG@10 = **1.0000** vs LTR = **0.7660**; the LTR does not clear the
-margin, so we **ship the BLEND**. The monotone-constrained LTR pipeline is fully built and
-round-trips to numpy trees — it simply does not beat the blend on this proxy. Either way,
+**This run.** Blend CV-NDCG@10 = **0.8925** vs LTR = **0.9096**; the LTR's slim edge does
+not clear the ship-the-safer-one margin, so we **ship the BLEND** (`use_ltr: false`). The
+monotone-constrained LTR pipeline is fully built and round-trips to numpy trees — it is kept
+as the documented alternative. Either way,
 the feature engineering is the reusable IP and the monotone constraints guarantee the model
 can never reward a known anti-pattern.
 
@@ -255,12 +259,12 @@ reasoning lines (`artifacts/reasoning.jsonl`), deterministic for the rest.
 ## 13. Runtime, determinism, budget
 
 - **Time:** load artifacts ~3 s + one streaming JSON pass + numpy cosine matmul (sub-second)
-  + frozen-tree eval + fuse/gate/sort ⇒ **73.5 s measured** vs the 300 s cap.
-- **RAM:** mmap'd `cand_emb.f16` + small matrices + Python overhead ⇒ **2.01 GB measured**
+  + frozen-tree eval + fuse/gate/sort ⇒ **87.9 s measured** vs the 300 s cap.
+- **RAM:** mmap'd `cand_emb.f16` + small matrices + Python overhead ⇒ **2.25 GB measured**
   vs 16 GB. The 465 MB JSONL is strictly streamed, never fully loaded.
 - **Determinism:** `PYTHONHASHSEED=0`, `OMP_NUM_THREADS=1`, frozen artifact bytes, no
   rank-time randomness, stable explicit sort key ⇒ byte-identical
-  (`sha256 694f86dd…cc457f`). CI runs `rank.py` twice and byte-diffs.
+  (`sha256 f39f5fa5…21c60c`). CI runs `rank.py` twice and byte-diffs.
 - **No network:** proven three ways — `--network none` Docker, a no-socket monkeypatch
   test, and the absence of any networked import on the rank path.
 

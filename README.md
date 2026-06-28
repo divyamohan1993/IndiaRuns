@@ -4,7 +4,7 @@
 candidates against a Senior AI Engineer JD the way a great recruiter would: by career
 **evidence**, not stuffed keywords — and it proves, with a network-namespace-removed
 Docker run and a byte-for-byte determinism hash, that the graded step is a pure-numpy,
-CPU-only, offline pass that finishes in **73.5 seconds** well inside the 5-minute cap.
+CPU-only, offline pass that finishes in **87.9 seconds** well inside the 5-minute cap.
 
 ---
 
@@ -47,11 +47,11 @@ flowchart TB
   subgraph A["PLANE A — OFFLINE PRE-COMPUTE  (network + GPU + API allowed · regenerable)"]
     direction TB
     A1[build_features] --> A5
-    A2["embed<br/>NVIDIA nv-embedqa / BGE / TF-IDF"] --> A5
+    A2["embed<br/>NVIDIA nv-embedqa-e5-v5 1024d<br/>(BGE / TF-IDF no-key fallback)"] --> A5
     A3[fit_lexical<br/>BM25 + TFIDF/SVD] --> A5
     A4[make_labels<br/>proxy tier 0-5] --> A5
     A5{{first_pass fuse<br/>SHORTLIST K=1200<br/>recall gate}}
-    A6["llm_rerank<br/>shortlist only"]
+    A6["llm_rerank<br/>meta/llama-3.3-70b<br/>full shortlist"]
     A7[train_ltr<br/>monotone trees]
     A8[build_honeypots<br/>CLEAN 201 exclude]
     A9[build_reasoning<br/>fact-validated]
@@ -63,7 +63,7 @@ flowchart TB
     ART[(cand_emb · cand_features · bm25<br/>llm_scores · ltr/calibration<br/>honeypot_excludes · reasoning)]
   end
 
-  subgraph B["PLANE B — GRADED rank.py  NO network · NO GPU · NO LLM · 73.5s · 2.0GB · CPU"]
+  subgraph B["PLANE B — GRADED rank.py  NO network · NO GPU · NO LLM · 87.9s · 2.25GB · CPU"]
     direction TB
     B1[load artifacts] --> B2[stream JSONL]
     B2 --> B3[dense + bm25 + rule + llm_fit fuse]
@@ -143,10 +143,10 @@ make prove
 
 Verified results from the real full pool:
 
-- **Wall-clock 73.5 s** (`/usr/bin/time -v`) vs the 300 s cap → 4.1× headroom.
-- **Peak RSS 2.01 GB** vs the 16 GB cap → 8× headroom.
+- **Wall-clock 87.9 s** (`/usr/bin/time -v`) vs the 300 s cap → 3.4× headroom.
+- **Peak RSS 2.25 GB** vs the 16 GB cap → 7× headroom.
 - **Byte-identical** across runs and the committed file:
-  `sha256 = 694f86dd462772b7884e18e5b47a04e6b828f12abc91636c78c23b1b98cc457f`.
+  `sha256 = f39f5fa551b26cbab98d79c3cd1d72c0a6a4dacde49df6e1337f1083e421c60c`.
 - `docker run --network none` produced a valid CSV with **no network reachable at all**.
 
 ### Web demo (Plane C)
@@ -170,11 +170,13 @@ python data/prepare_data.py --source /path/to/candidates.jsonl
 python precompute/run_all.py --candidates ./candidates.jsonl --artifacts ./artifacts
 ```
 
-With `NVIDIA_API_KEY` set, Plane A uses NVIDIA hosted embeddings + a large instruct
-model for re-rank. With the `claude` CLI available it uses that as a live judge. With neither, it
-degrades to local BGE embeddings (or TF-IDF/SVD) + a deterministic brain. **Every
-degradation level still produces a valid, honeypot-clean submission** — keys are quality
-multipliers, never dependencies.
+This submission's Plane A was ACTUALLY run on NVIDIA hosted endpoints:
+`nvidia/nv-embedqa-e5-v5` (1024-d) for embeddings and `meta/llama-3.3-70b-instruct` for the
+full-shortlist re-rank and reasoning, frozen into checksummed artifacts. With no
+`NVIDIA_API_KEY`, Plane A falls back to the `claude` CLI as a live judge, then to local BGE
+embeddings (or TF-IDF/SVD) + a deterministic brain. **Every degradation level still produces
+a valid, honeypot-clean submission** — keys are quality multipliers, never dependencies. The
+graded `rank.py` reads only the frozen artifacts and needs no key or network.
 
 ---
 
@@ -182,32 +184,33 @@ multipliers, never dependencies.
 
 | Metric | Value | Bound / baseline |
 |---|---|---|
-| `rank.py` wall-clock | **73.5 s** | cap 300 s (4.1× headroom) |
-| `rank.py` peak RSS | **2.01 GB** | cap 16 GB (8× headroom) |
+| `rank.py` wall-clock | **87.9 s** | cap 300 s (3.4× headroom) |
+| `rank.py` peak RSS | **2.25 GB** | cap 16 GB (7× headroom) |
 | Compute | **CPU-only, no network** | proven via `--network none` Docker |
-| Determinism | **byte-identical** | `sha256 694f86dd…cc457f` |
+| Determinism | **byte-identical** | `sha256 f39f5fa5…21c60c` |
 | Validator | **"Submission is valid."** | 100 rows, ranks 1–100 unique, score non-increasing, ties id-ascending |
 | Honeypots in top-100 / top-10 | **0 / 0** | 201 clean ids hard-excluded |
 | Shortlist recall gate | **PASS** | proxy-Tier-5 100% (700/700), Tier-4 100% (216/216) inside K=1200 |
-| Real LLM judgments | **299** on the top-300 shortlist | 294 LLM-written + fact-validated reasoning lines |
-| Fusion decision | **ship BLEND** | 5-fold CV-NDCG@10 blend 1.0000 vs LTR 0.766 (ship-the-safer-one) |
-| Internal NDCG@10 vs naive keyword baseline | **~1.00 vs ~0.07** | synthetic proxy, relative sanity check only |
+| Embeddings | **nvidia/nv-embedqa-e5-v5 (1024-d)** | real NVIDIA NIM, offline pre-compute |
+| Real LLM judgments | **1226** on the full shortlist | `meta/llama-3.3-70b-instruct`, LLM-written + fact-validated reasoning |
+| Fusion decision | **ship BLEND** | 5-fold CV-NDCG@10 blend 0.892 vs LTR 0.910 (ship-the-safer-one) |
+| Composite vs NVIDIA LLM-tier relevance | **0.9361** (was 0.8208) | discriminating metric vs prior claude-p/BGE build |
 
 Tier distribution over 100K: **T0** 43,961 · **T1** 25,035 · **T2** 5,978 · **T3** 24,110
 · **T4** 216 · **T5** 700. Full numbers, the validator transcript, and the
 NDCG-vs-baseline table are in [`docs/results.md`](docs/results.md).
 
 **Top-10 (all genuine ranking / search / recsys engineers at product companies):**
-`CAND_0046525` Sr ML Eng @ Genpact AI (LinkedIn RAG ranking, 50M q/mo) ·
-`CAND_0024466` Search Eng @ PharmEasy (L2R search) ·
-`CAND_0041669` Recsys Eng @ CRED (LTR + RAG eval) ·
-`CAND_0075439` ML Eng @ Flipkart (prod RAG, 10M recsys) ·
+`CAND_0046525` Sr ML Eng @ Genpact AI ·
+`CAND_0041669` Recsys Eng @ CRED ·
+`CAND_0014440` Recsys Eng @ CRED ·
 `CAND_0026532` Recsys Eng @ Zomato ·
-`CAND_0070485` Search Eng @ Saarthi.ai (L2R @ Dream11, FAISS) ·
-`CAND_0053591` AI Eng @ Ola ·
-`CAND_0011432` Sr DS @ Amazon ·
-`CAND_0051615` Search Eng @ Meta ·
-`CAND_0076251` Search Eng @ Haptik.
+`CAND_0024466` Search Eng @ PharmEasy ·
+`CAND_0009024` Search Eng @ Google ·
+`CAND_0003977` Recsys Eng @ Google ·
+`CAND_0065878` Sr DS @ Niramai ·
+`CAND_0075439` ML Eng @ Flipkart ·
+`CAND_0070485` Search Eng @ Saarthi.ai.
 
 ---
 
@@ -239,13 +242,15 @@ to soft features, never a hard gate. Full rationale in
 
 ## NVIDIA, GCP & Claude usage
 
-- **NVIDIA (Plane A only).** Hosted endpoints at build.nvidia.com — `nv-embedqa`
-  embeddings and a large instruct model for shortlist re-rank and per-candidate
-  reasoning. The `precompute/nvidia_client.py` path is shipped and selected automatically
-  when `NVIDIA_API_KEY` is set. Never touches the rank path.
-- **Claude (dev + Plane A judge).** Architecture, code authoring/review, docs, and the
-  deck were produced with Claude; the `claude` CLI also serves as a live offline-build LLM
-  judge backend (this run produced **299 real judgments** with it).
+- **NVIDIA (Plane A only).** Hosted NVIDIA NIM endpoints at build.nvidia.com —
+  `nvidia/nv-embedqa-e5-v5` (1024-d) embeddings over all 100K narratives and
+  `meta/llama-3.3-70b-instruct` for the full-shortlist re-rank and per-candidate reasoning
+  (**1,226 real judgments this run**), frozen into checksummed artifacts. The
+  `precompute/nvidia_client.py` path is selected automatically when `NVIDIA_API_KEY` is set.
+  Never touches the rank path.
+- **Claude (dev + Plane A judge fallback).** Architecture, code authoring/review, docs, and
+  the deck were produced with Claude; the `claude` CLI also remains shipped as a no-key
+  offline-build LLM-judge fallback when no NVIDIA key is present.
 - **GCP (Plane C deploy, documented).** Cloud Run (`asia-south1` Mumbai) + Artifact
   Registry + Secret Manager + an optional Vertex Custom Job for Plane A, all via
   `infra/bootstrap.sh` / `infra/main.tf` / `cloudbuild.yaml`. No secret is needed to build

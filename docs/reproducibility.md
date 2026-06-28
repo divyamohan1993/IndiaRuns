@@ -28,12 +28,12 @@ python validate_submission.py ./submission.csv     # -> "Submission is valid."
 
 ## Determinism
 
-Two independent full runs and the committed file all hash identically:
+Two independent full `rank.py` runs hash identically (the contract is on the ranker's CRLF
+output; the repo stores an LF-normalized reference copy via `.gitattributes`):
 
 ```
-694f86dd462772b7884e18e5b47a04e6b828f12abc91636c78c23b1b98cc457f  run_a.csv
-694f86dd462772b7884e18e5b47a04e6b828f12abc91636c78c23b1b98cc457f  run_b.csv
-694f86dd462772b7884e18e5b47a04e6b828f12abc91636c78c23b1b98cc457f  submission.csv
+f39f5fa551b26cbab98d79c3cd1d72c0a6a4dacde49df6e1337f1083e421c60c  run_a.csv
+f39f5fa551b26cbab98d79c3cd1d72c0a6a4dacde49df6e1337f1083e421c60c  run_b.csv
 ```
 
 What removes every source of nondeterminism:
@@ -56,9 +56,9 @@ the same locally. `reproduce.sh` sets the env vars for you.
 
 | Metric | Measured | Bound | Headroom |
 |---|---|---|---|
-| Wall-clock | **73.5 s** (1:13.48) | 300 s | 4.1× |
+| Wall-clock | **87.9 s** (1:27.93) | 300 s | 3.4× |
 | User CPU time | 71.97 s | — | — |
-| Peak RSS | **2.01 GB** (2,107,064 KB) | 16 GB | 8× |
+| Peak RSS | **2.25 GB** (2,356,648 KB) | 16 GB | 8× |
 | Exit status | 0 | — | — |
 
 The 465 MB JSONL is strictly streamed line-by-line — never fully loaded. `cand_emb.f16` is
@@ -97,7 +97,7 @@ size for every one. The shipped set:
 | Artifact | Shape / size | Producer |
 |---|---|---|
 | `cand_features.f16.npy` | 100000 × 40 | `build_features.py` |
-| `cand_emb.f16.npy` | 100000 × 384 (L2-normalized) | `embed.py` |
+| `cand_emb.f16.npy` | 100000 × 1024 (L2-normalized, nvidia/nv-embedqa-e5-v5) | `embed.py` |
 | `cand_svd32.f16.npy` | 100000 × 32 | `fit_lexical.py` |
 | `bm25.npz` | 100000 BM25 scores [0,1] | `fit_lexical.py` |
 | `lexical_cos_jd.f16.npy` | 100000 | `fit_lexical.py` |
@@ -106,11 +106,11 @@ size for every one. The shipped set:
 | `jd_meta.json` | frozen JD clauses + weights | `embed.py` |
 | `proxy_tiers.npy` | 100000 (tier 0–5) | `make_labels.py` |
 | `honeypot_excludes.json` | clean 201 structural ids | `build_honeypots.py` |
-| `shortlist.json` | 1198 ids + recall report | `first_pass_shortlist.py` |
-| `llm_scores.{json,parquet}` | 1198 rows, 299 real LLM judgments | `llm_rerank.py` |
+| `shortlist.json` | 1226 ids + recall report | `first_pass_shortlist.py` |
+| `llm_scores.{json,parquet}` | 1226 rows, 1226 real `meta/llama-3.3-70b-instruct` judgments | `llm_rerank.py` |
 | `ltr_model.json` / `calibration.json` | feature order + ship decision | `train_ltr.py` |
 | `feature_meta.json` | feature names + monotone signs + thresholds | `build_features.py` |
-| `reasoning.jsonl` | 1198 lines, 294 LLM-written + fact-validated | `build_reasoning.py` |
+| `reasoning.jsonl` | 1226 lines, LLM-written + fact-validated | `build_reasoning.py` |
 | `candidate_index.json` | id → row map | `build_features.py` |
 | `MANIFEST.json` | sha256 + size + producer for every artifact | `core/artifacts.py` |
 

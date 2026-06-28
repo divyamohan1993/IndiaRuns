@@ -25,8 +25,9 @@ github_repo: "https://github.com/divyamohan1993/IndiaRuns"
 sandbox_link: "https://huggingface.co/spaces/divyamohan1993/indiaruns-atlas"   # HF Docker Space (placeholder slug)
 
 reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
-# Single command; produces submission.csv from candidates.jsonl in ~73.5 s on CPU,
-# 2.01 GB peak RSS, no network. rank.py self-validates before writing.
+# Single command; produces submission.csv from candidates.jsonl in ~87.9 s on CPU,
+# 2.25 GB peak RSS, no network. rank.py self-validates before writing. It reads only the
+# FROZEN NVIDIA-derived artifacts and needs NO key (reproduces after key rotation).
 
 # ============================================================================
 # Compute environment
@@ -40,31 +41,34 @@ compute:
   uses_gpu_for_inference: false          # proven via docker run --network none on a CPU-only image
   has_network_during_ranking: false      # proven via --network none + no-socket test + no networked imports
   pre_computation_required: true         # embeddings, lexical fit, shortlist, LLM re-rank, LTR, reasoning (Plane A)
-  pre_computation_time_minutes: 60       # ~48 min this run; budget ~60 (CPU embeddings + LLM re-rank + LTR)
+  pre_computation_time_minutes: 60       # ~60 min this run: NVIDIA nv-embedqa-e5-v5 100K embed (~6 min) + meta/llama-3.3-70b-instruct full-shortlist re-rank & reasoning (~45-60 min) + deterministic stages (~4 min)
 
 # ============================================================================
 # AI tools declaration  (transparency only — declared use is NOT penalized)
 # ============================================================================
 ai_tools_used:
-  - "Claude"                                   # architecture, code authoring/review, docs, deck, offline LLM judge (claude CLI)
-  - "NVIDIA NIM / build.nvidia.com endpoints"  # offline embeddings + shortlist re-rank (Plane A only; auto-selected when a key is present)
+  - "Claude"                                   # architecture, code authoring/review, docs, deck; claude CLI is a no-key LLM-judge fallback
+  - "NVIDIA NIM (nv-embedqa-e5-v5 embeddings; meta/llama-3.3-70b-instruct re-rank & reasoning)"  # ACTUALLY used in offline pre-compute (Plane A); frozen into artifacts
 
 ai_usage_summary: |
-  Claude (including the claude CLI) was used for architecture, code authoring and review,
-  documentation, the deck, and — in OFFLINE pre-compute (Plane A) — as a live LLM judge
-  that re-ranked the shortlist and wrote per-candidate reasoning (299 real judgments this
-  run). NVIDIA hosted endpoints (build.nvidia.com) are wired for Plane A only: nv-embedqa
-  embeddings (local BAAI/bge-small as no-key fallback, TF-IDF/SVD as the deterministic
-  floor) and a large instruct model for shortlist re-rank and reasoning. All LLM
-  reasoning is POST-VALIDATED so every named skill, company, and number appears in the
-  candidate's own profile (no hallucination). The scored ranker (rank.py, Plane B) makes
-  NO network, GPU, or LLM call — proven by a no-socket test, the absence of any networked
-  import on the rank path, and a docker run with --network none that produced a valid CSV
-  offline. The live product (Plane C) uses AI at runtime but reads rank.py's OUTPUT and
-  never invokes it online. The whole pipeline runs end-to-end with NO NVIDIA key and NO
-  GCP credentials (local/TF-IDF embeddings + rule-proxy + deterministic reasoning still
-  yield a valid, honeypot-clean submission). AI tools are quality multipliers, never
-  dependencies on the graded path.
+  NVIDIA hosted endpoints (build.nvidia.com / NVIDIA NIM) were ACTUALLY used in the
+  OFFLINE pre-compute (Plane A) for this submission: nvidia/nv-embedqa-e5-v5 (1024-d)
+  embedded all 100,000 candidate narratives and the JD clauses, and
+  meta/llama-3.3-70b-instruct re-ranked the FULL 1,226-row shortlist and wrote the
+  per-candidate reasoning (1,226 real LLM judgments this run). These outputs are FROZEN
+  into checksummed artifacts; the graded ranker reads only those frozen artifacts. The
+  local BAAI/bge-small embeddings, the TF-IDF/SVD floor, and the `claude -p` LLM-judge path
+  remain shipped as the no-key degradation chain (selected automatically only when no
+  NVIDIA key is present), so the whole pipeline still produces a valid, honeypot-clean
+  submission with NO NVIDIA key and NO GCP credentials. Claude was used for architecture,
+  code authoring and review, documentation, and the deck. All LLM reasoning is
+  POST-VALIDATED so every named skill, company, and number appears in the candidate's own
+  profile (no hallucination). The scored ranker (rank.py, Plane B) makes NO network, GPU,
+  or LLM call — proven by a no-socket test, the absence of any networked import on the rank
+  path, and a docker run with --network none that produced a valid CSV offline; it
+  reproduces with no key after the NVIDIA key is rotated. The live product (Plane C) uses
+  AI at runtime but reads rank.py's OUTPUT and never invokes it online. AI tools are
+  quality multipliers, never dependencies on the graded path.
 
 # ============================================================================
 # Approach summary  (<=200 words)
@@ -73,14 +77,15 @@ methodology_summary: |
   A hybrid funnel split across three planes. Offline (Plane A): embed the career NARRATIVE
   (not the skills list), fit BM25/TF-IDF, build ~40 deterministic features, fuse a
   recall-first pass into a K=1200 shortlist (recall gate verified: 100% of proxy-Tier-5 and
-  Tier-4 inside), re-rank the shortlist with an LLM, and freeze everything to checksummed
+  Tier-4 inside), embed via NVIDIA nv-embedqa-e5-v5 (1024-d) and re-rank the full shortlist
+  with meta/llama-3.3-70b-instruct, and freeze everything to checksummed
   artifacts. The graded ranker (Plane B, rank.py) loads those artifacts, streams the JSONL,
   fuses sub-scores into a blend, applies multiplicative ANTI-TRAP caps (non-eng title + AI
   skill => x0.15, the direct counter to the keyword-stuffer baseline), a bounded behavioral
   multiplier (sentinels never penalize), and a 3-layer honeypot gate (clean-201 structural
   exclude + live re-verify + top-10 paranoia). Salary inversion (18.9%, a dataset norm) is
   deliberately NOT flagged. Output: top-100 with fact-validated reasoning, written only after
-  an in-process validator pass. Measured on the real 100K: 73.5 s, 2.01 GB, CPU-only, no
+  an in-process validator pass. Measured on the real 100K: 87.9 s, 2.25 GB, CPU-only, no
   network, byte-identical across runs, 0 honeypots in top-100/top-10. Evidence beats title;
   the top-10 are all genuine ranking/search/recsys engineers at product companies.
 

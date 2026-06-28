@@ -137,7 +137,7 @@
     </div>
     <div class="badges">
       <div class="badge"><b>100,000</b> real candidates</div>
-      <div class="badge"><b>73.5 s</b> &middot; CPU-only &middot; offline</div>
+      <div class="badge"><b>87.9 s</b> &middot; CPU-only &middot; offline</div>
       <div class="badge"><b>0</b> honeypots in top-100</div>
       <div class="badge">Validator: <b>valid</b></div>
     </div>
@@ -258,7 +258,7 @@
     <div>
       <ul class="clean" style="font-size:17.5px;">
         <li><b>1 &middot; Recall first-pass.</b> <span class="mono">0.30&middot;dense + 0.25&middot;bm25 + 0.45&middot;rule</span> over all 100K &rarr; top <b>1,200</b>, force-include AI-titled &amp; strong-evidence, drop honeypots.</li>
-        <li><b>2 &middot; LLM re-rank</b> the shortlist only &mdash; where <span class="g">~80% of the metric lives</span>. 299 real judgments on the top-300.</li>
+        <li><b>2 &middot; LLM re-rank</b> the shortlist only &mdash; where <span class="g">~80% of the metric lives</span>. 1,226 real meta/llama-3.3-70b-instruct judgments on the full shortlist.</li>
         <li><b>3 &middot; Blend / LTR fusion</b> &mdash; monotone-constrained. We <span class="c">ship the safer one</span>.</li>
         <li><b>4 &middot; Behavioral &times;</b> <span class="mono">[0.80&ndash;1.12]</span> &mdash; modulates, never dominates. Sentinels never penalize.</li>
         <li><b>5 &middot; Honeypot hard-gate</b> + live re-verify of survivors.</li>
@@ -354,11 +354,11 @@ margin   = blend(features) &rarr; &times; anti_trap_caps &rarr; &times; behavior
     <div>
       <table class="res">
         <tr><th>Metric</th><th>Result</th><th>Cap</th></tr>
-        <tr><td>Wall-clock (full 100K)</td><td class="v"><span class="g">73.5 s</span></td><td class="cap">300 s</td></tr>
-        <tr><td>Peak memory</td><td class="v"><span class="g">2.01 GB</span></td><td class="cap">16 GB</td></tr>
+        <tr><td>Wall-clock (full 100K)</td><td class="v"><span class="g">87.9 s</span></td><td class="cap">300 s</td></tr>
+        <tr><td>Peak memory</td><td class="v"><span class="g">2.25 GB</span></td><td class="cap">16 GB</td></tr>
         <tr><td>Network / GPU at rank time</td><td class="v"><span class="c">none</span></td><td class="cap">&mdash;</td></tr>
         <tr><td>Validator</td><td class="v"><span class="c">valid</span></td><td class="cap">&mdash;</td></tr>
-        <tr><td>Determinism</td><td class="v">byte-identical</td><td class="cap">694f86dd&hellip;</td></tr>
+        <tr><td>Determinism</td><td class="v">byte-identical</td><td class="cap">f39f5fa5&hellip;</td></tr>
         <tr><td>Honeypots top-100 / top-10</td><td class="v">0 / 0</td><td class="cap">&le;10</td></tr>
         <tr><td>Lift vs naive baseline</td><td class="v"><span class="g">~1.00</span> / 0.07</td><td class="cap">NDCG@10</td></tr>
       </table>
@@ -444,7 +444,7 @@ margin   = blend(features) &rarr; &times; anti_trap_caps &rarr; &times; behavior
     <div class="card"><h3><span class="dot" style="background:var(--cyan);"></span>NVIDIA &mdash; Plane A</h3>
       <p>Hosted embeddings + a 70B-class instruct re-rank of the shortlist and fact-validated reasoning. Full path built; degrades cleanly with no key.</p></div>
     <div class="card"><h3><span class="dot" style="background:var(--gold);"></span>LLM judging</h3>
-      <p>299 real judgments on the top-300; 294 fact-validated reasoning lines. A local CLI backend + deterministic fallback &mdash; runs <b style="color:#fff;">with or without</b> any key.</p></div>
+      <p>1,226 real meta/llama-3.3-70b-instruct judgments on the full shortlist; fact-validated reasoning lines. A claude -p CLI backend + deterministic fallback &mdash; runs <b style="color:#fff;">with or without</b> any key.</p></div>
     <div class="card"><h3><span class="dot" style="background:var(--cyan);"></span>GCP &mdash; Plane C</h3>
       <p>Cloud Run for API + web, Secret Manager for the key, optional Vertex for Plane A. Documented and credential-gated &mdash; never needed to grade.</p></div>
   </div>
@@ -470,7 +470,7 @@ docker run --rm <span class="gd">--network none</span> --cpus=4 --memory=16g \
 
 <span class="cm"># or directly</span>
 python rank.py --candidates candidates.jsonl --out submission.csv
-<span class="cm"># 73.5 s &middot; 2.01 GB peak RSS &middot; CPU-only</span>
+<span class="cm"># 87.9 s &middot; 2.25 GB peak RSS &middot; CPU-only</span>
   </div>
   <ul class="clean" style="font-size:17.5px;">
     <li>Run it twice and byte-diff &mdash; <b>identical</b> (<span class="mono">PYTHONHASHSEED=0</span>, <span class="mono">OMP_NUM_THREADS=1</span>, artifact bytes tracked by sha256 in the manifest).</li>
