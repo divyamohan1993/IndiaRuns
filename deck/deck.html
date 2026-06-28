@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IndiaRuns / ATLAS — Track 1</title>
+<style>
+  :root{
+    --navy:#0A0E1A; --navy2:#0D1424; --panel:#111A2E; --panel2:#0F1830;
+    --gold:#F5C04E; --cyan:#5BE0E6; --red:#FF5C6C;
+    --ink:#E6EAF2; --muted:#9AA6BE; --line:#23304C;
+    --green:#5BE07F;
+  }
+  @page{ size:1280px 720px; margin:0; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ background:var(--navy); color:var(--ink);
+    font-family:-apple-system,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased; }
+  .slide{
+    width:1280px; height:720px; position:relative; overflow:hidden;
+    page-break-after:always; padding:54px 64px 58px;
+    background:
+      radial-gradient(1100px 620px at 88% -12%, rgba(91,224,230,.10), transparent 60%),
+      radial-gradient(900px 520px at 2% 108%, rgba(245,192,78,.09), transparent 60%),
+      linear-gradient(180deg, #0A0E1A 0%, #0B1020 100%);
+  }
+  .slide:last-child{ page-break-after:auto; }
+  .kicker{ font-size:13px; letter-spacing:.32em; text-transform:uppercase;
+    color:var(--cyan); font-weight:700; margin-bottom:14px; }
+  h1.big{ font-size:92px; line-height:.96; font-weight:800; letter-spacing:-.02em; }
+  h2{ font-size:40px; font-weight:800; letter-spacing:-.015em; line-height:1.08; }
+  h2 .em{ color:var(--gold); }
+  h2 .emc{ color:var(--cyan); }
+  .sub{ color:var(--muted); font-size:18px; margin-top:10px; max-width:1000px; line-height:1.5; }
+  .rule{ height:3px; width:84px; background:linear-gradient(90deg,var(--gold),var(--cyan));
+    border-radius:3px; margin:18px 0 26px; }
+  .pageno{ position:absolute; bottom:24px; right:30px; font-size:12px; color:#56627E;
+    font-variant-numeric:tabular-nums; }
+  .brandfoot{ position:absolute; bottom:24px; left:64px; font-size:12px; color:#56627E;
+    letter-spacing:.14em; text-transform:uppercase; }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  .grid3{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .card{ background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.01));
+    border:1px solid var(--line); border-radius:16px; padding:22px 24px; }
+  .card h3{ font-size:19px; font-weight:700; margin-bottom:8px; }
+  .card h3 .dot{ display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:9px;
+    vertical-align:middle; }
+  .card p{ color:var(--muted); font-size:15.5px; line-height:1.5; }
+  ul.clean{ list-style:none; }
+  ul.clean li{ position:relative; padding-left:26px; margin-bottom:14px;
+    font-size:18.5px; line-height:1.5; color:#D7DEEC; }
+  ul.clean li::before{ content:""; position:absolute; left:2px; top:9px; width:9px; height:9px;
+    border-radius:2px; background:var(--gold); transform:rotate(45deg); }
+  ul.clean li b{ color:#fff; }
+  ul.clean li .c{ color:var(--cyan); font-weight:700; }
+  ul.clean li .g{ color:var(--gold); font-weight:700; }
+  ul.clean li .r{ color:var(--red); font-weight:700; }
+  .mono{ font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace; }
+  /* title */
+  .title-wrap{ display:flex; flex-direction:column; height:100%; justify-content:center; }
+  .logorow{ display:flex; align-items:center; gap:18px; margin-bottom:10px; }
+  .glyph{ width:64px; height:64px; }
+  .thesis{ margin-top:30px; font-size:21px; line-height:1.55; color:#C7D0E2; font-style:italic;
+    max-width:1010px; border-left:3px solid var(--gold); padding-left:22px; }
+  .badges{ display:flex; gap:12px; margin-top:34px; flex-wrap:wrap; }
+  .badge{ border:1px solid var(--line); border-radius:999px; padding:9px 18px; font-size:14px;
+    color:#C7D0E2; background:rgba(255,255,255,.03); }
+  .badge b{ color:var(--gold); }
+  /* stat strip */
+  .statbig{ font-size:62px; font-weight:800; letter-spacing:-.02em; line-height:1;
+    font-variant-numeric:tabular-nums; }
+  .statbig.g{ color:var(--gold);} .statbig.c{ color:var(--cyan);} .statbig.r{ color:var(--red);}
+  .statlbl{ color:var(--muted); font-size:14.5px; margin-top:10px; line-height:1.4; }
+  /* table */
+  table.res{ width:100%; border-collapse:collapse; font-size:16.5px; }
+  table.res th{ text-align:left; color:var(--cyan); font-size:12.5px; letter-spacing:.14em;
+    text-transform:uppercase; padding:0 14px 12px; border-bottom:1px solid var(--line); }
+  table.res td{ padding:13px 14px; border-bottom:1px solid rgba(35,48,76,.55); color:#D7DEEC; }
+  table.res td.v{ color:#fff; font-weight:700; font-variant-numeric:tabular-nums; }
+  table.res td.v .g{ color:var(--gold);} table.res td.v .c{ color:var(--cyan);}
+  table.res td.cap{ color:var(--muted); font-variant-numeric:tabular-nums; }
+  .codebox{ background:#070B16; border:1px solid var(--line); border-radius:14px;
+    padding:20px 24px; font-family:"JetBrains Mono",ui-monospace,monospace; font-size:16px;
+    color:#CFE3FF; line-height:1.6; }
+  .codebox .cm{ color:#5C6B86; } .codebox .gd{ color:var(--gold);} .codebox .cy{ color:var(--cyan);}
+  .pill{ display:inline-block; padding:4px 12px; border-radius:999px; font-size:13px; font-weight:700;
+    border:1px solid var(--line); }
+  .pill.live{ color:var(--cyan); border-color:rgba(91,224,230,.45); }
+  .pill.off{ color:var(--muted); }
+  /* product mock */
+  .mock{ background:#080D1A; border:1px solid var(--line); border-radius:16px; overflow:hidden;
+    height:100%; display:flex; flex-direction:column; }
+  .mockbar{ display:flex; align-items:center; gap:8px; padding:11px 16px; border-bottom:1px solid var(--line);
+    background:rgba(255,255,255,.02); }
+  .mockbar .dotr{ width:11px; height:11px; border-radius:50%; }
+  .mockttl{ margin-left:10px; font-size:13px; color:var(--muted); letter-spacing:.04em; }
+  .cinema{ flex:1; position:relative; }
+  .candrow{ display:flex; align-items:center; gap:14px; padding:12px 16px; border-bottom:1px solid rgba(35,48,76,.5); }
+  .rankbadge{ width:30px; height:30px; border-radius:8px; background:rgba(245,192,78,.14);
+    color:var(--gold); font-weight:800; display:flex; align-items:center; justify-content:center; font-size:14px;
+    border:1px solid rgba(245,192,78,.35); }
+  .candmeta{ flex:1; } .candmeta .n{ font-size:14.5px; color:#fff; font-weight:600; }
+  .candmeta .s{ font-size:12.5px; color:var(--muted); }
+  .fitring{ font-size:13px; font-weight:800; color:var(--cyan); font-variant-numeric:tabular-nums; }
+  .chipP{ font-size:10.5px; padding:2px 8px; border-radius:999px; background:rgba(91,224,231,.12);
+    color:var(--cyan); border:1px solid rgba(91,224,231,.3); }
+  .footnote{ position:absolute; bottom:54px; left:64px; right:64px; color:#56627E; font-size:13px;
+    border-top:1px solid var(--line); padding-top:12px; line-height:1.5; }
+  .lead{ font-size:24px; line-height:1.5; color:#DCE3F0; max-width:1010px; }
+  .lead b{ color:#fff; } .lead .g{ color:var(--gold);} .lead .c{ color:var(--cyan);} .lead .r{ color:var(--red);}
+  .twocol{ column-count:2; column-gap:40px; }
+</style>
+</head>
+<body>
+
+<!-- 1 TITLE -->
+<section class="slide">
+  <div class="title-wrap">
+    <div class="logorow">
+      <svg class="glyph" viewBox="0 0 64 64" fill="none">
+        <circle cx="32" cy="32" r="29" stroke="#F5C04E" stroke-width="2.5"/>
+        <circle cx="32" cy="32" r="19" stroke="#5BE0E6" stroke-width="2" opacity=".7"/>
+        <circle cx="32" cy="32" r="4.5" fill="#F5C04E"/>
+        <path d="M32 3 L32 13 M32 51 L32 61 M3 32 L13 32 M51 32 L61 32" stroke="#5BE0E6" stroke-width="2"/>
+        <circle cx="48" cy="16" r="2.5" fill="#5BE0E6"/>
+        <circle cx="16" cy="48" r="2.5" fill="#F5C04E"/>
+      </svg>
+      <div class="kicker" style="margin:0;">India Runs &times; Redrob AI &middot; Track 01</div>
+    </div>
+    <h1 class="big">ATLAS</h1>
+    <div class="sub" style="font-size:26px; color:#C7D0E2; margin-top:18px;">
+      Intelligent Candidate Discovery &amp; Ranking</div>
+    <div style="margin-top:8px; font-size:18px; color:var(--muted);">The Data &amp; AI Challenge &middot; Team <b style="color:#fff;">IndiaRuns</b></div>
+    <div class="thesis">
+      Retrieval finds the candidates. An LLM judges the few that matter. A monotone-constrained
+      blender fuses the evidence. A structural gate guarantees no trap survives &mdash; all frozen
+      offline so the graded step is a 73-second pure-numpy pass.
+    </div>
+    <div class="badges">
+      <div class="badge"><b>100,000</b> real candidates</div>
+      <div class="badge"><b>73.5 s</b> &middot; CPU-only &middot; offline</div>
+      <div class="badge"><b>0</b> honeypots in top-100</div>
+      <div class="badge">Validator: <b>valid</b></div>
+    </div>
+  </div>
+  <div class="brandfoot">IndiaRuns / ATLAS</div>
+  <div class="pageno">01 / 13</div>
+</section>
+
+<!-- 2 PROBLEM -->
+<section class="slide">
+  <div class="kicker">The Problem</div>
+  <h2>Recruiters drown in profiles &mdash; and still <span class="em">miss the right person</span>.</h2>
+  <div class="rule"></div>
+  <ul class="clean" style="max-width:1080px;">
+    <li>Keyword filters match <b>words, not fit</b>. They rank by skill-count, so a buzzword-stuffed
+        profile beats a quiet specialist who actually shipped the system.</li>
+    <li>The cost is two-sided: <b>great candidates stay invisible</b>, and recruiters burn hours on
+        confident-looking non-fits.</li>
+    <li>Redrob's bet is an <span class="g">AI brain for hiring</span> &mdash; read a job description and
+        rank like a great recruiter would, by understanding <b>who fits</b>, not who matched the most strings.</li>
+  </ul>
+  <div class="lead" style="margin-top:30px;">And this dataset makes that hard <span class="g">on purpose.</span></div>
+  <div class="brandfoot">IndiaRuns / ATLAS</div>
+  <div class="pageno">02 / 13</div>
+</section>
+
+<!-- 3 THE TRAP -->
+<section class="slide">
+  <div class="kicker">The Insight</div>
+  <h2>The dataset is a <span class="em">trap</span> &mdash; it punishes keyword-counting by design.</h2>
+  <div class="rule"></div>
+  <div class="grid3" style="margin-bottom:26px;">
+    <div class="card"><div class="statbig g">20.4%</div><div class="statlbl">have an AI/ML <b style="color:#fff;">skill keyword</b> in their profile</div></div>
+    <div class="card"><div class="statbig c">1.0%</div><div class="statlbl">have an AI/ML <b style="color:#fff;">job title</b> &mdash; a 19.4-pt gap</div></div>
+    <div class="card"><div class="statbig r">#1</div><div class="statlbl">the baseline ranks an <b style="color:#fff;">HR Manager</b> first &mdash; purely on skill count</div></div>
+  </div>
+  <ul class="clean">
+    <li>That gap is overwhelmingly <b>non-AI roles that stuffed AI keywords</b> into their skills array.</li>
+    <li>Planted <span class="r">honeypots</span> &mdash; impossible-on-the-numbers profiles &mdash; sit in the pool.
+        More than <b>10 in your top-100 is an automatic disqualification</b>.</li>
+  </ul>
+  <div class="lead" style="margin-top:24px;">The challenge: <span class="g">beat the keyword instinct</span>, and
+      <span class="c">don't step on a landmine.</span></div>
+  <div class="brandfoot">IndiaRuns / ATLAS</div>
+  <div class="pageno">03 / 13</div>
+</section>
+
+<!-- 4 ARCHITECTURE -->
+<section class="slide">
+  <div class="kicker">Architecture</div>
+  <h2>Three planes, <span class="emc">one inviolable boundary</span>.</h2>
+  <div class="rule" style="margin:14px 0 18px;"></div>
+  <svg viewBox="0 0 1152 470" width="1152" height="470" style="display:block;">
+    <defs>
+      <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+        <path d="M0 0 L9 4.5 L0 9 Z" fill="#5BE0E6"/></marker>
+      <marker id="arg" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+        <path d="M0 0 L9 4.5 L0 9 Z" fill="#F5C04E"/></marker>
+    </defs>
+    <!-- Plane A -->
+    <rect x="0" y="40" width="360" height="400" rx="16" fill="#0E1730" stroke="#23304C" stroke-width="1.5"/>
+    <text x="22" y="30" fill="#5BE0E6" font-size="13" font-weight="700" letter-spacing="2">PLANE A &middot; OFFLINE PRE-COMPUTE</text>
+    <text x="22" y="64" fill="#9AA6BE" font-size="12.5">network + GPU + APIs allowed &middot; regenerable</text>
+    <g font-size="13.5" fill="#D7DEEC" font-weight="600">
+      <rect x="22" y="82" width="316" height="40" rx="9" fill="#13203B" stroke="#2C3A5C"/><text x="38" y="106">Embeddings &middot; BM25/TF-IDF &middot; features</text>
+      <rect x="22" y="132" width="316" height="40" rx="9" fill="#13203B" stroke="#2C3A5C"/><text x="38" y="156">Recall first-pass &rarr; shortlist K=1,200</text>
+      <rect x="22" y="182" width="316" height="40" rx="9" fill="#13203B" stroke="#2C3A5C"/><text x="38" y="206" fill="#F5C04E">LLM re-rank of the shortlist</text>
+      <rect x="22" y="232" width="316" height="40" rx="9" fill="#13203B" stroke="#2C3A5C"/><text x="38" y="256">Monotone blender &middot; calibration</text>
+      <rect x="22" y="282" width="316" height="40" rx="9" fill="#13203B" stroke="#2C3A5C"/><text x="38" y="306">Clean-201 honeypot set</text>
+      <rect x="22" y="332" width="316" height="40" rx="9" fill="#13203B" stroke="#2C3A5C"/><text x="38" y="356">Fact-validated reasoning</text>
+    </g>
+    <text x="22" y="402" fill="#5C6B86" font-size="11.5">frozen artifacts &middot; sha256 in MANIFEST</text>
+
+    <!-- Plane B -->
+    <rect x="396" y="40" width="360" height="400" rx="16" fill="#0D1424" stroke="#FF5C6C" stroke-width="2.5"/>
+    <text x="418" y="30" fill="#FF5C6C" font-size="13" font-weight="700" letter-spacing="2">PLANE B &middot; GRADED rank.py</text>
+    <text x="418" y="64" fill="#FF8A95" font-size="12.5">&#9940; NO network &middot; NO GPU &middot; NO LLM</text>
+    <g font-size="13.5" fill="#D7DEEC" font-weight="600">
+      <rect x="418" y="82" width="316" height="38" rx="9" fill="#141C30" stroke="#3A2A38"/><text x="434" y="105">Load artifacts &middot; stream JSONL</text>
+      <rect x="418" y="128" width="316" height="38" rx="9" fill="#141C30" stroke="#3A2A38"/><text x="434" y="151">Fuse dense + bm25 + rule + LLM fit</text>
+      <rect x="418" y="174" width="316" height="38" rx="9" fill="#141C30" stroke="#3A2A38"/><text x="434" y="197">Blend &rarr; margin</text>
+      <rect x="418" y="220" width="316" height="38" rx="9" fill="#141C30" stroke="#3A2A38"/><text x="434" y="243">Behavioral &times; [0.80&ndash;1.12]</text>
+      <rect x="418" y="266" width="316" height="38" rx="9" fill="#1B1322" stroke="#FF5C6C"/><text x="434" y="289" fill="#FF8A95">Honeypot GATE + re-verify</text>
+      <rect x="418" y="312" width="316" height="38" rx="9" fill="#141C30" stroke="#3A2A38"/><text x="434" y="335">Top-100 &middot; id-asc tie-break</text>
+      <rect x="418" y="358" width="316" height="38" rx="9" fill="#142413" stroke="#2E5C2A"/><text x="434" y="381" fill="#5BE07F">Self-validate &rarr; submission.csv</text>
+    </g>
+    <text x="418" y="420" fill="#FF8A95" font-size="11.5">CPU-only &middot; &le;5 min &middot; &le;16 GB &middot; the only step judges reproduce</text>
+
+    <!-- Plane C -->
+    <rect x="792" y="40" width="360" height="400" rx="16" fill="#0E1730" stroke="#23304C" stroke-width="1.5"/>
+    <text x="814" y="30" fill="#5BE0E6" font-size="13" font-weight="700" letter-spacing="2">PLANE C &middot; LIVE ATLAS</text>
+    <text x="814" y="64" fill="#9AA6BE" font-size="12.5">network + live AI &middot; off the graded path</text>
+    <g font-size="13.5" fill="#D7DEEC" font-weight="600">
+      <rect x="814" y="82" width="316" height="46" rx="9" fill="#13203B" stroke="#2C3A5C"/><text x="830" y="103">Cinematic web app</text><text x="830" y="120" font-size="11.5" fill="#9AA6BE">cinema &middot; board &middot; cards &middot; co-pilot &middot; share</text>
+      <rect x="814" y="140" width="316" height="46" rx="9" fill="#13203B" stroke="#2C3A5C"/><text x="830" y="161">Reads Plane B output artifacts</text><text x="830" y="178" font-size="11.5" fill="#9AA6BE">ranked_top100 / funnel / traps / intent</text>
+      <rect x="814" y="198" width="316" height="46" rx="9" fill="#13203B" stroke="#2C3A5C"/><text x="830" y="219">Live AI co-pilot</text><text x="830" y="236" font-size="11.5" fill="#9AA6BE">deterministic fallback with no key</text>
+      <rect x="814" y="256" width="316" height="46" rx="9" fill="#142413" stroke="#2E5C2A"/><text x="830" y="277" fill="#5BE07F">/sandbox runs the REAL rank.py</text><text x="830" y="294" font-size="11.5" fill="#9AA6BE">--network none + live timer</text>
+      <rect x="814" y="316" width="316" height="46" rx="9" fill="#13203B" stroke="#2C3A5C"/><text x="830" y="337">Never invokes rank.py online</text>
+    </g>
+
+    <!-- arrows -->
+    <line x1="360" y1="240" x2="394" y2="240" stroke="#F5C04E" stroke-width="2.5" marker-end="url(#arg)"/>
+    <line x1="756" y1="240" x2="790" y2="240" stroke="#5BE0E6" stroke-width="2.5" marker-end="url(#ar)"/>
+  </svg>
+  <div style="margin-top:14px; font-size:17px; color:#C7D0E2;">
+    <b style="color:#fff;">The one rule:</b> no network, GPU, or LLM call ever sits on the graded path &mdash;
+    the single most defensible point of the whole submission.</div>
+  <div class="brandfoot">IndiaRuns / ATLAS</div>
+  <div class="pageno">04 / 13</div>
+</section>
+
+<!-- 5 FUNNEL -->
+<section class="slide">
+  <div class="kicker">The Algorithm</div>
+  <h2>The hybrid funnel: <span class="em">recall &rarr; judge &rarr; fuse &rarr; gate</span>.</h2>
+  <div class="rule"></div>
+  <div class="grid2" style="grid-template-columns:1.05fr 1fr; gap:26px;">
+    <div>
+      <ul class="clean" style="font-size:17.5px;">
+        <li><b>1 &middot; Recall first-pass.</b> <span class="mono">0.30&middot;dense + 0.25&middot;bm25 + 0.45&middot;rule</span> over all 100K &rarr; top <b>1,200</b>, force-include AI-titled &amp; strong-evidence, drop honeypots.</li>
+        <li><b>2 &middot; LLM re-rank</b> the shortlist only &mdash; where <span class="g">~80% of the metric lives</span>. 299 real judgments on the top-300.</li>
+        <li><b>3 &middot; Blend / LTR fusion</b> &mdash; monotone-constrained. We <span class="c">ship the safer one</span>.</li>
+        <li><b>4 &middot; Behavioral &times;</b> <span class="mono">[0.80&ndash;1.12]</span> &mdash; modulates, never dominates. Sentinels never penalize.</li>
+        <li><b>5 &middot; Honeypot hard-gate</b> + live re-verify of survivors.</li>
+      </ul>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:14px;">
+      <div class="card" style="border-color:rgba(91,224,230,.35);">
+        <h3 style="color:var(--cyan);">Recall gate &mdash; measured, not assumed</h3>
+        <p style="font-size:16px;">100% of proxy-Tier-5 (<b style="color:#fff;">700</b>) and 100% of proxy-Tier-4 (<b style="color:#fff;">216</b>) land inside the 1,198-id shortlist. Nothing good is lost before the LLM sees it.</p>
+      </div>
+      <div class="card" style="border-color:rgba(245,192,78,.35);">
+        <h3 style="color:var(--gold);">Ship the safer model</h3>
+        <p style="font-size:16px;">Fixed-weight blend won 5-fold CV-NDCG@10 <b style="color:#fff;">1.0000</b> vs learned LTR <b style="color:#fff;">0.766</b> &rarr; the blend ships. The monotone LTR path is fully built and reproducible.</p>
+      </div>
+    </div>
+  </div>
+  <div class="codebox" style="margin-top:22px; font-size:15px;">
+<span class="cm"># shortlisted (the only rows that reach top-100)</span>
+base_fit = <span class="gd">0.50</span>&middot;S_llm + <span class="gd">0.20</span>&middot;S_dense + <span class="gd">0.18</span>&middot;S_rule + <span class="gd">0.12</span>&middot;S_bm25
+margin   = blend(features) &rarr; &times; anti_trap_caps &rarr; &times; behavioral &rarr; <span class="cy">honeypot GATE</span>
+  </div>
+  <div class="brandfoot">IndiaRuns / ATLAS</div>
+  <div class="pageno">05 / 13</div>
+</section>
+
+<!-- 6 ANTI-KEYWORD -->
+<section class="slide">
+  <div class="kicker">Anti-Keyword Reasoning</div>
+  <h2>We rank by what you <span class="em">did</span> &mdash; not what you <span class="emc">listed</span>.</h2>
+  <div class="rule"></div>
+  <ul class="clean">
+    <li><b>Embed the career narrative</b>, weighting descriptions <b>above</b> the skills array &mdash; so stuffing the skills list cannot move the vector.</li>
+    <li><b>Evidence features read from descriptions</b>: shipped a ranking/search/recsys system, built embeddings retrieval, designed NDCG/MRR/MAP eval, deployed to production.</li>
+  </ul>
+  <div class="card" style="margin-top:8px; border-color:rgba(255,92,108,.4); background:linear-gradient(180deg,rgba(255,92,108,.07),transparent);">
+    <h3 style="font-size:22px;"><span class="dot" style="background:var(--red);"></span>The role/skill-mismatch cap &mdash; <span class="mono" style="color:var(--red);">&times; 0.15</span></h3>
+    <p style="font-size:18px; color:#D7DEEC;">A non-engineering current title that lists an AI skill is multiplied down by <b style="color:#fff;">0.15</b>.
+      This is the direct counter to the baseline's HR-Manager-#1 failure &mdash; and it acts as a
+      <b style="color:var(--gold);">deterministic floor under the LLM</b>, so model optimism can never out-vote a structural disqualifier.</p>
+  </div>
+  <div class="lead" style="margin-top:28px;">A Marketing Manager's campaign text embeds <span class="r">far</span> from the role &mdash;
+    <span class="g">regardless of stuffed skills.</span></div>
+  <div class="brandfoot">IndiaRuns / ATLAS</div>
+  <div class="pageno">06 / 13</div>
+</section>
+
+<!-- 7 HONEYPOT -->
+<section class="slide">
+  <div class="kicker">Honeypot Defense</div>
+  <h2>Three deterministic layers &mdash; <span class="em">no trap survives</span>.</h2>
+  <div class="rule"></div>
+  <div class="grid2" style="grid-template-columns:1.15fr 1fr; gap:28px;">
+    <div>
+      <div class="card" style="margin-bottom:14px;">
+        <h3><span class="dot" style="background:var(--gold);"></span>Clean-201 hard exclude</h3>
+        <p style="font-size:15.5px;">Rebuilt from high-precision structural impossibilities <b style="color:#fff;">only</b> &mdash; gated to <span class="mono">-inf</span>:</p>
+        <table class="res" style="margin-top:10px; font-size:14.5px;">
+          <tr><td>too_many_experts</td><td class="v"><span class="g">167</span></td><td>career_sum_exceeds_yoe</td><td class="v">24</td></tr>
+          <tr><td>expert_zero_duration</td><td class="v">21</td><td>tenure_exceeds_company_age</td><td class="v">3</td></tr>
+          <tr><td>career_span_exceeds_yoe</td><td class="v">3</td><td style="color:#fff;font-weight:700;">= exactly</td><td class="v"><span class="g">201</span></td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3><span class="dot" style="background:var(--cyan);"></span>Live re-verify + top-10 paranoia</h3>
+        <p style="font-size:15.5px;">Every survivor reaching the top-300 is re-checked; each top-10 slot must show real shipping evidence.</p>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="border-color:rgba(255,92,108,.4); height:100%;">
+        <h3 style="color:var(--red);"><span class="dot" style="background:var(--red);"></span>The critical non-check</h3>
+        <p style="font-size:16.5px;">Salary <span class="mono">min &gt; max</span> fires on <b style="color:#fff;">18.9% of the pool</b> &mdash; it is a
+          <b style="color:var(--gold);">dataset norm, not a trap</b>. Flagging it would delete a fifth of the candidates,
+          including genuine fits. We deliberately do <b style="color:#fff;">not</b> flag it.</p>
+        <div style="margin-top:22px; padding-top:18px; border-top:1px solid var(--line);">
+          <div style="display:flex; gap:24px;">
+            <div><div class="statbig r" style="font-size:46px;">0</div><div class="statlbl">honeypots in top-100</div></div>
+            <div><div class="statbig r" style="font-size:46px;">0</div><div class="statlbl">honeypots in top-10</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brandfoot">IndiaRuns / ATLAS</div>
+  <div class="pageno">07 / 13</div>
+</section>
+
+<!-- 8 RESULTS -->
+<section class="slide">
+  <div class="kicker">Results &mdash; Measured on the real 100K</div>
+  <h2>Receipts, not promises.</h2>
+  <div class="rule" style="margin:12px 0 18px;"></div>
+  <div class="grid2" style="grid-template-columns:1.02fr 1fr; gap:30px;">
+    <div>
+      <table class="res">
+        <tr><th>Metric</th><th>Result</th><th>Cap</th></tr>
+        <tr><td>Wall-clock (full 100K)</td><td class="v"><span class="g">73.5 s</span></td><td class="cap">300 s</td></tr>
+        <tr><td>Peak memory</td><td class="v"><span class="g">2.01 GB</span></td><td class="cap">16 GB</td></tr>
+        <tr><td>Network / GPU at rank time</td><td class="v"><span class="c">none</span></td><td class="cap">&mdash;</td></tr>
+        <tr><td>Validator</td><td class="v"><span class="c">valid</span></td><td class="cap">&mdash;</td></tr>
+        <tr><td>Determinism</td><td class="v">byte-identical</td><td class="cap">694f86dd&hellip;</td></tr>
+        <tr><td>Honeypots top-100 / top-10</td><td class="v">0 / 0</td><td class="cap">&le;10</td></tr>
+        <tr><td>Lift vs naive baseline</td><td class="v"><span class="g">~1.00</span> / 0.07</td><td class="cap">NDCG@10</td></tr>
+      </table>
+      <div style="margin-top:16px; font-size:13px; color:var(--muted);">Tier distribution / 100K &mdash; T0 43,961 &middot; T1 25,035 &middot; T2 5,978 &middot; T3 24,110 &middot; T4 216 &middot; T5 700</div>
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:12px;">Top-10 &mdash; genuine shippers</h3>
+      <div style="font-size:14px; line-height:1.65; color:#D7DEEC;">
+        <div><b style="color:var(--gold);">1</b> Sr ML Eng @ Genpact AI &middot; LinkedIn RAG ranking, 50M q/mo</div>
+        <div><b style="color:var(--gold);">2</b> Search Eng @ PharmEasy &middot; L2R search</div>
+        <div><b style="color:var(--gold);">3</b> Recsys Eng @ CRED &middot; LTR + RAG eval</div>
+        <div><b style="color:var(--gold);">4</b> ML Eng @ Flipkart &middot; prod RAG, 10M recsys</div>
+        <div><b style="color:var(--gold);">5</b> Recsys Eng @ Zomato</div>
+        <div><b style="color:var(--gold);">6</b> Search Eng @ Saarthi.ai &middot; L2R @ Dream11, FAISS</div>
+        <div><b style="color:var(--gold);">7</b> AI Eng @ Ola</div>
+        <div><b style="color:var(--gold);">8</b> Sr DS @ Amazon</div>
+        <div><b style="color:var(--gold);">9</b> Search Eng @ Meta</div>
+        <div><b style="color:var(--gold);">10</b> Search Eng @ Haptik</div>
+      </div>
+      <p style="margin-top:14px; font-size:13.5px; color:var(--muted);">Real product-company ranking &amp; search engineers &mdash; not keyword phantoms.</p>
+    </div>
+  </div>
+  <div class="brandfoot">IndiaRuns / ATLAS</div>
+  <div class="pageno">08 / 13</div>
+</section>
+
+<!-- 9 PRODUCT -->
+<section class="slide">
+  <div class="kicker">The Product</div>
+  <h2>ATLAS &mdash; the ranking, made <span class="emc">legible and trustworthy</span>.</h2>
+  <div class="rule"></div>
+  <div class="grid2" style="grid-template-columns:1fr 1fr; gap:28px;">
+    <div>
+      <ul class="clean" style="font-size:16.5px;">
+        <li><b>Ranking cinema</b> &mdash; a real-data particle funnel: 100,000 &rarr; 1,198 &rarr; the <span class="r">201 traps combust</span> &rarr; crystallize to top-100 then top-10. Every burning dot is a real flagged id.</li>
+        <li><b>Evidence cards</b> &mdash; the verbatim CSV reasoning, candidate's own words highlighted and tagged to the matched requirement, with one honest concern.</li>
+        <li><b>Honeypot reveal drawer</b> &mdash; "caught before they could be hired," with salary-inversion shown as <span class="g">not</span> a trap.</li>
+        <li><b>Recruiter co-pilot</b> &mdash; filter, compare, draft outreach. Honest status pill.</li>
+        <li><b>Shareable shortlist</b> &mdash; auto OG image + one-page top-10 PDF.</li>
+      </ul>
+    </div>
+    <div class="mock">
+      <div class="mockbar">
+        <div class="dotr" style="background:#FF5C6C;"></div><div class="dotr" style="background:#F5C04E;"></div><div class="dotr" style="background:#5BE07F;"></div>
+        <div class="mockttl">ATLAS &middot; Top 100 &middot; 100,000 screened &middot; 201 traps removed &middot; <span style="color:#5BE07F;">73 s offline</span></div>
+        <div style="margin-left:auto;"><span class="pill live">Live AI &#9679;</span></div>
+      </div>
+      <div class="cinema">
+        <div class="candrow">
+          <div class="rankbadge">1</div>
+          <div class="candmeta"><div class="n">Sr ML Engineer &middot; Genpact AI <span class="chipP">product</span></div><div class="s">LinkedIn RAG ranking &middot; 50M q/mo &middot; resp 0.81 &middot; open to work</div></div>
+          <div class="fitring">98</div>
+        </div>
+        <div class="candrow">
+          <div class="rankbadge">2</div>
+          <div class="candmeta"><div class="n">Search Engineer &middot; PharmEasy <span class="chipP">product</span></div><div class="s">L2R search &middot; NDCG/MRR eval &middot; &le;30d notice</div></div>
+          <div class="fitring">96</div>
+        </div>
+        <div class="candrow">
+          <div class="rankbadge">3</div>
+          <div class="candmeta"><div class="n">Recsys Engineer &middot; CRED <span class="chipP">product</span></div><div class="s">LTR + RAG eval &middot; FAISS &middot; verified email</div></div>
+          <div class="fitring">95</div>
+        </div>
+        <div class="candrow" style="opacity:.55;">
+          <div class="rankbadge" style="background:rgba(255,92,108,.14); color:#FF5C6C; border-color:rgba(255,92,108,.35);">&times;</div>
+          <div class="candmeta"><div class="n" style="text-decoration:line-through; color:#9AA6BE;">HR Manager &middot; 7 "expert" AI skills</div><div class="s" style="color:#FF8A95;">honeypot: too_many_experts &middot; excluded</div></div>
+          <div class="fitring" style="color:#FF5C6C;">0</div>
+        </div>
+        <div style="padding:14px 16px; font-size:12.5px; color:#56627E;">co-pilot &rsaquo; "show product-company candidates open to work in &le;30 days"</div>
+      </div>
+    </div>
+  </div>
+  <div class="brandfoot">IndiaRuns / ATLAS</div>
+  <div class="pageno">09 / 13</div>
+</section>
+
+<!-- 10 NVIDIA + GCP + LLM -->
+<section class="slide">
+  <div class="kicker">AI Usage &amp; The Compliance Boundary</div>
+  <h2>Heavy AI everywhere it helps &mdash; <span class="em">never</span> on the graded path.</h2>
+  <div class="rule"></div>
+  <div class="grid3" style="margin-bottom:22px;">
+    <div class="card"><h3><span class="dot" style="background:var(--cyan);"></span>NVIDIA &mdash; Plane A</h3>
+      <p>Hosted embeddings + a 70B-class instruct re-rank of the shortlist and fact-validated reasoning. Full path built; degrades cleanly with no key.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--gold);"></span>LLM judging</h3>
+      <p>299 real judgments on the top-300; 294 fact-validated reasoning lines. A local CLI backend + deterministic fallback &mdash; runs <b style="color:#fff;">with or without</b> any key.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--cyan);"></span>GCP &mdash; Plane C</h3>
+      <p>Cloud Run for API + web, Secret Manager for the key, optional Vertex for Plane A. Documented and credential-gated &mdash; never needed to grade.</p></div>
+  </div>
+  <div class="card" style="border-color:rgba(255,92,108,.4); background:linear-gradient(180deg,rgba(255,92,108,.06),transparent);">
+    <h3 style="font-size:21px;"><span class="dot" style="background:var(--red);"></span>The boundary</h3>
+    <p style="font-size:18px; color:#D7DEEC;">Every AI / network call lives in Plane A or C. The graded <span class="mono">rank.py</span> makes
+      <b style="color:#fff;">zero</b> network, GPU, or LLM calls &mdash; proven by a no-socket test and a
+      <span class="mono">--network none</span> run. <span class="g">NVIDIA and GCP are quality multipliers, never dependencies.</span></p>
+  </div>
+  <div class="brandfoot">IndiaRuns / ATLAS</div>
+  <div class="pageno">10 / 13</div>
+</section>
+
+<!-- 11 REPRODUCIBILITY -->
+<section class="slide">
+  <div class="kicker">Reproducibility</div>
+  <h2>One command. Sealed. <span class="emc">Twice &rarr; identical.</span></h2>
+  <div class="rule"></div>
+  <div class="codebox" style="margin-bottom:22px;">
+<span class="cm"># the sealed graded reproduction</span>
+docker run --rm <span class="gd">--network none</span> --cpus=4 --memory=16g \
+  indiaruns-sandbox  <span class="cm">-&gt;</span>  /out/submission.csv      <span class="cy"># PASS</span>
+
+<span class="cm"># or directly</span>
+python rank.py --candidates candidates.jsonl --out submission.csv
+<span class="cm"># 73.5 s &middot; 2.01 GB peak RSS &middot; CPU-only</span>
+  </div>
+  <ul class="clean" style="font-size:17.5px;">
+    <li>Run it twice and byte-diff &mdash; <b>identical</b> (<span class="mono">PYTHONHASHSEED=0</span>, <span class="mono">OMP_NUM_THREADS=1</span>, artifact bytes tracked by sha256 in the manifest).</li>
+    <li>The vendored <span class="mono">validate_submission.py</span> runs <b>inside</b> rank.py &mdash; it refuses to write a non-conforming file.</li>
+    <li>Nothing to trust on faith: <span class="g">the grader reproduces the exact bytes.</span></li>
+  </ul>
+  <div class="brandfoot">IndiaRuns / ATLAS</div>
+  <div class="pageno">11 / 13</div>
+</section>
+
+<!-- 12 BUSINESS -->
+<section class="slide">
+  <div class="kicker">Business &amp; Roadmap</div>
+  <h2>The hiring brain <span class="em">Redrob is already building toward</span>.</h2>
+  <div class="rule"></div>
+  <div class="grid2">
+    <div class="card"><h3><span class="dot" style="background:var(--gold);"></span>Monetization</h3>
+      <p style="font-size:16px;">Per-seat recruiter SaaS &middot; usage-based ranking API for ATS &amp; job boards &middot; premium co-pilot outreach &amp; intelligence &middot; enterprise on-prem for compliance-sensitive hiring.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--cyan);"></span>Virality</h3>
+      <p style="font-size:16px;">Shareable shortlists with auto OG images turn every result into a "make your own ranking" funnel. The honeypot-reveal drawer is inherently screenshot-worthy.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--gold);"></span>Trust is the moat</h3>
+      <p style="font-size:16px;">Evidence-linked reasoning &middot; honest AI-status pill &middot; a sealed reproducible ranker &middot; a structural anti-trap guarantee &mdash; exactly the trust hiring decisions require.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--cyan);"></span>Redrob fit</h3>
+      <p style="font-size:16px;">Plugs straight into the super-app &mdash; job matching across <b style="color:#fff;">15M+ live jobs</b>, hiring intelligence, the AI app store &mdash; on the path to <b style="color:#fff;">10&ndash;20M</b> monthly Indians.</p></div>
+  </div>
+  <div class="brandfoot">IndiaRuns / ATLAS</div>
+  <div class="pageno">12 / 13</div>
+</section>
+
+<!-- 13 TEAM -->
+<section class="slide">
+  <div class="title-wrap">
+    <div class="kicker">Team &amp; Contact</div>
+    <h1 class="big" style="font-size:64px;">Team IndiaRuns</h1>
+    <div class="thesis" style="font-style:normal; margin-top:24px;">
+      <div style="font-size:20px; color:#fff;">Primary contact &mdash; Divya Mohan</div>
+      <div class="mono" style="color:var(--cyan); font-size:18px; margin-top:6px;">divyamohan1993@gmail.com</div>
+    </div>
+    <div class="grid3" style="margin-top:36px; max-width:1010px;">
+      <div class="card"><h3>The Code</h3><p>Clean, complete, reproducible GitHub repository.</p></div>
+      <div class="card"><h3>The Sandbox</h3><p>One-click hosted Space that runs the real rank.py on screen.</p></div>
+      <div class="card"><h3>The Results</h3><p>Valid, honeypot-clean, fully reasoned top-100 from the real 100,000.</p></div>
+    </div>
+    <div class="lead" style="margin-top:40px; font-style:italic; color:var(--gold);">Build something real. Make hiring smarter.</div>
+  </div>
+  <div class="brandfoot">IndiaRuns / ATLAS</div>
+  <div class="pageno">13 / 13</div>
+</section>
+
+</body>
+</html>

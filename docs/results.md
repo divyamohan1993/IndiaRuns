@@ -5,6 +5,20 @@ All numbers below are measured on the real `candidates.jsonl` (100,000 lines,
 consumed by `rank.py`. Determinism env: `PYTHONHASHSEED=0`, single-thread BLAS at rank
 time. The graded `rank.py` runs CPU-only, no network.
 
+## Headline (verified)
+
+| Metric | Value | Bound / baseline |
+|---|---|---|
+| `rank.py` wall-clock | **73.5 s** | cap 300 s (4.1× headroom) |
+| `rank.py` peak RSS | **2.01 GB** | cap 16 GB (8× headroom) |
+| Determinism | **byte-identical** | `sha256 694f86dd…cc457f` |
+| Validator | **"Submission is valid."** | 100 rows, ranks 1–100 unique, score non-increasing, ties id-ascending |
+| Honeypots top-100 / top-10 | **0 / 0** | clean-201 hard exclude |
+| Shortlist recall gate | **PASS** | proxy-Tier-5 100%, Tier-4 100% inside K=1200 |
+| Real LLM judgments | **299** | top-300 shortlist; 294 fact-validated reasoning lines |
+| Fusion shipped | **BLEND** | CV-NDCG@10 blend 1.0000 vs LTR 0.766 |
+| Internal NDCG@10 vs naive keyword baseline | **~1.00 vs ~0.07** | synthetic proxy, relative check only |
+
 ## Frozen artifacts (full pool)
 
 | Artifact | Shape / size | Producer |
@@ -200,3 +214,38 @@ baseline foil), `intent.json` (JD chip cloud), and `results_top.json` (compact A
 
 `python -m pytest` → **39 passed** (validator, determinism, no-network, sentinels,
 gate-blocks-honeypots, salary-not-flagged, features-no-skew, reasoning-quality, budget).
+
+---
+
+## Top-20 (from `submission.csv` / `ranked_top100.json`)
+
+All twenty are genuine ranking / search / recommendation engineers at product companies;
+no keyword-stuffer (non-engineering title with stuffed AI skills) appears anywhere in the
+top-50. Scores are the rescaled, non-increasing column from the CSV.
+
+| Rank | candidate_id | Score | Title @ Company |
+|---|---|---|---|
+| 1 | CAND_0046525 | 1.0000 | Senior ML Engineer @ Genpact AI — LinkedIn RAG ranking, 50M+ q/mo |
+| 2 | CAND_0024466 | 0.9162 | Search Engineer @ PharmEasy — owned search ranking end-to-end (L2R + embedding migration) |
+| 3 | CAND_0041669 | 0.9089 | Recommendation Systems Engineer @ CRED — LTR ranking + RAG eval ownership |
+| 4 | CAND_0075439 | 0.8267 | ML Engineer @ Flipkart — prod RAG + eval ownership, 10M-user recsys |
+| 5 | CAND_0026532 | 0.7555 | Recommendation Systems Engineer @ Zomato — semantic search +35% over ES, 10M-user recs |
+| 6 | CAND_0070485 | 0.6578 | Search Engineer @ Saarthi.ai — L2R pipeline at Dream11, FAISS semantic search |
+| 7 | CAND_0053591 | 0.5837 | AI Engineer @ Ola — XGBoost/LightGBM discovery ranking + FAISS/BM25 search |
+| 8 | CAND_0011432 | 0.5196 | Senior Data Scientist @ Amazon — ranking models (XGBoost/LightGBM) + RAG |
+| 9 | CAND_0051615 | 0.4321 | Search Engineer @ Meta — LTR ranking + relevance labeling |
+| 10 | CAND_0076251 | 0.4264 | Search Engineer @ Haptik — keyword-to-embedding search migration (500K docs, FAISS+BM25) |
+| 11 | CAND_0014440 | 0.4049 | Recommendation Systems Engineer @ CRED — LTR ranking + embedding retrieval migration |
+| 12 | CAND_0016163 | 0.3932 | Applied ML Engineer @ Dream11 — keyword-to-embedding retrieval, +35% search relevance |
+| 13 | CAND_0003977 | 0.3896 | Recommendation Systems Engineer @ Google — embedding semantic search + LTR |
+| 14 | CAND_0065878 | 0.3417 | Senior Data Scientist @ Niramai — L2R ranking + RAG + LLM fine-tuning (HealthTech) |
+| 15 | CAND_0076163 | 0.3286 | NLP Engineer @ Ola — full ranking pipeline (LTR + RAG + eval) |
+| 16 | CAND_0009024 | 0.2653 | Search Engineer @ Google — embedding-based search migration, 10M-scale |
+| 17 | CAND_0001600 | 0.1006 | AI Specialist @ InMobi — built ranking/search/reco systems |
+| 18 | CAND_0078810 | 0.0408 | Senior Software Engineer (ML) @ Dream11 — built ranking/search systems |
+| 19 | CAND_0048375 | 0.0399 | Computer Vision Engineer @ Saarthi.ai — built ranking/search/reco systems |
+| 20 | CAND_0031752 | 0.0398 | ML Engineer @ Unacademy — built ranking/search/reco systems |
+
+Top-10 are the ten highest real LLM judgments; the descending score column reflects the
+multiplicative anti-trap + behavioral gating that concentrates the strongest signal where
+NDCG@10 (0.50) and NDCG@50 (0.30) live.
