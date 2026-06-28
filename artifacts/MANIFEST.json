@@ -110,18 +110,23 @@
       "sha256": "7a6d1f8fa2cd5be920780bb4401301e728f28978ae3391a58cbfadc82fb73e9b"
     },
     "ranked_top100.json": {
-      "bytes": 44807,
+      "bytes": 49085,
       "path": "ranked_top100.json",
       "producer": "build_web_artifacts.py",
-      "sha256": "83f8f182e44a10f4f43023d10d9483a3aabd5a3ee2668c51e0c87e78032854a1"
+      "sha256": "9cf5ebf1d99c43f21810e707f5147a2f893d1163284127f154cc5fadf43d9ca0"
     },
     "reasoning": {
       "backend": "NvidiaClient",
-      "bytes": 120079,
-      "n_llm": 1226,
+      "bytes": 174431,
+      "llm_target_top": 300,
+      "n_deterministic": 931,
+      "n_llm": 295,
+      "n_reprompt": 300,
+      "n_reprompt_ok": 295,
       "path": "reasoning.jsonl",
       "producer": "precompute/build_reasoning.py",
-      "sha256": "27af88719d86fc3efa5a6989cd7adf865ceb2c8430109e2ac285ff6cf7b87c8d"
+      "sha256": "022826a8812146033a9d6967b8a13dca0696812edc66140bbb97f55cd54e087c",
+      "specificity_gate": true
     },
     "rejected_traps.json": {
       "bytes": 2135,
@@ -130,10 +135,10 @@
       "sha256": "f910f15d57a8d47d266eb58ade4a33ab5edd5bf4ef510e78611c08ff91c1ba90"
     },
     "results_top.json": {
-      "bytes": 27807,
+      "bytes": 32085,
       "path": "results_top.json",
       "producer": "build_web_artifacts.py",
-      "sha256": "0eeed206a45526babcb37a603a9126fe6bbf18b8518d45e6d4200ca75a33c6e5"
+      "sha256": "a20dbfc5a4e0003476cf1047c5bfaeed4b424321af23d137176756f8c52cd2ac"
     },
     "shortlist": {
       "bytes": 61539,

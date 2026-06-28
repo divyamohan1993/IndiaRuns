@@ -11,7 +11,7 @@ time. The graded `rank.py` runs CPU-only, no network.
 |---|---|---|
 | `rank.py` wall-clock | **87.9 s** | cap 300 s (3.4× headroom) |
 | `rank.py` peak RSS | **2.25 GB** | cap 16 GB (7× headroom) |
-| Determinism | **byte-identical** | `sha256 f39f5fa5…21c60c` |
+| Determinism | **byte-identical** | `sha256 82ed257a…1d18e` |
 | Validator | **"Submission is valid."** | 100 rows, ranks 1–100 unique, score non-increasing, ties id-ascending |
 | Honeypots top-100 / top-10 | **0 / 0** | clean-201 hard exclude |
 | Shortlist recall gate | **PASS** | proxy-Tier-5 100%, Tier-4 100% inside K=1200 |
@@ -37,7 +37,7 @@ time. The graded `rank.py` runs CPU-only, no network.
 | `shortlist.json` | 1226 ids + recall report + per-id first_pass | first_pass_shortlist.py |
 | `llm_scores.{json,parquet}` | 1226 rows, 1226 real `meta/llama-3.3-70b-instruct` judgments | llm_rerank.py |
 | `ltr_model.json` / `calibration.json` | feature order + ship decision | train_ltr.py |
-| `reasoning.jsonl` | 1226 lines, LLM-written + fact-validated | build_reasoning.py |
+| `reasoning.jsonl` | 1226 lines, LLM-written + fact-validated + specificity-gated | build_reasoning.py |
 | `MANIFEST.json` | sha256 + size + producer for 18 artifacts (all verified) | core/artifacts.py |
 
 **Embedding backend:** `nvidia/nv-embedqa-e5-v5` (1024-d, real NVIDIA NIM). All 100,000
@@ -97,6 +97,36 @@ to soft features. Symmetric-difference vs the probe's clean set = 0.
   and emitted disqualifier flags; every reasoning line is POST-VALIDATED against the
   candidate's own profile. The `claude -p` (`claude_cli`) path remains shipped as a
   documented no-key fallback.
+
+## Reasoning quality — Stage-4 specificity gate
+
+Every reasoning line that reaches `submission.csv` must clear a **specificity gate**
+(`reasoning.is_specific`): it has to (a) name at least one JD requirement
+(ranking / retrieval / search / recommendation / embeddings / evaluation), (b) cite
+≥ 2 concrete specifics drawn from that candidate's own record, and (c) anchor on at
+least one **strong** specific — a validated number, the company, or a named skill — so a
+line can never clear the bar on generic role words alone. Generic strings such as
+"Strong ML background" are rejected.
+
+Pipeline (`precompute/build_reasoning.py`, top-300 by first_pass — covers all of the
+top-100 plus the web top-300 shortlist):
+
+1. one NVIDIA call (`meta/llama-3.3-70b-instruct`, temperature 0, JSON, facts-only);
+2. if the answer fails the gate, **one stricter re-prompt** that demands ≥ 2 specifics
+   incl. a number and the company, the matched JD requirement, and an honest concern;
+3. fact-VALIDATE the result (every named skill / company / number must appear in the
+   record); if it still fails or hallucinates, **fall back to the deterministic
+   fact-assembler** (`reasoning.deterministic_reasoning`), which is specific by
+   construction (title + years + company + matched JD evidence + honest concern).
+
+`rank.py` re-applies the same validate-then-gate test per row at attach time, so a cached
+line that does not clear the bar can never reach the CSV.
+
+**Top-100 outcome:** 97 NVIDIA-written (95 of them via the stricter re-prompt) + 3
+deterministic-fallback; **0 / 100 fail the gate**, 100/100 distinct lines, all CSV-safe
+(≤ 140 chars, no commas). Of the top-300 LLM targets, 295 are NVIDIA-written and 5 fall
+back to deterministic. Rankings, ranks and scores are byte-identical to the prior build —
+**only the reasoning column changed.**
 
 ## Fusion: LTR vs blend (spec §2.6, ship-the-safer-one)
 
@@ -170,8 +200,8 @@ titles are AI/ML/eng (Search/Recommendation/ML/AI/Data Scientist).
 Two independent full `rank.py` runs hash identically (the reproducibility contract is on
 the ranker's CRLF output):
 ```
-f39f5fa551b26cbab98d79c3cd1d72c0a6a4dacde49df6e1337f1083e421c60c  run_a.csv
-f39f5fa551b26cbab98d79c3cd1d72c0a6a4dacde49df6e1337f1083e421c60c  run_b.csv
+82ed257a2be06a0f8a3c1fdff44108122c05ee3d60ffba4aadc6a2f01f21d18e  run_a.csv
+82ed257a2be06a0f8a3c1fdff44108122c05ee3d60ffba4aadc6a2f01f21d18e  run_b.csv
 ```
 The repo stores an LF-normalized reference copy (`.gitattributes: *.csv text eol=lf`), so
 the committed `submission.csv` blob is the same content with LF endings; both forms pass
@@ -241,8 +271,9 @@ baseline foil), `intent.json` (JD chip cloud), and `results_top.json` (compact A
 
 ### Test suite
 
-`python -m pytest` → **39 passed** (validator, determinism, no-network, sentinels,
-gate-blocks-honeypots, salary-not-flagged, features-no-skew, reasoning-quality, budget).
+`python -m pytest` → **42 passed** (validator, determinism, no-network, sentinels,
+gate-blocks-honeypots, salary-not-flagged, features-no-skew, reasoning-quality incl. the
+specificity gate, budget).
 
 ---
 
