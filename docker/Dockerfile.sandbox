@@ -28,9 +28,11 @@ ARG BUILD_CA=
 
 COPY requirements-rank.txt ./
 # If a build-time CA bundle was provided in the context, trust it for this pip step.
-COPY docker/build-ca.cr[t] /tmp/build-ca.crt
-RUN if [ -s /tmp/build-ca.crt ]; then export PIP_CERT=/tmp/build-ca.crt; fi; \
-    pip install --no-cache-dir -r requirements-rank.txt && rm -f /tmp/build-ca.crt
+# docker/ca/ is a tracked dir (holds .gitkeep) so this COPY always succeeds; the actual
+# build-ca.crt is gitignored and present only in sandboxed-CI build contexts.
+COPY docker/ca/ /tmp/ca/
+RUN if [ -s /tmp/ca/build-ca.crt ]; then export PIP_CERT=/tmp/ca/build-ca.crt; fi; \
+    pip install --no-cache-dir -r requirements-rank.txt && rm -rf /tmp/ca
 
 COPY rank.py features.py reasoning.py validate_submission.py ./
 COPY core/ ./core/

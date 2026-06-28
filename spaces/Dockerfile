@@ -24,13 +24,15 @@ ENV PYTHONUNBUFFERED=1 \
 WORKDIR /app
 
 # Optional build-only CA passthrough for TLS-terminating CI proxies (empty by default).
-COPY docker/build-ca.cr[t] /tmp/build-ca.crt
+# docker/ca/ is a tracked dir (holds .gitkeep) so this COPY always succeeds; the actual
+# build-ca.crt is gitignored and present only in sandboxed-CI build contexts.
+COPY docker/ca/ /tmp/ca/
 
 # Rank-time deps (numpy + sklearn) + the tiny web server.
 COPY requirements-rank.txt ./requirements-rank.txt
-RUN if [ -s /tmp/build-ca.crt ]; then export PIP_CERT=/tmp/build-ca.crt; fi; \
+RUN if [ -s /tmp/ca/build-ca.crt ]; then export PIP_CERT=/tmp/ca/build-ca.crt; fi; \
     pip install --no-cache-dir -r requirements-rank.txt \
-        fastapi==0.115.6 "uvicorn[standard]==0.34.0" && rm -f /tmp/build-ca.crt
+        fastapi==0.115.6 "uvicorn[standard]==0.34.0" && rm -rf /tmp/ca
 
 # Graded ranker code + vendored validator + the runtime socket guard.
 COPY rank.py features.py reasoning.py validate_submission.py ./

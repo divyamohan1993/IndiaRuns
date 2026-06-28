@@ -103,15 +103,30 @@ pure-numpy pass.**
 
 ### Reproduce the submission (the graded path)
 
+Works out-of-the-box from a fresh clone — the 100-line stratified real sample and its
+matching frozen artifacts (`artifacts_sample/`) are committed:
+
 ```bash
 pip install -r requirements-rank.txt
-python rank.py --candidates ./candidates.jsonl --out ./submission.csv
+python rank.py --candidates data/sample_candidates.jsonl \
+  --out ./submission.csv --artifacts artifacts_sample
 python validate_submission.py ./submission.csv      # -> "Submission is valid."
 ```
 
-`rank.py` reads only frozen artifacts from `artifacts/`, never downloads anything, and
-runs the vendored validator on its own output before it writes — it refuses to emit a
-non-conforming file.
+Full pool: the large frozen arrays for the 100K pool (`artifacts/candidate_index.json`
+plus the `*.npy` / `*.npz` binaries) are regenerable and **not committed**. Supply
+`candidates.jsonl`, regenerate the Plane-A artifacts once (see *Regenerate artifacts*
+below), then run the default paths:
+
+```bash
+python rank.py --candidates ./candidates.jsonl --out ./submission.csv   # --artifacts ./artifacts
+python validate_submission.py ./submission.csv
+```
+
+`rank.py` reads only frozen artifacts (never downloads anything) and runs the vendored
+validator on its own output before it writes — it refuses to emit a non-conforming file.
+If the full `artifacts/` are absent it exits early with an actionable message pointing to
+the sample command above and to `precompute/run_all.py`.
 
 ### Prove the no-network / CPU / budget claims
 

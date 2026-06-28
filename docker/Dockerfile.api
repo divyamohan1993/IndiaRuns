@@ -19,11 +19,13 @@ WORKDIR /app
 
 # Optional build-only CA passthrough for TLS-terminating CI proxies. Empty by default,
 # so a normal `docker build` on an open network is unaffected. NEVER used at run time.
-COPY docker/build-ca.cr[t] /tmp/build-ca.crt
+# docker/ca/ is a tracked dir (holds .gitkeep) so this COPY always succeeds; the actual
+# build-ca.crt is gitignored and present only in sandboxed-CI build contexts.
+COPY docker/ca/ /tmp/ca/
 
 COPY docker/api/requirements.txt ./requirements.txt
-RUN if [ -s /tmp/build-ca.crt ]; then export PIP_CERT=/tmp/build-ca.crt; fi; \
-    pip install --no-cache-dir -r requirements.txt && rm -f /tmp/build-ca.crt
+RUN if [ -s /tmp/ca/build-ca.crt ]; then export PIP_CERT=/tmp/ca/build-ca.crt; fi; \
+    pip install --no-cache-dir -r requirements.txt && rm -rf /tmp/ca
 
 # Application code.
 COPY docker/api/app.py ./app.py

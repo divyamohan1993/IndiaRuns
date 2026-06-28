@@ -69,7 +69,19 @@ def main() -> int:
     # ---- load frozen artifacts ----
     idx = load_json(os.path.join(A, "candidate_index.json"))
     if not idx:
-        print(f"missing candidate_index.json in {A}", file=sys.stderr)
+        sample_art = os.path.join(REPO, "artifacts_sample")
+        print(
+            f"missing candidate_index.json (and the frozen arrays) in {A}.\n"
+            "The full-pool artifacts (candidate_index.json + the large *.npy/*.npz binaries)\n"
+            "are regenerable and not committed. To reproduce:\n"
+            f"  - quick out-of-the-box demo on the shipped 100-line sample:\n"
+            f"      python rank.py --candidates data/sample_candidates.jsonl "
+            f"--out submission.csv --artifacts {sample_art}\n"
+            "  - full pool: regenerate Plane-A artifacts first, then re-run:\n"
+            "      python precompute/run_all.py --candidates ./candidates.jsonl "
+            "--artifacts ./artifacts",
+            file=sys.stderr,
+        )
         return 2
     ids = idx["ids"]
     det_names = idx["det_feature_names"]

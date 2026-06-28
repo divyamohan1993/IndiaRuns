@@ -61,14 +61,16 @@ jobs:
             -H 'content-type: application/json' \
             -d '{"message":"who are the top matches?"}' | grep -q '"backend"'
 
-      - name: Start web image and smoke /healthz
+      - name: Start web image and smoke /api/health
         run: |
           docker run -d --name atlas-web -p 8090:8080 indiaruns-web
           for i in $(seq 1 30); do
-            if curl -fsS http://127.0.0.1:8090/healthz >/dev/null 2>&1; then break; fi
+            if curl -fsS http://127.0.0.1:8090/api/health >/dev/null 2>&1; then break; fi
             sleep 1
           done
-          curl -fsS http://127.0.0.1:8090/healthz | grep -q '"status"'
+          # The Next.js app exposes /api/health (returns {"ok": true, "backend": ...});
+          # it has no /healthz route. Assert on a field the route actually returns.
+          curl -fsS http://127.0.0.1:8090/api/health | grep -q '"backend"'
 
       - name: Logs on failure
         if: failure()

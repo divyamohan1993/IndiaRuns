@@ -23,16 +23,18 @@ ENV NEXT_PUBLIC_API_BASE=${NEXT_PUBLIC_API_BASE} \
     NEXT_TELEMETRY_DISABLED=1
 
 # Optional build-only CA passthrough for TLS-terminating CI proxies (empty by default).
-COPY docker/build-ca.cr[t] /tmp/build-ca.crt
-RUN if [ -s /tmp/build-ca.crt ]; then \
+# docker/ca/ is a tracked dir (holds .gitkeep) so this COPY always succeeds; the actual
+# build-ca.crt is gitignored and present only in sandboxed-CI build contexts.
+COPY docker/ca/ /tmp/ca/
+RUN if [ -s /tmp/ca/build-ca.crt ]; then \
       mkdir -p /usr/local/share/ca-certificates && \
-      cp /tmp/build-ca.crt /usr/local/share/ca-certificates/build-ca.crt && \
+      cp /tmp/ca/build-ca.crt /usr/local/share/ca-certificates/build-ca.crt && \
       (command -v update-ca-certificates >/dev/null 2>&1 && update-ca-certificates || true) && \
-      npm config set cafile /tmp/build-ca.crt; \
+      npm config set cafile /tmp/ca/build-ca.crt; \
     fi
 # Make Node's fetch (used by next/font build-time downloads) trust the build CA when one
 # is supplied via a TLS-terminating CI proxy. Harmless when no CA is present.
-ENV NODE_EXTRA_CA_CERTS=/tmp/build-ca.crt
+ENV NODE_EXTRA_CA_CERTS=/tmp/ca/build-ca.crt
 
 # Install deps first (better layer caching). package-lock present -> reproducible install.
 COPY web/package.json web/package-lock.json* ./
@@ -68,11 +70,13 @@ COPY artifacts_sample/ /repo/artifacts/
 # Minimal python for the /sandbox route (numpy + sklearn for rank.py).
 # Optional build-only CA passthrough (empty by default) so pip works behind a
 # TLS-terminating CI proxy. NEVER used at run time.
-COPY docker/build-ca.cr[t] /tmp/build-ca.crt
+# docker/ca/ is a tracked dir (holds .gitkeep) so this COPY always succeeds; the actual
+# build-ca.crt is gitignored and present only in sandboxed-CI build contexts.
+COPY docker/ca/ /tmp/ca/
 RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-pip \
-    && { [ -s /tmp/build-ca.crt ] && export PIP_CERT=/tmp/build-ca.crt || true; } \
+    && { [ -s /tmp/ca/build-ca.crt ] && export PIP_CERT=/tmp/ca/build-ca.crt || true; } \
     && pip3 install --no-cache-dir --break-system-packages numpy scikit-learn \
-    && rm -f /tmp/build-ca.crt && rm -rf /var/lib/apt/lists/*
+    && rm -rf /tmp/ca && rm -rf /var/lib/apt/lists/*
 ENV REPO_ROOT=/repo
 
 EXPOSE 8080

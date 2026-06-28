@@ -20,7 +20,10 @@ export const dynamic = "force-dynamic";
  * graded pipeline reproducibly, offline, in-container.
  */
 
-const REPO_ROOT = path.resolve(process.cwd(), "..");
+// In the production web image, rank.py + data/ + artifacts/ are copied to /repo and the
+// runtime sets REPO_ROOT=/repo (WORKDIR is /app, so process.cwd()/.. would be wrong).
+// In local dev (`npm run dev` from web/), fall back to the parent of the cwd (repo root).
+const REPO_ROOT = process.env.REPO_ROOT ?? path.resolve(process.cwd(), "..");
 
 function sse(controller: ReadableStreamDefaultController, event: string, data: unknown) {
   controller.enqueue(

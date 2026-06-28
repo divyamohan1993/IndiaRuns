@@ -54,5 +54,8 @@ web/out/
 .DS_Store
 *.swp
 
-# environment-specific build CA (sandbox CI only; never committed)
+# environment-specific build CA (sandbox CI only; never committed).
+# The docker/ca/ directory itself is tracked (via .gitkeep) so the optional-CA
+# COPY in the Dockerfiles always has an existing source dir; only the cert is ignored.
+docker/ca/build-ca.crt
 docker/build-ca.crt
