@@ -1,101 +1,101 @@
 candidate_id,rank,score,reasoning
-CAND_0000165,1,1.000000,AI Specialist 6.8 yrs at Mad Street Den — built ranking/search/reco systems
-CAND_0000422,2,0.998189,AI Research Engineer 6.3 yrs at Haptik: built ranking/search/reco systems
-CAND_0000200,3,0.995649,ML Engineer 4.3 yrs at Aganitha: built ranking/search/reco systems
-CAND_0000666,4,0.991307,Data Scientist 6.5 yrs at PhonePe. built ranking/search/reco systems
-CAND_0000981,5,0.971551,ML Engineer 6.4 yrs at Wysa — built ranking/search/reco systems — concern: not flagged open-to-work
-CAND_0004114,6,0.944853,Senior Software Engineer 4.9 yrs at Unacademy; response rate 0.61 — concern: not flagged open-to-work
-CAND_0002764,7,0.834111,Mobile Developer 3.1 yrs at Hooli: shipped ML to production at scale — concern: YOE outside band
-CAND_0018303,8,0.829729,Software Engineer 7.9 yrs at Cognizant: shipped ML to production at scale — concern: low response rate 0.22
-CAND_0003113,9,0.730858,Cloud Engineer 1.9 yrs at Swiggy — response rate 0.32 — concern: YOE outside band
-CAND_0015991,10,0.565696,Full Stack Developer 2.5 yrs at Wayne Enterprises — response rate 0.75 — concern: YOE outside band
-CAND_0008784,11,0.560310,Full Stack Developer 10 yrs at Swiggy. response rate 0.22 — concern: low response rate 0.22
-CAND_0001545,12,0.557038,QA Engineer 6.9 yrs at CRED; shipped ML to production at scale — concern: not flagged open-to-work
-CAND_0005581,13,0.553712,QA Engineer 3.8 yrs at Flipkart — shipped ML to production at scale — concern: YOE outside band
-CAND_0011832,14,0.550436,Software Engineer 10 yrs at Swiggy — shipped ML to production at scale — concern: low response rate 0.14
-CAND_0002554,15,0.544454,Java Developer 5.1 yrs at Pied Piper; response rate 0.57 — concern: stale activity
-CAND_0013168,16,0.538498,Java Developer 5.4 yrs at Stark Industries; response rate 0.43 — concern: not flagged open-to-work
-CAND_0005407,17,0.518424,.NET Developer 7.1 yrs at Zomato — response rate 0.67 — concern: stale activity
-CAND_0014342,18,0.511266,Mobile Developer 7.9 yrs at Hooli. shipped ML to production at scale — concern: stale activity
-CAND_0003997,19,0.510390,Software Engineer 9.1 yrs at Wipro; shipped ML to production at scale — concern: low response rate 0.20
-CAND_0016368,20,0.507484,Backend Engineer 7.1 yrs at PhonePe. response rate 0.58
-CAND_0009527,21,0.492009,Frontend Engineer 9.5 yrs at Dunder Mifflin. shipped ML to production at scale — concern: not flagged open-to-work
-CAND_0013610,22,0.488254,Mobile Developer 7.2 yrs at CRED: shipped ML to production at scale — concern: low response rate 0.21
-CAND_0001797,23,0.481976,Java Developer 4.4 yrs at Acme Corp — response rate 0.72 — concern: stale activity
-CAND_0007187,24,0.452074,Software Engineer 9 yrs at Tech Mahindra — response rate 0.47 — concern: stale activity
-CAND_0012477,25,0.444466,Frontend Engineer 9.5 yrs at Mphasis: shipped ML to production at scale — concern: low response rate 0.20
-CAND_0001329,26,0.429980,DevOps Engineer 9.4 yrs at Hooli; response rate 0.72
-CAND_0006217,27,0.338098,Data Analyst 2.2 yrs at Meesho. shipped ML to production at scale — concern: YOE outside band
-CAND_0016921,28,0.223012,Mechanical Engineer 11.6 yrs at Stark Industries: built ranking/search/reco systems — concern: stale activity
-CAND_0015675,29,0.204313,Software Engineer 1.7 yrs at Wipro: response rate 0.56 — concern: YOE outside band
-CAND_0018265,30,0.204048,Civil Engineer 14.2 yrs at Infosys. built ranking/search/reco systems — concern: stale activity
-CAND_0016503,31,0.203203,Operations Manager 12.9 yrs at Globex Inc; built ranking/search/reco systems — concern: low response rate 0.17
-CAND_0007336,32,0.199067,Senior Data Engineer 6.1 yrs at Cognizant. ranking evaluation (NDCG/MRR/AB) — concern: not flagged open-to-work
-CAND_0015762,33,0.196880,DevOps Engineer 2.6 yrs at Mindtree — shipped ML to production at scale — concern: YOE outside band
-CAND_0010440,34,0.195920,Operations Manager 11.4 yrs at Stark Industries; built ranking/search/reco systems — concern: YOE outside band
-CAND_0008170,35,0.190137,Customer Support 8.1 yrs at Wayne Enterprises; built ranking/search/reco systems — concern: not flagged open-to-work
-CAND_0007565,36,0.190016,Mechanical Engineer 7.6 yrs at Globex Inc — built ranking/search/reco systems
-CAND_0001243,37,0.188980,Project Manager 11.9 yrs at Acme Corp: built ranking/search/reco systems — concern: stale activity
-CAND_0013995,38,0.183841,Civil Engineer 10.7 yrs at Infosys; built ranking/search/reco systems — concern: YOE outside band
-CAND_0006509,39,0.180607,Software Engineer 6.6 yrs at Capgemini: response rate 0.75
-CAND_0001162,40,0.179895,Business Analyst 11.4 yrs at Pied Piper. built ranking/search/reco systems — concern: YOE outside band
-CAND_0015480,41,0.177171,Business Analyst 5 yrs at Initech; built ranking/search/reco systems — concern: stale activity
-CAND_0015225,42,0.177035,Operations Manager 2.9 yrs at Infosys; built ranking/search/reco systems — concern: YOE outside band
-CAND_0012745,43,0.176647,Graphic Designer 11.1 yrs at Globex Inc — built ranking/search/reco systems — concern: stale activity
-CAND_0015073,44,0.171068,Business Analyst 5.7 yrs at Acme Corp; built ranking/search/reco systems — concern: not flagged open-to-work
-CAND_0000196,45,0.169473,QA Engineer 4.2 yrs at Mphasis — response rate 0.20 — concern: low response rate 0.20
-CAND_0005016,46,0.169058,Business Analyst 3 yrs at Stark Industries; built ranking/search/reco systems — concern: YOE outside band
-CAND_0006676,47,0.168909,Marketing Manager 7.9 yrs at Stark Industries. built ranking/search/reco systems — concern: not flagged open-to-work
-CAND_0010844,48,0.158950,HR Manager 4.3 yrs at Hooli. built ranking/search/reco systems — concern: low response rate 0.08
-CAND_0011663,49,0.147968,DevOps Engineer 4.2 yrs at Capgemini. response rate 0.25 — concern: stale activity
-CAND_0011909,50,0.146298,Operations Manager 9.4 yrs at Globex Inc — built ranking/search/reco systems — concern: low response rate 0.09
-CAND_0010573,51,0.141457,Accountant 9.6 yrs at Stark Industries; built ranking/search/reco systems — concern: low response rate 0.14
-CAND_0001787,52,0.139832,Operations Manager 14.9 yrs at Globex Inc. built ranking/search/reco systems — concern: low response rate 0.18
-CAND_0017000,53,0.138601,Accountant 11.7 yrs at Initech; built ranking/search/reco systems — concern: YOE outside band
-CAND_0015038,54,0.137694,Marketing Manager 8.9 yrs at Wayne Enterprises: built ranking/search/reco systems — concern: stale activity
-CAND_0003896,55,0.129996,Accountant 9.8 yrs at TCS. built ranking/search/reco systems
-CAND_0000241,56,0.124157,Content Writer 7.7 yrs at Wipro; built ranking/search/reco systems — concern: stale activity
-CAND_0002710,57,0.123514,Accountant 9.8 yrs at Pied Piper; built ranking/search/reco systems
-CAND_0013455,58,0.121677,Customer Support 12.1 yrs at TCS; built ranking/search/reco systems — concern: low response rate 0.19
-CAND_0006684,59,0.103036,Project Manager 14.5 yrs at Infosys. built ranking/search/reco systems — concern: YOE outside band
-CAND_0018341,60,0.086181,Cloud Engineer 7.2 yrs at Globex Inc — shipped ML to production at scale
-CAND_0005001,61,0.080308,.NET Developer 6.4 yrs at Infosys. shipped ML to production at scale
-CAND_0002439,62,0.080253,DevOps Engineer 6 yrs at HCL; response rate 0.65
-CAND_0019056,63,0.076444,Data Engineer 5.6 yrs at CRED. response rate 0.62
-CAND_0007227,64,0.073137,Java Developer 6 yrs at Cognizant: response rate 0.83 — concern: not flagged open-to-work
-CAND_0018395,65,0.060736,Marketing Manager 5.2 yrs at Wipro — built ranking/search/reco systems — concern: stale activity
-CAND_0011539,66,0.045886,Customer Support 4.6 yrs at Pied Piper — shipped ML to production at scale
-CAND_0005348,67,0.043637,Business Analyst 7.1 yrs at Hooli. shipped ML to production at scale — concern: low response rate 0.07
-CAND_0015542,68,0.038105,Business Analyst 6.7 yrs at Initech — shipped ML to production at scale
-CAND_0003623,69,0.037390,Sales Executive 4.7 yrs at Acme Corp — shipped ML to production at scale
-CAND_0008577,70,0.036395,Sales Executive 5.3 yrs at Dunder Mifflin — shipped ML to production at scale — concern: not flagged open-to-work
-CAND_0013362,71,0.033185,Project Manager 9.5 yrs at Infosys; shipped ML to production at scale — concern: stale activity
-CAND_0017084,72,0.026769,Content Writer 2.5 yrs at Pied Piper. shipped ML to production at scale — concern: YOE outside band
-CAND_0010274,73,0.026422,Customer Support 7.5 yrs at Acme Corp; shipped ML to production at scale — concern: low response rate 0.06
-CAND_0002301,74,0.023341,Java Developer 4.2 yrs at TCS. response rate 0.75 — concern: not flagged open-to-work
-CAND_0000693,75,0.022599,Java Developer 6.2 yrs at Accenture — shipped ML to production at scale — concern: not flagged open-to-work
-CAND_0010647,76,0.017853,Sales Executive 14.6 yrs at Globex Inc: shipped ML to production at scale — concern: YOE outside band
-CAND_0000701,77,0.014757,Sales Executive 11 yrs at Dunder Mifflin; shipped ML to production at scale — concern: YOE outside band
-CAND_0009623,78,0.014665,Content Writer 10.3 yrs at Initech — shipped ML to production at scale — concern: YOE outside band
-CAND_0000121,79,0.009971,Customer Support 3.7 yrs at Wayne Enterprises; production embeddings/vector retrieval — concern: YOE outside band
-CAND_0009594,80,0.009531,Customer Support 6.5 yrs at Stark Industries — shipped ML to production at scale — concern: low response rate 0.15
-CAND_0004440,81,0.008764,Accountant 9.3 yrs at Wayne Enterprises; shipped ML to production at scale
-CAND_0006285,82,0.008553,Customer Support 2.6 yrs at Dunder Mifflin — production embeddings/vector retrieval — concern: YOE outside band
-CAND_0000738,83,0.007762,Graphic Designer 3.4 yrs at Dunder Mifflin. production embeddings/vector retrieval — concern: YOE outside band
-CAND_0000201,84,0.007180,Marketing Manager 14.1 yrs at Stark Industries. built ranking/search/reco systems — concern: YOE outside band
-CAND_0002525,85,0.005966,Content Writer 7.7 yrs at Dunder Mifflin. built ranking/search/reco systems
-CAND_0002980,86,0.005922,Graphic Designer 3.4 yrs at Stark Industries: production embeddings/vector retrieval — concern: YOE outside band
-CAND_0002671,87,0.005686,Operations Manager 13.6 yrs at Initech; built ranking/search/reco systems — concern: YOE outside band
-CAND_0001980,88,0.005356,Operations Manager 8.7 yrs at Dunder Mifflin. built ranking/search/reco systems — concern: not flagged open-to-work
-CAND_0001147,89,0.005166,Sales Executive 11.8 yrs at Hooli; built ranking/search/reco systems — concern: YOE outside band
-CAND_0002631,90,0.004233,Operations Manager 5.6 yrs at Stark Industries — production embeddings/vector retrieval — concern: not flagged open-to-work
-CAND_0000330,91,0.004021,Civil Engineer 12 yrs at Acme Corp; production embeddings/vector retrieval — concern: YOE outside band
-CAND_0003395,92,0.003884,Graphic Designer 5.7 yrs at Pied Piper — built ranking/search/reco systems — concern: stale activity
-CAND_0005293,93,0.003714,Sales Executive 10.5 yrs at TCS. shipped ML to production at scale — concern: YOE outside band
-CAND_0010212,94,0.003637,HR Manager 8.4 yrs at Acme Corp. shipped ML to production at scale
-CAND_0000097,95,0.002537,Mechanical Engineer 5.8 yrs at TCS. production embeddings/vector retrieval — concern: stale activity
-CAND_0002763,96,0.002510,Marketing Manager 4 yrs at Hooli: built ranking/search/reco systems — concern: stale activity
-CAND_0003505,97,0.002214,Accountant 2.8 yrs at Dunder Mifflin: production embeddings/vector retrieval — concern: YOE outside band
-CAND_0002623,98,0.001304,HR Manager 7.9 yrs at TCS; built ranking/search/reco systems — concern: low response rate 0.18
-CAND_0001450,99,0.001183,HR Manager 9.6 yrs at Wayne Enterprises. production embeddings/vector retrieval
-CAND_0000921,100,0.000000,Sales Executive 7.1 yrs at Infosys: production embeddings/vector retrieval — concern: low response rate 0.17
+CAND_0000422,1,1.000000,AI Research Engineer 6.3 yrs at Haptik: built ranking/search/reco systems
+CAND_0000200,2,0.994499,ML Engineer 4.3 yrs at Aganitha: built ranking/search/reco systems
+CAND_0000165,3,0.990919,AI Specialist 6.8 yrs at Mad Street Den — built ranking/search/reco systems
+CAND_0000666,4,0.986506,Data Scientist 6.5 yrs at PhonePe. built ranking/search/reco systems
+CAND_0000981,5,0.968138,ML Engineer 6.4 yrs at Wysa — built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0004114,6,0.695136,Senior Software Engineer 4.9 yrs at Unacademy; response rate 0.61 — concern: not flagged open-to-work
+CAND_0002764,7,0.601629,Mobile Developer 3.1 yrs at Hooli: shipped ML to production at scale — concern: YOE outside band
+CAND_0015991,8,0.578982,Full Stack Developer 2.5 yrs at Wayne Enterprises — response rate 0.75 — concern: YOE outside band
+CAND_0011832,9,0.569233,Software Engineer 10 yrs at Swiggy — shipped ML to production at scale — concern: low response rate 0.14
+CAND_0001545,10,0.568842,QA Engineer 6.9 yrs at CRED; shipped ML to production at scale — concern: not flagged open-to-work
+CAND_0016368,11,0.558316,Backend Engineer 7.1 yrs at PhonePe. response rate 0.58
+CAND_0008784,12,0.549663,Full Stack Developer 10 yrs at Swiggy. response rate 0.22 — concern: low response rate 0.22
+CAND_0014342,13,0.546211,Mobile Developer 7.9 yrs at Hooli. shipped ML to production at scale — concern: stale activity
+CAND_0018303,14,0.537227,Software Engineer 7.9 yrs at Cognizant: shipped ML to production at scale — concern: low response rate 0.22
+CAND_0002554,15,0.528435,Java Developer 5.1 yrs at Pied Piper; response rate 0.57 — concern: stale activity
+CAND_0013168,16,0.528274,Java Developer 5.4 yrs at Stark Industries; response rate 0.43 — concern: not flagged open-to-work
+CAND_0005407,17,0.524610,.NET Developer 7.1 yrs at Zomato — response rate 0.67 — concern: stale activity
+CAND_0009527,18,0.522218,Frontend Engineer 9.5 yrs at Dunder Mifflin. shipped ML to production at scale — concern: not flagged open-to-work
+CAND_0001797,19,0.509042,Java Developer 4.4 yrs at Acme Corp — response rate 0.72 — concern: stale activity
+CAND_0007187,20,0.503144,Software Engineer 9 yrs at Tech Mahindra — response rate 0.47 — concern: stale activity
+CAND_0005581,21,0.501044,QA Engineer 3.8 yrs at Flipkart — shipped ML to production at scale — concern: YOE outside band
+CAND_0013610,22,0.496849,Mobile Developer 7.2 yrs at CRED: shipped ML to production at scale — concern: low response rate 0.21
+CAND_0003113,23,0.480773,Cloud Engineer 1.9 yrs at Swiggy — response rate 0.32 — concern: YOE outside band
+CAND_0003997,24,0.477317,Software Engineer 9.1 yrs at Wipro; shipped ML to production at scale — concern: low response rate 0.20
+CAND_0012477,25,0.451496,Frontend Engineer 9.5 yrs at Mphasis: shipped ML to production at scale — concern: low response rate 0.20
+CAND_0007565,26,0.290936,Mechanical Engineer 7.6 yrs at Globex Inc — built ranking/search/reco systems
+CAND_0016921,27,0.281124,Mechanical Engineer 11.6 yrs at Stark Industries: built ranking/search/reco systems — concern: stale activity
+CAND_0016503,28,0.280953,Operations Manager 12.9 yrs at Globex Inc; built ranking/search/reco systems — concern: low response rate 0.17
+CAND_0001329,29,0.267945,DevOps Engineer 9.4 yrs at Hooli; response rate 0.72
+CAND_0007227,30,0.266185,Java Developer 6 yrs at Cognizant: response rate 0.83 — concern: not flagged open-to-work
+CAND_0013995,31,0.260510,Civil Engineer 10.7 yrs at Infosys; built ranking/search/reco systems — concern: YOE outside band
+CAND_0019056,32,0.244538,Data Engineer 5.6 yrs at CRED. response rate 0.62
+CAND_0018265,33,0.239406,Civil Engineer 14.2 yrs at Infosys. built ranking/search/reco systems — concern: stale activity
+CAND_0018341,34,0.234491,Cloud Engineer 7.2 yrs at Globex Inc — shipped ML to production at scale
+CAND_0007336,35,0.230987,Senior Data Engineer 6.1 yrs at Cognizant. ranking evaluation (NDCG/MRR/AB) — concern: not flagged open-to-work
+CAND_0010844,36,0.228516,HR Manager 4.3 yrs at Hooli. built ranking/search/reco systems — concern: low response rate 0.08
+CAND_0015073,37,0.221710,Business Analyst 5.7 yrs at Acme Corp; built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0005001,38,0.219953,.NET Developer 6.4 yrs at Infosys. shipped ML to production at scale
+CAND_0005016,39,0.214254,Business Analyst 3 yrs at Stark Industries; built ranking/search/reco systems — concern: YOE outside band
+CAND_0006676,40,0.212547,Marketing Manager 7.9 yrs at Stark Industries. built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0002439,41,0.212207,DevOps Engineer 6 yrs at HCL; response rate 0.65
+CAND_0010573,42,0.203296,Accountant 9.6 yrs at Stark Industries; built ranking/search/reco systems — concern: low response rate 0.14
+CAND_0013455,43,0.200714,Customer Support 12.1 yrs at TCS; built ranking/search/reco systems — concern: low response rate 0.19
+CAND_0006217,44,0.196634,Data Analyst 2.2 yrs at Meesho. shipped ML to production at scale — concern: YOE outside band
+CAND_0001162,45,0.195686,Business Analyst 11.4 yrs at Pied Piper. built ranking/search/reco systems — concern: YOE outside band
+CAND_0008170,46,0.193839,Customer Support 8.1 yrs at Wayne Enterprises; built ranking/search/reco systems — concern: not flagged open-to-work
+CAND_0001787,47,0.187694,Operations Manager 14.9 yrs at Globex Inc. built ranking/search/reco systems — concern: low response rate 0.18
+CAND_0015225,48,0.187492,Operations Manager 2.9 yrs at Infosys; built ranking/search/reco systems — concern: YOE outside band
+CAND_0001243,49,0.182964,Project Manager 11.9 yrs at Acme Corp: built ranking/search/reco systems — concern: stale activity
+CAND_0012745,50,0.179347,Graphic Designer 11.1 yrs at Globex Inc — built ranking/search/reco systems — concern: stale activity
+CAND_0015675,51,0.177305,Software Engineer 1.7 yrs at Wipro: response rate 0.56 — concern: YOE outside band
+CAND_0011909,52,0.175265,Operations Manager 9.4 yrs at Globex Inc — built ranking/search/reco systems — concern: low response rate 0.09
+CAND_0006509,53,0.173232,Software Engineer 6.6 yrs at Capgemini: response rate 0.75
+CAND_0000693,54,0.169390,Java Developer 6.2 yrs at Accenture — shipped ML to production at scale — concern: not flagged open-to-work
+CAND_0015038,55,0.163981,Marketing Manager 8.9 yrs at Wayne Enterprises: built ranking/search/reco systems — concern: stale activity
+CAND_0000241,56,0.163652,Content Writer 7.7 yrs at Wipro; built ranking/search/reco systems — concern: stale activity
+CAND_0000196,57,0.160463,QA Engineer 4.2 yrs at Mphasis — response rate 0.20 — concern: low response rate 0.20
+CAND_0017000,58,0.158406,Accountant 11.7 yrs at Initech; built ranking/search/reco systems — concern: YOE outside band
+CAND_0010440,59,0.154276,Operations Manager 11.4 yrs at Stark Industries; built ranking/search/reco systems — concern: YOE outside band
+CAND_0003896,60,0.149096,Accountant 9.8 yrs at TCS. built ranking/search/reco systems
+CAND_0015480,61,0.148001,Business Analyst 5 yrs at Initech; built ranking/search/reco systems — concern: stale activity
+CAND_0006684,62,0.147560,Project Manager 14.5 yrs at Infosys. built ranking/search/reco systems — concern: YOE outside band
+CAND_0015762,63,0.145503,DevOps Engineer 2.6 yrs at Mindtree — shipped ML to production at scale — concern: YOE outside band
+CAND_0011663,64,0.134884,DevOps Engineer 4.2 yrs at Capgemini. response rate 0.25 — concern: stale activity
+CAND_0002710,65,0.133171,Accountant 9.8 yrs at Pied Piper; built ranking/search/reco systems
+CAND_0010647,66,0.124471,Sales Executive 14.6 yrs at Globex Inc: shipped ML to production at scale — concern: YOE outside band
+CAND_0017084,67,0.114251,Content Writer 2.5 yrs at Pied Piper. shipped ML to production at scale — concern: YOE outside band
+CAND_0010212,68,0.113892,HR Manager 8.4 yrs at Acme Corp. shipped ML to production at scale
+CAND_0003623,69,0.107721,Sales Executive 4.7 yrs at Acme Corp — shipped ML to production at scale
+CAND_0017804,70,0.100313,Mechanical Engineer 6.3 yrs at Acme Corp; shipped ML to production at scale — concern: low response rate 0.15
+CAND_0013362,71,0.096151,Project Manager 9.5 yrs at Infosys; shipped ML to production at scale — concern: stale activity
+CAND_0000542,72,0.092996,HR Manager 12.9 yrs at TCS; shipped ML to production at scale — concern: YOE outside band
+CAND_0005348,73,0.085405,Business Analyst 7.1 yrs at Hooli. shipped ML to production at scale — concern: low response rate 0.07
+CAND_0010540,74,0.075255,HR Manager 8.7 yrs at Infosys; shipped ML to production at scale
+CAND_0009623,75,0.070183,Content Writer 10.3 yrs at Initech — shipped ML to production at scale — concern: YOE outside band
+CAND_0002577,76,0.069361,Project Manager 7.7 yrs at Dunder Mifflin; shipped ML to production at scale — concern: stale activity
+CAND_0011539,77,0.067358,Customer Support 4.6 yrs at Pied Piper — shipped ML to production at scale
+CAND_0002301,78,0.058376,Java Developer 4.2 yrs at TCS. response rate 0.75 — concern: not flagged open-to-work
+CAND_0004440,79,0.056951,Accountant 9.3 yrs at Wayne Enterprises; shipped ML to production at scale
+CAND_0017881,80,0.056567,Content Writer 3.6 yrs at Globex Inc; response rate 0.78 — concern: YOE outside band
+CAND_0013796,81,0.047945,Customer Support 6.4 yrs at Stark Industries; shipped ML to production at scale — concern: low response rate 0.18
+CAND_0018395,82,0.040103,Marketing Manager 5.2 yrs at Wipro — built ranking/search/reco systems — concern: stale activity
+CAND_0008577,83,0.037682,Sales Executive 5.3 yrs at Dunder Mifflin — shipped ML to production at scale — concern: not flagged open-to-work
+CAND_0000701,84,0.037499,Sales Executive 11 yrs at Dunder Mifflin; shipped ML to production at scale — concern: YOE outside band
+CAND_0007426,85,0.035676,HR Manager 9.1 yrs at Globex Inc. response rate 0.31 — concern: stale activity
+CAND_0005101,86,0.032209,Mechanical Engineer 11.3 yrs at Acme Corp; shipped ML to production at scale — concern: YOE outside band
+CAND_0008164,87,0.028570,Marketing Manager 3.8 yrs at TCS — shipped ML to production at scale — concern: stale activity
+CAND_0015555,88,0.027708,Accountant 1 yrs at Dunder Mifflin. response rate 0.46 — concern: stale activity
+CAND_0016679,89,0.027583,HR Manager 10.8 yrs at Infosys: response rate 0.22 — concern: low response rate 0.22
+CAND_0014487,90,0.025091,Graphic Designer 2.3 yrs at Pied Piper. response rate 0.52 — concern: YOE outside band
+CAND_0015671,91,0.016782,Mechanical Engineer 7.3 yrs at Wayne Enterprises; shipped ML to production at scale
+CAND_0012159,92,0.011078,Marketing Manager 6.5 yrs at Globex Inc; shipped ML to production at scale — concern: low response rate 0.05
+CAND_0010274,93,0.006394,Customer Support 7.5 yrs at Acme Corp; shipped ML to production at scale — concern: low response rate 0.06
+CAND_0000121,94,0.006197,Customer Support 3.7 yrs at Wayne Enterprises; production embeddings/vector retrieval — concern: YOE outside band
+CAND_0018600,95,0.003318,Customer Support 9.8 yrs at Pied Piper. response rate 0.15 — concern: low response rate 0.15
+CAND_0000201,96,0.001908,Marketing Manager 14.1 yrs at Stark Industries. built ranking/search/reco systems — concern: YOE outside band
+CAND_0000330,97,0.000551,Civil Engineer 12 yrs at Acme Corp; production embeddings/vector retrieval — concern: YOE outside band
+CAND_0001450,98,0.000497,HR Manager 9.6 yrs at Wayne Enterprises. production embeddings/vector retrieval
+CAND_0002671,99,0.000186,Operations Manager 13.6 yrs at Initech; built ranking/search/reco systems — concern: YOE outside band
+CAND_0001980,100,0.000000,Operations Manager 8.7 yrs at Dunder Mifflin. built ranking/search/reco systems — concern: not flagged open-to-work
