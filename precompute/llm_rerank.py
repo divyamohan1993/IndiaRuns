@@ -134,8 +134,27 @@ def main() -> int:
     print(f"LLM re-rank backend: {bname} | shortlist={len(shortlist)}")
 
     ckpt_path = os.path.join(A, "llm_scores.checkpoint.json")
-    results: Dict[str, Dict] = load_json(ckpt_path, default={}) or {}
+    # RESUMABLE: the checkpoint stores the per-bundle ANSWERS (keyed by bundle hash); those
+    # are the unit of completed work. `results` (per-cid rows) is rebuilt fresh every run in
+    # phase 1 and the answers are merged back in, so a restart never re-calls an
+    # already-answered bundle but also never skips a cid that lacks a real answer.
+    _ckpt = load_json(ckpt_path, default={}) or {}
+    if isinstance(_ckpt, dict) and "answers" in _ckpt:
+        ckpt_answers: Dict[str, Dict] = _ckpt.get("answers", {}) or {}
+    else:
+        ckpt_answers = {}
+    results: Dict[str, Dict] = {}   # always rebuilt in phase 1
     deterministic = bname == "DeterministicClient"
+
+    # FALLBACK SOURCE: the previous frozen llm_scores (e.g. the partial claude -p / prior
+    # NVIDIA run). On a final per-call failure we reuse a prior REAL judgment for that id
+    # rather than dropping it to 0; see _merge below. Keyed by candidate_id.
+    prior_scores: Dict[str, Dict] = {}
+    prev = load_json(os.path.join(A, "llm_scores.json"), default=None)
+    if isinstance(prev, dict):
+        prior_scores = {k: v for k, v in prev.items()
+                        if isinstance(v, dict) and v.get("llm_present")}
+        print(f"prior real LLM judgments available for fallback: {len(prior_scores)}")
 
     # ---- phase 1: deterministic rows + collect the unique LLM work items ----
     pending: Dict[str, list] = {}   # bundle_hash -> [cids sharing this bundle]
@@ -143,7 +162,7 @@ def main() -> int:
     clean_hp_of: Dict[str, bool] = {}
     for c in iter_candidates(args.candidates):
         cid = c["candidate_id"]
-        if cid not in shortlist or cid in results:
+        if cid not in shortlist:
             continue
         tier, _ = rf.proxy_tier(c)
         rfit = rf.rule_fit(c)
@@ -172,44 +191,117 @@ def main() -> int:
             hash_payload.setdefault(h, json.dumps(b, ensure_ascii=False))
 
     # ---- phase 2: execute unique LLM calls (deduped) at modest concurrency ----
-    answers: Dict[str, Dict] = {}
+    # Resume: reuse any successful answers from the checkpoint; only call the rest.
+    answers: Dict[str, Dict] = {h: a for h, a in ckpt_answers.items()
+                                if isinstance(a, dict) and "fit_score" in a and "__error__" not in a}
+    n_failed_bundles = 0
     calls = 0
     if pending and not deterministic:
-        unique_hashes = list(pending.keys())
+        unique_hashes = [h for h in pending.keys() if h not in answers]
         if args.max_calls:
             unique_hashes = unique_hashes[: args.max_calls]
         calls = len(unique_hashes)
+        if answers:
+            print(f"resuming: {len(answers)} bundles already answered in checkpoint")
         print(f"unique LLM bundles to call: {len(unique_hashes)} "
               f"(of {len(pending)} deduped) @ concurrency={args.concurrency}")
 
         def _one(h: str):
-            return h, backend.chat_json(SYSTEM, hash_payload[h])
+            # NEVER raise: the client already retries with exp-backoff; on a final failure
+            # return {} so the merge step falls back (prior real judgment, else rule proxy).
+            try:
+                return h, (backend.chat_json(SYSTEM, hash_payload[h]) or {})
+            except Exception as e:  # noqa: BLE001
+                return h, {"__error__": str(e)[:160]}
 
         done = 0
         with ThreadPoolExecutor(max_workers=max(1, args.concurrency)) as ex:
             futs = [ex.submit(_one, h) for h in unique_hashes]
             for fut in as_completed(futs):
                 h, ans = fut.result()
+                if not ans or "__error__" in ans or "fit_score" not in ans:
+                    n_failed_bundles += 1
                 answers[h] = ans or {}
                 done += 1
                 if done % 25 == 0:
-                    print(f"  {done}/{len(unique_hashes)} LLM calls done")
-                    json.dump(results, open(ckpt_path, "w"))
+                    print(f"  {done}/{len(unique_hashes)} LLM calls done "
+                          f"({n_failed_bundles} failed so far)")
+                    # checkpoint the per-bundle answers so a restart resumes from here.
+                    json.dump({"answers": answers}, open(ckpt_path, "w"))
 
     # ---- merge answers back into every cid that shared the bundle ----
+    # On a usable answer: record the fresh real NVIDIA judgment.
+    # On a failed/empty answer: FALL BACK to a prior real judgment for that id if one
+    # exists (so a transient failure never drops a candidate or zeroes a vetted score),
+    # else leave the rule-proxy default already in `results[cid]`.
+    n_success = 0      # cids with a fresh real NVIDIA judgment this run
+    n_fallback_prior = 0   # cids that reused a prior real judgment
+    n_fallback_rule = 0    # cids left on the deterministic rule-proxy default
+
+    def _tier_int(v, dflt):
+        try:
+            return int(v)
+        except (TypeError, ValueError):
+            return int(dflt)
+
+    def _as_list(v, dflt):
+        if isinstance(v, list):
+            return v
+        if v is None or v == "":
+            return list(dflt) if isinstance(dflt, list) else []
+        return [str(v)]  # coerce a stray scalar into a single-element list
+
     for h, cids in pending.items():
         ans = answers.get(h)
-        if not ans:
-            continue
+        usable = isinstance(ans, dict) and "fit_score" in ans and "__error__" not in ans
         for cid in cids:
             row = results[cid]
-            row["fit_score"] = int(ans.get("fit_score", row["fit_score"]))
-            row["tier"] = int(ans.get("tier", row["tier"]))
-            row["disqualifier_flags"] = list(ans.get("disqualifier_flags", row["disqualifier_flags"]))
-            row["evidence"] = list(ans.get("evidence", []))[:4]
-            row["concern"] = str(ans.get("concern", ""))[:140]
-            row["reasoning"] = str(ans.get("reasoning", ""))[:140].replace(",", " ")
+            if usable:
+                row["fit_score"] = _tier_int(ans.get("fit_score"), row["fit_score"])
+                row["tier"] = _tier_int(ans.get("tier"), row["tier"])
+                row["disqualifier_flags"] = _as_list(ans.get("disqualifier_flags"),
+                                                     row["disqualifier_flags"])
+                row["evidence"] = _as_list(ans.get("evidence"), [])[:4]
+                row["concern"] = str(ans.get("concern", ""))[:140]
+                row["reasoning"] = str(ans.get("reasoning", ""))[:140].replace(",", " ")
+                row["llm_present"] = True
+                row["llm_source"] = "nvidia"
+                n_success += 1
+            else:
+                pr = prior_scores.get(cid)
+                if pr:
+                    row["fit_score"] = _tier_int(pr.get("fit_score"), row["fit_score"])
+                    row["tier"] = _tier_int(pr.get("tier"), row["tier"])
+                    row["disqualifier_flags"] = list(pr.get("disqualifier_flags",
+                                                            row["disqualifier_flags"]))
+                    row["evidence"] = list(pr.get("evidence", []))[:4]
+                    row["concern"] = str(pr.get("concern", ""))[:140]
+                    row["reasoning"] = str(pr.get("reasoning", ""))[:140].replace(",", " ")
+                    row["llm_present"] = True
+                    row["llm_source"] = "prior_fallback"
+                    n_fallback_prior += 1
+                else:
+                    row["llm_source"] = "rule_fallback"
+                    n_fallback_rule += 1
+
+    # Also rescue any shortlisted id that was NOT an LLM target this run but has a prior
+    # real judgment (keeps coverage maximal across re-runs); never overwrites a fresh one.
+    for cid in shortlist:
+        row = results.get(cid)
+        if not row or row.get("llm_present"):
+            continue
+        pr = prior_scores.get(cid)
+        if pr:
+            row["fit_score"] = _tier_int(pr.get("fit_score"), row["fit_score"])
+            row["tier"] = _tier_int(pr.get("tier"), row["tier"])
+            row["disqualifier_flags"] = list(pr.get("disqualifier_flags",
+                                                    row["disqualifier_flags"]))
+            row["evidence"] = list(pr.get("evidence", []))[:4]
+            row["concern"] = str(pr.get("concern", ""))[:140]
+            row["reasoning"] = str(pr.get("reasoning", ""))[:140].replace(",", " ")
             row["llm_present"] = True
+            row["llm_source"] = "prior_fallback"
+            n_fallback_prior += 1
 
     # ---- deterministic floor: a structural honeypot can never score high ----
     for cid, clean_hp in clean_hp_of.items():
@@ -241,6 +333,8 @@ def main() -> int:
     if os.path.exists(ckpt_path):
         os.remove(ckpt_path)
     print(f"wrote {written} | rows={len(results)} llm_present={n_llm} calls={calls}")
+    print(f"  judgments: nvidia_fresh={n_success} prior_fallback={n_fallback_prior} "
+          f"rule_fallback={n_fallback_rule} failed_bundles={n_failed_bundles}")
     return 0
 
 

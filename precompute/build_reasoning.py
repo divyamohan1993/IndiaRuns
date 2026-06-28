@@ -72,27 +72,39 @@ def main() -> int:
 
     # phase 2: run the LLM calls concurrently, fact-validate each, keep only valid lines
     llm_text: dict = {}
+    n_rejected = 0   # LLM wrote a line but it failed fact-validation -> deterministic
+    n_call_fail = 0  # LLM call itself failed (after retries) -> deterministic
     if call_items:
         print(f"LLM reasoning calls: {len(call_items)} @ concurrency={args.concurrency}")
 
         def _one(item):
             cid, c = item
-            ans = backend.chat_json(SYSTEM, json.dumps(fact_bundle(c), ensure_ascii=False))
+            # NEVER raise: the client retries with backoff; a final failure -> ("fail").
+            try:
+                ans = backend.chat_json(SYSTEM, json.dumps(fact_bundle(c), ensure_ascii=False))
+            except Exception:  # noqa: BLE001
+                return cid, None  # call failed
             cand_text = str(ans.get("reasoning", "")) if isinstance(ans, dict) else ""
             if cand_text and rsn._validate_llm(cand_text, c):
-                return cid, rsn._csv_safe(cand_text)
-            return cid, ""
+                return cid, rsn._csv_safe(cand_text)  # validated
+            return cid, ""  # written but rejected by fact-validation
 
         done = 0
         with ThreadPoolExecutor(max_workers=max(1, args.concurrency)) as ex:
             for cid, text in ex.map(_one, call_items):
                 if text:
                     llm_text[cid] = text
+                elif text is None:
+                    n_call_fail += 1
+                else:
+                    n_rejected += 1
                 done += 1
                 if done % 25 == 0:
-                    print(f"  {done}/{len(call_items)} reasoning calls done")
+                    print(f"  {done}/{len(call_items)} reasoning calls done "
+                          f"(validated={len(llm_text)} rejected={n_rejected} failed={n_call_fail})")
 
-    n_llm = len(llm_text)
+    n_llm = len(llm_text)            # LLM-written AND fact-validated
+    n_det = len(ordered) - n_llm     # everything else gets deterministic reasoning
     calls = len(call_items)
     with open(out_path := os.path.join(A, "reasoning.jsonl"), "w", encoding="utf-8") as out:
         for c in ordered:
@@ -102,7 +114,9 @@ def main() -> int:
 
     manifest_add("reasoning", out_path, "precompute/build_reasoning.py", A,
                  extra={"backend": bname, "n_llm": n_llm})
-    print(f"wrote {out_path} | llm_written={n_llm} calls={calls}")
+    print(f"wrote {out_path} | rows={len(ordered)} "
+          f"llm_written_validated={n_llm} rejected_to_deterministic={n_rejected} "
+          f"call_failed_to_deterministic={n_call_fail} deterministic_total={n_det} calls={calls}")
     return 0
 
 

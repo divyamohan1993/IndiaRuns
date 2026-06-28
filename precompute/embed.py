@@ -49,6 +49,9 @@ def _fit_dim(mat: np.ndarray, dim: int) -> np.ndarray:
 
 
 def _backend_nvidia():
+    """NVIDIA nv-embedqa-e5-v5 (1024-dim). Batches of <=250, concurrency ~8,
+    input_type passage/query, truncate END, transient-5xx/429 retry (in the client).
+    Reads NVIDIA_API_KEY from env only. Returns (embed_fn, name, native_dim)."""
     if not os.environ.get("NVIDIA_API_KEY"):
         return None
     try:
@@ -56,14 +59,37 @@ def _backend_nvidia():
     except Exception:
         return None
     try:
+        from concurrent.futures import ThreadPoolExecutor
+
         client = NvidiaClient()
         if not client.available():
             return None
 
+        batch = int(os.environ.get("NVIDIA_EMBED_BATCH", "250"))
+        conc = int(os.environ.get("NVIDIA_EMBED_CONCURRENCY", "8"))
+
         def embed(texts, is_query=False):
-            return np.asarray(client.embed(texts, input_type="query" if is_query else "passage"),
-                              dtype=np.float32)
-        return embed, "nvidia/nv-embedqa"
+            itype = "query" if is_query else "passage"
+            texts = list(texts)
+            if not texts:
+                return np.zeros((0, 1024), dtype=np.float32)
+            batches = [texts[i:i + batch] for i in range(0, len(texts), batch)]
+
+            def _do(b):
+                return client.embed(b, input_type=itype, truncate="END")
+
+            # preserve order: index the batches, run concurrently, reassemble
+            results = [None] * len(batches)
+            with ThreadPoolExecutor(max_workers=conc) as ex:
+                futs = {ex.submit(_do, b): bi for bi, b in enumerate(batches)}
+                for fut in futs:
+                    pass
+                for fut, bi in futs.items():
+                    results[bi] = fut.result()
+            out = [vec for r in results for vec in r]
+            return np.asarray(out, dtype=np.float32)
+
+        return embed, "nvidia/nv-embedqa-e5-v5", 1024
     except Exception:
         return None
 
@@ -116,17 +142,20 @@ def main() -> int:
     ap.add_argument("--batch", type=int, default=256)
     args = ap.parse_args()
     os.makedirs(args.artifacts_dir, exist_ok=True)
-    dim = config.EMBED_DIM
 
     narratives = [feat.narrative_text(c) for c in iter_candidates(args.candidates)]
     n = len(narratives)
 
     backend = None
     cand_pre = None
+    native_dim = None
     order = (["nvidia", "bge", "svd"] if args.backend == "auto" else [args.backend])
     for b in order:
         if b == "nvidia":
-            backend = _backend_nvidia()
+            r = _backend_nvidia()
+            if r:
+                backend = (r[0], r[1])
+                native_dim = r[2]  # 1024 for nv-embedqa; do NOT truncate
         elif b == "bge":
             backend = _backend_bge()
         elif b == "svd":
@@ -141,11 +170,18 @@ def main() -> int:
               "or cand_svd32 from fit_lexical.py)", file=sys.stderr)
         return 1
     embed_fn, backend_name = backend
-    print(f"embedding backend: {backend_name}")
+    # Use the backend's native dimensionality when it exposes one (NVIDIA=1024);
+    # otherwise fall back to the configured dim (BGE/SVD path = 384).
+    dim = native_dim if native_dim is not None else config.EMBED_DIM
+    print(f"embedding backend: {backend_name} (dim={dim})")
 
     # ---- candidate vectors ----
     if cand_pre is not None:
         cand = _fit_dim(cand_pre, dim)
+    elif native_dim is not None:
+        # NVIDIA: the embed_fn batches (<=250) + parallelizes internally; hand it the
+        # whole list so concurrency spans all batches.
+        cand = _fit_dim(embed_fn(narratives, is_query=False), dim)
     else:
         chunks = []
         for i in range(0, n, args.batch):
