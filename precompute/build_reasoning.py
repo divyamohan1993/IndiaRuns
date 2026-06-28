@@ -33,6 +33,19 @@ SYSTEM = (
     "Return ONLY JSON: {\"reasoning\": \"...\"}."
 )
 
+# Stricter re-prompt used when the first answer fails the Stage-4 specificity gate.
+# Forces >=2 concrete specifics (incl. a number and the company), names the matched JD
+# requirement, and adds one honest concern on a gap.
+SYSTEM_STRICT = (
+    "You are scoring a Senior AI Engineer for a ranking/search/recommendation role. "
+    "Write ONE recruiter-facing line (<=140 characters NO commas) using ONLY these facts. "
+    "It MUST cite at least TWO concrete specifics drawn from the record including a number "
+    "(years or a metric) AND the company name. It MUST name the matched JD requirement "
+    "(one of: ranking retrieval search recommendation embeddings evaluation). Add ONE honest "
+    "concern if a gap exists. Never invent skills companies or numbers not in the facts. "
+    "Return ONLY JSON: {\"reasoning\": \"...\"}."
+)
+
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
@@ -70,30 +83,54 @@ def main() -> int:
     if args.max_calls:
         call_items = call_items[: args.max_calls]
 
-    # phase 2: run the LLM calls concurrently, fact-validate each, keep only valid lines
+    # phase 2: run the LLM calls concurrently. Each line must pass BOTH the no-hallucination
+    # validator AND the Stage-4 specificity gate. If the first answer is too generic, do ONE
+    # stricter re-prompt; if that still fails (or hallucinates), fall back to deterministic.
     llm_text: dict = {}
-    n_rejected = 0   # LLM wrote a line but it failed fact-validation -> deterministic
-    n_call_fail = 0  # LLM call itself failed (after retries) -> deterministic
+    n_rejected = 0    # LLM wrote a line but it failed validation/specificity -> deterministic
+    n_call_fail = 0   # LLM call itself failed (after retries) -> deterministic
+    n_reprompt = 0    # first answer was generic -> stricter re-prompt issued
+    n_reprompt_ok = 0  # stricter re-prompt produced a passing line
     if call_items:
-        print(f"LLM reasoning calls: {len(call_items)} @ concurrency={args.concurrency}")
+        print(f"LLM reasoning calls: {len(call_items)} @ concurrency={args.concurrency} "
+              f"(specificity gate + 1 stricter re-prompt on failure)")
+
+        def _accept(text: str, c) -> str:
+            """Return the csv-safe text iff it validates AND is specific, else ''."""
+            if text and rsn._validate_llm(text, c) and rsn.is_specific(text, c):
+                return rsn._csv_safe(text)
+            return ""
 
         def _one(item):
             cid, c = item
-            # NEVER raise: the client retries with backoff; a final failure -> ("fail").
+            facts = json.dumps(fact_bundle(c), ensure_ascii=False)
+            # NEVER raise: the client retries with backoff; a final failure -> (cid, None).
             try:
-                ans = backend.chat_json(SYSTEM, json.dumps(fact_bundle(c), ensure_ascii=False))
+                ans = backend.chat_json(SYSTEM, facts)
             except Exception:  # noqa: BLE001
-                return cid, None  # call failed
-            cand_text = str(ans.get("reasoning", "")) if isinstance(ans, dict) else ""
-            if cand_text and rsn._validate_llm(cand_text, c):
-                return cid, rsn._csv_safe(cand_text)  # validated
-            return cid, ""  # written but rejected by fact-validation
+                return cid, None, False  # call failed entirely
+            t1 = str(ans.get("reasoning", "")) if isinstance(ans, dict) else ""
+            ok = _accept(t1, c)
+            if ok:
+                return cid, ok, False
+            # first answer too generic / hallucinated -> ONE stricter re-prompt.
+            try:
+                ans2 = backend.chat_json(SYSTEM_STRICT, facts)
+            except Exception:  # noqa: BLE001
+                return cid, "", True  # re-prompt issued but failed -> deterministic
+            t2 = str(ans2.get("reasoning", "")) if isinstance(ans2, dict) else ""
+            ok2 = _accept(t2, c)
+            return (cid, ok2, True) if ok2 else (cid, "", True)
 
         done = 0
         with ThreadPoolExecutor(max_workers=max(1, args.concurrency)) as ex:
-            for cid, text in ex.map(_one, call_items):
+            for cid, text, reprompted in ex.map(_one, call_items):
+                if reprompted:
+                    n_reprompt += 1
                 if text:
                     llm_text[cid] = text
+                    if reprompted:
+                        n_reprompt_ok += 1
                 elif text is None:
                     n_call_fail += 1
                 else:
@@ -101,7 +138,8 @@ def main() -> int:
                 done += 1
                 if done % 25 == 0:
                     print(f"  {done}/{len(call_items)} reasoning calls done "
-                          f"(validated={len(llm_text)} rejected={n_rejected} failed={n_call_fail})")
+                          f"(validated={len(llm_text)} reprompts={n_reprompt} "
+                          f"rejected={n_rejected} failed={n_call_fail})")
 
     n_llm = len(llm_text)            # LLM-written AND fact-validated
     n_det = len(ordered) - n_llm     # everything else gets deterministic reasoning
@@ -113,9 +151,12 @@ def main() -> int:
             out.write(json.dumps({"candidate_id": cid, "reasoning": text}, ensure_ascii=False) + "\n")
 
     manifest_add("reasoning", out_path, "precompute/build_reasoning.py", A,
-                 extra={"backend": bname, "n_llm": n_llm})
+                 extra={"backend": bname, "n_llm": n_llm, "n_deterministic": n_det,
+                        "n_reprompt": n_reprompt, "n_reprompt_ok": n_reprompt_ok,
+                        "specificity_gate": True})
     print(f"wrote {out_path} | rows={len(ordered)} "
-          f"llm_written_validated={n_llm} rejected_to_deterministic={n_rejected} "
+          f"llm_written_validated={n_llm} reprompts={n_reprompt} (ok={n_reprompt_ok}) "
+          f"rejected_to_deterministic={n_rejected} "
           f"call_failed_to_deterministic={n_call_fail} deterministic_total={n_det} calls={calls}")
     return 0
 

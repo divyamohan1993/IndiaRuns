@@ -33,6 +33,16 @@ from core.schema import (
 
 MAX_LEN = 140
 
+# JD-requirement vocabulary the reasoning must connect to (Stage-4: "explicit JD
+# connection"). Lowercase substring match against the reasoning text.
+_JD_REQUIREMENT_TOKENS = (
+    "ranking", "rank", "retrieval", "retrieve", "search", "recommendation",
+    "recommender", "reco", "embedding", "embeddings", "vector", "semantic",
+    "relevance", "personalization", "personalisation", "learning-to-rank",
+    "learning to rank", "ltr", "eval", "ndcg", "mrr", "a/b", "ab test",
+    "information retrieval", "production",
+)
+
 _CONNECTORS = [
     "{head}; {jd}{concern}",
     "{head} — {jd}{concern}",
@@ -195,9 +205,104 @@ def _validate_llm(text: str, c: Dict) -> bool:
     return True
 
 
+# Generic title words that, alone, do not make a line "specific" (they appear in the
+# JD role title too, so a match on them is not distinctive to the candidate).
+_GENERIC_TITLE_WORDS = {
+    "senior", "junior", "lead", "principal", "staff", "engineer", "developer",
+    "scientist", "specialist", "analyst", "architect", "manager", "ai", "ml",
+    "data", "software", "machine", "learning", "applied", "research",
+}
+
+
+def _strong_record_tokens(c: Dict) -> List[str]:
+    """Distinctive tokens that anchor a reason to THIS candidate: company names and
+    named skills (and the full multi-word title). A bare generic title word like
+    'engineer' is NOT here — it is not distinctive."""
+    toks: List[str] = []
+    company = _primary_company(c)
+    if company:
+        toks.append(lower(company))
+    for j in career(c):
+        if isinstance(j, dict) and j.get("company"):
+            toks.append(lower(j["company"]))
+    for s in c.get("skills", []):
+        if isinstance(s, dict) and s.get("name"):
+            toks.append(lower(s["name"]))
+    seen = set()
+    out = []
+    for t in toks:
+        t = t.strip()
+        if len(t) >= 3 and t not in seen:
+            seen.add(t)
+            out.append(t)
+    return out
+
+
+def _weak_title_tokens(c: Dict) -> List[str]:
+    """Title words from the record, EXCLUDING the generic role words. A match here is a
+    real (if soft) specific — e.g. 'recommendation' / 'search' in the candidate's title."""
+    out: List[str] = []
+    titles = []
+    t = profile(c).get("current_title")
+    if t:
+        titles.append(lower(t))
+    for j in career(c):
+        if isinstance(j, dict) and j.get("title"):
+            titles.append(lower(j["title"]))
+    for title in titles:
+        for w in title.replace("/", " ").split():
+            w = w.strip(".,()")
+            if len(w) >= 4 and w not in _GENERIC_TITLE_WORDS:
+                out.append(w)
+    return list(dict.fromkeys(out))
+
+
+def is_specific(text: str, c: Dict) -> bool:
+    """Stage-4 specificity gate.
+
+    A reasoning line is "specific" iff (a) it names at least one JD requirement
+    (ranking/retrieval/search/recommendation/embeddings/eval/...), (b) it cites >=2
+    CONCRETE specifics grounded in this candidate's record, AND (c) at least one of
+    those specifics is STRONG — a validated number, the company, or a named skill —
+    so a line cannot clear the bar on generic role words alone. Generic lines like
+    "Strong ML background" or "Senior AI Engineer with 6+ years" (no company/skill)
+    fail; "8 yrs at CRED owns the ranking layer" passes.
+    """
+    if not text:
+        return False
+    import re
+    low = text.lower()
+
+    has_jd = any(t in low for t in _JD_REQUIREMENT_TOKENS)
+    if not has_jd:
+        return False
+
+    strong = 0
+    # a validated number/year that legitimately belongs to the record.
+    if re.search(r"\d", text) and _validate_llm(text, c):
+        if any(round(float(t)) for t in re.findall(r"\d+(?:\.\d+)?", text) or ["0"]):
+            strong += 1
+    # company / named-skill tokens (distinctive to this candidate).
+    for tok in _strong_record_tokens(c):
+        if tok in low:
+            strong += 1
+
+    weak = sum(1 for w in _weak_title_tokens(c) if w in low)
+
+    # >=2 concrete specifics total AND at least one of them STRONG (number/company/skill).
+    return strong >= 1 and (strong + weak) >= 2
+
+
 def build_reasoning(c: Dict, ctx: Optional[Dict] = None) -> str:
+    """Return the final reasoning string.
+
+    A frozen LLM reasoning (ctx['llm_reasoning']) is used ONLY if it passes BOTH the
+    no-hallucination validator AND the Stage-4 specificity gate. Otherwise the
+    deterministic fact-assembler — specific by construction — is used.
+    """
     ctx = ctx or {}
     llm = ctx.get("llm_reasoning")
-    if isinstance(llm, str) and llm.strip() and _validate_llm(llm, c):
+    if (isinstance(llm, str) and llm.strip()
+            and _validate_llm(llm, c) and is_specific(llm, c)):
         return _csv_safe(llm)
     return deterministic_reasoning(c)

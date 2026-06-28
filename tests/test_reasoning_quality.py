@@ -55,6 +55,30 @@ def test_honest_concern_when_gap():
     assert "concern" in r or "response" in r
 
 
+def test_specificity_gate_rejects_generic_llm():
+    c = fixtures.base_candidate()
+    # generic, no concrete record token + JD requirement -> gate fails -> deterministic used
+    for generic in ("Strong ML background", "Strong ML modeling experience", "Good fit"):
+        assert not reasoning.is_specific(generic, c)
+        out = reasoning.build_reasoning(c, {"llm_reasoning": generic})
+        assert out != generic  # fell back to the specific deterministic line
+
+
+def test_specificity_gate_accepts_specific_llm():
+    c = fixtures.base_candidate()
+    good = "ML Engineer 6 yrs at PhonePe shipped a recommendation ranking system in production"
+    assert reasoning.is_specific(good, c)
+    out = reasoning.build_reasoning(c, {"llm_reasoning": good})
+    assert "PhonePe" in out and "ranking" in out
+
+
+def test_deterministic_reasoning_is_specific():
+    # the deterministic fallback must itself clear the Stage-4 specificity bar.
+    for mk in (fixtures.base_candidate,):
+        c = mk()
+        assert reasoning.is_specific(reasoning.deterministic_reasoning(c), c)
+
+
 def test_variation_by_candidate_id():
     a = fixtures.base_candidate("CAND_0000001")
     b = fixtures.base_candidate("CAND_0000007")
